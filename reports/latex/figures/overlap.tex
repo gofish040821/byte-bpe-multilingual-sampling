@@ -1,0 +1,68 @@
+% Source: results/bpe_walkthrough.json, training.steps[1].
+% Input [256,256,256,256]; overlapping pair count=3; actual replacements=2.
+% Input fragment. Requires tikz + arrows.meta + calc.
+% Fixed design box: 15.5 cm x 6.5 cm. Text content is not scaled.
+\begingroup
+\definecolor{tokenizerBlue}{HTML}{285D77}
+\definecolor{tokenizerOchre}{HTML}{B36826}
+\definecolor{tokenizerGrey}{HTML}{66747B}
+\definecolor{tokenizerGrid}{HTML}{E1E6E9}
+\begin{tikzpicture}[
+  x=1cm,y=1cm,font=\small,
+  token/.style={
+    draw=tokenizerBlue,line width=.5pt,fill=tokenizerBlue!3,
+    minimum height=.82cm,minimum width=1.52cm,
+    inner xsep=1pt,inner ysep=2pt,outer sep=0pt,
+    align=center,text=tokenizerBlue
+  },
+  result/.style={token,draw=tokenizerOchre,fill=tokenizerOchre!4,
+    text=tokenizerOchre,minimum width=3.12cm},
+  window/.style={draw=tokenizerBlue,line width=.5pt},
+  link/.style={draw=tokenizerOchre!85,line width=.45pt},
+  finish/.style={link,-{Stealth[length=1.5mm,width=1.05mm]}},
+  note/.style={font=\footnotesize,text=tokenizerGrey}
+]
+  \path[use as bounding box] (0,0) rectangle (15.5,6.5);
+  \node[anchor=west] at (.10,6.12) {\textbf{(a)}\quad 相邻窗口};
+  \node[anchor=west] at (8.45,6.12) {\textbf{(b)}\quad 不重叠替换};
+  \draw[tokenizerGrid,line width=.35pt] (7.65,.65) -- (7.65,5.98);
+
+  % Both panels repeat the same four-token input, at the same scale.
+  \foreach \i in {0,...,3} {
+    \pgfmathtruncatemacro{\position}{\i+1}
+    \node[note] at ({.90+1.6*\i},5.57) {$\position$};
+    \node[note] at ({9.25+1.6*\i},5.57) {$\position$};
+    \node[token] (a-\i) at ({.90+1.6*\i},4.80)
+      {\texttt{ab}\\[-1pt]{\footnotesize\color{tokenizerGrey}\texttt{256}}};
+    \node[token] (b-\i) at ({9.25+1.6*\i},4.80)
+      {\texttt{ab}\\[-1pt]{\footnotesize\color{tokenizerGrey}\texttt{256}}};
+  }
+
+  % All three adjacent windows count, including the overlapping middle one.
+  \foreach \left/\right/\yy/\label in {
+    .14/3.26/3.75/{(1,2)},1.74/4.86/2.85/{(2,3)},3.34/6.46/1.95/{(3,4)}
+  } {
+    \draw[window] (\left,{\yy+.15}) -- (\left,\yy)
+      -- (\right,\yy) -- (\right,{\yy+.15});
+    \node[note,anchor=north] at ({(\left+\right)/2},{\yy-.14}) {$\label$};
+  }
+
+  % Left-to-right merging consumes positions 1,2 and then 3,4 exactly once.
+  \node[result] (out-0) at (10.05,2.85)
+    {\texttt{abab}\\[-1pt]{\footnotesize\color{tokenizerGrey}\texttt{257}}};
+  \node[result] (out-1) at (13.25,2.85)
+    {\texttt{abab}\\[-1pt]{\footnotesize\color{tokenizerGrey}\texttt{257}}};
+  \foreach \i in {0,1} {
+    \pgfmathtruncatemacro{\leftchild}{2*\i}
+    \pgfmathtruncatemacro{\rightchild}{2*\i+1}
+    \coordinate (join-\i) at ($(out-\i.north)+(0,.56)$);
+    \draw[link] (b-\leftchild.south) -- (join-\i);
+    \draw[link] (b-\rightchild.south) -- (join-\i);
+    \draw[finish] (join-\i) -- (out-\i.north);
+  }
+  \node[note] at (10.05,2.08) {$(1,2)$};
+  \node[note] at (13.25,2.08) {$(3,4)$};
+  \node[font=\small,text=tokenizerBlue] at (3.30,.70) {$3$ 次计数};
+  \node[font=\small,text=tokenizerOchre] at (11.65,.70) {$2$ 次替换};
+\end{tikzpicture}
+\endgroup

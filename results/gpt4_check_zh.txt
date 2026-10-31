@@ -1,0 +1,126 @@
+MinBPE 与 cl100k_base 编码核对
+只验证该固定版本 MinBPE 对 cl100k_base 普通文本编码的复现；不代表所有 GPT 型号。
+MinBPE 固定提交：1acefe89412b20245db5a22d2a02001e547dc602
+tiktoken 版本：0.14.0
+regex 版本：2026.9.29
+
+【英文】原文：'Hello, world!'
+  正则预分块：['Hello', ',', ' world', '!']
+  MinBPE ID：[9906, 11, 1917, 0]
+  tiktoken ID：[9906, 11, 1917, 0]
+  token 数：4；编码一致：True；完整往返：True
+    ID 9906；hex 48 65 6c 6c 6f；显示 'Hello'
+    ID 11；hex 2c；显示 ','
+    ID 1917；hex 20 77 6f 72 6c 64；显示 ' world'
+    ID 0；hex 21；显示 '!'
+
+【德语】原文：'Füße, Straße und Häuser.'
+  正则预分块：['Füße', ',', ' Straße', ' und', ' Häuser', '.']
+  MinBPE ID：[37, 2448, 24352, 11, 27745, 24352, 2073, 91693, 882, 13]
+  tiktoken ID：[37, 2448, 24352, 11, 27745, 24352, 2073, 91693, 882, 13]
+  token 数：10；编码一致：True；完整往返：True
+    ID 37；hex 46；显示 'F'
+    ID 2448；hex c3 bc；显示 'ü'
+    ID 24352；hex c3 9f 65；显示 'ße'
+    ID 11；hex 2c；显示 ','
+    ID 27745；hex 20 53 74 72 61；显示 ' Stra'
+    ID 24352；hex c3 9f 65；显示 'ße'
+    ID 2073；hex 20 75 6e 64；显示 ' und'
+    ID 91693；hex 20 48 c3 a4；显示 ' Hä'
+    ID 882；hex 75 73 65 72；显示 'user'
+    ID 13；hex 2e；显示 '.'
+
+【西班牙语】原文：'¡Hola! ¿Cómo estás? El niño come piña.'
+  正则预分块：['¡Hola', '!', ' ¿', 'Cómo', ' estás', '?', ' El', ' niño', ' come', ' piña', '.']
+  MinBPE ID：[40932, 69112, 0, 29386, 96997, 1826, 7206, 30, 4072, 13080, 14871, 2586, 9115, 18829, 13]
+  tiktoken ID：[40932, 69112, 0, 29386, 96997, 1826, 7206, 30, 4072, 13080, 14871, 2586, 9115, 18829, 13]
+  token 数：15；编码一致：True；完整往返：True
+    ID 40932；hex c2 a1；显示 '¡'
+    ID 69112；hex 48 6f 6c 61；显示 'Hola'
+    ID 0；hex 21；显示 '!'
+    ID 29386；hex 20 c2 bf；显示 ' ¿'
+    ID 96997；hex 43 c3 b3 6d 6f；显示 'Cómo'
+    ID 1826；hex 20 65 73 74；显示 ' est'
+    ID 7206；hex c3 a1 73；显示 'ás'
+    ID 30；hex 3f；显示 '?'
+    ID 4072；hex 20 45 6c；显示 ' El'
+    ID 13080；hex 20 6e 69；显示 ' ni'
+    ID 14871；hex c3 b1 6f；显示 'ño'
+    ID 2586；hex 20 63 6f 6d 65；显示 ' come'
+    ID 9115；hex 20 70 69；显示 ' pi'
+    ID 18829；hex c3 b1 61；显示 'ña'
+    ID 13；hex 2e；显示 '.'
+
+【中文】原文：'你好，世界！'
+  正则预分块：['你好', '，世界', '！']
+  MinBPE ID：[57668, 53901, 3922, 3574, 244, 98220, 6447]
+  tiktoken ID：[57668, 53901, 3922, 3574, 244, 98220, 6447]
+  token 数：7；编码一致：True；完整往返：True
+    ID 57668；hex e4 bd a0；显示 '你'
+    ID 53901；hex e5 a5 bd；显示 '好'
+    ID 3922；hex ef bc 8c；显示 '，'
+    ID 3574；hex e4 b8；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+    ID 244；hex 96；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+    ID 98220；hex e7 95 8c；显示 '界'
+    ID 6447；hex ef bc 81；显示 '！'
+
+【数字】原文：'1234567890'
+  正则预分块：['123', '456', '789', '0']
+  MinBPE ID：[4513, 10961, 16474, 15]
+  tiktoken ID：[4513, 10961, 16474, 15]
+  token 数：4；编码一致：True；完整往返：True
+    ID 4513；hex 31 32 33；显示 '123'
+    ID 10961；hex 34 35 36；显示 '456'
+    ID 16474；hex 37 38 39；显示 '789'
+    ID 15；hex 30；显示 '0'
+
+【换行】原文：'line one\n\nline two\n'
+  正则预分块：['line', ' one', '\n\n', 'line', ' two', '\n']
+  MinBPE ID：[1074, 832, 271, 1074, 1403, 198]
+  tiktoken ID：[1074, 832, 271, 1074, 1403, 198]
+  token 数：6；编码一致：True；完整往返：True
+    ID 1074；hex 6c 69 6e 65；显示 'line'
+    ID 832；hex 20 6f 6e 65；显示 ' one'
+    ID 271；hex 0a 0a；显示 '\n\n'
+    ID 1074；hex 6c 69 6e 65；显示 'line'
+    ID 1403；hex 20 74 77 6f；显示 ' two'
+    ID 198；hex 0a；显示 '\n'
+
+【Emoji】原文：'🙂🚀'
+  正则预分块：['🙂🚀']
+  MinBPE ID：[9468, 19044, 9468, 248, 222]
+  tiktoken ID：[9468, 19044, 9468, 248, 222]
+  token 数：5；编码一致：True；完整往返：True
+    ID 9468；hex f0 9f；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+    ID 19044；hex 99 82；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+    ID 9468；hex f0 9f；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+    ID 248；hex 9a；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+    ID 222；hex 80；显示 '<不完整 UTF-8 字节；需与相邻 token 合并解码>'
+
+【空字符串】原文：''
+  正则预分块：[]
+  MinBPE ID：[]
+  tiktoken ID：[]
+  token 数：0；编码一致：True；完整往返：True
+
+字节编号置换：原始字节值不必等于 cl100k_base 的单字节 token ID。
+  原始 byte 32 -> token ID 220 -> 逆映射还原 byte 32
+  原始 byte 65 -> token ID 32 -> 逆映射还原 byte 65
+  原始 byte 97 -> token ID 64 -> 逆映射还原 byte 97
+  原始 byte 98 -> token ID 65 -> 逆映射还原 byte 98
+  原始 byte 10 -> token ID 198 -> 逆映射还原 byte 10
+  原始 byte 228 -> token ID 160 -> 逆映射还原 byte 228
+
+检查结果：
+  [通过] 8 类普通文本编码与 cl100k_base 一致
+  [通过] 8 类普通文本完整往返一致
+  [通过] 预分块完整覆盖每段输入
+  [通过] 256 个字节编号构成可逆映射
+  [通过] GPT4Tokenizer.train 明确未实现
+  [通过] 存在不可单独按 UTF-8 解码的 token
+
+范围与局限：
+  只测试有限样例，不等于对所有可能文本的形式化证明。
+  没有训练 GPT-4，也没有调用 GPT-4 生成回答。
+  不把特殊 token 加入普通文本往返测试；此版本 GPT4Tokenizer.decode 未处理其专用解码分支。
+  一个 token 的字节未必能单独解码成有效字符；应先拼接完整字节，再进行 UTF-8 解码。

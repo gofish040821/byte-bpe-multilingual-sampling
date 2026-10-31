@@ -1,0 +1,220 @@
+{
+  "renderer": "Tectonic (XeTeX/LaTeX), native TikZ / PGFPlots",
+  "report_source": "reports/latex/main.tex",
+  "standalone_entrypoints": [
+    "reports/latex/figures/bpe_merges_standalone.tex",
+    "reports/latex/figures/overlap_standalone.tex",
+    "reports/latex/figures/language_sampling_standalone.tex"
+  ],
+  "source_file": "results/bpe_walkthrough.json",
+  "source_sha256": "b9b00f29db8c60c003e7985b9a303a06af0aca5b6a480851cd24881cd08c1ec0",
+  "minbpe_commit": "1acefe89412b20245db5a22d2a02001e547dc602",
+  "source_data_checked": true,
+  "data_audit": [
+    {
+      "path": "figures/bpe_merges.csv",
+      "sha256": "eb05bf8bc90d8e23b02fe2e1b6a301bd20d1693498c703f931899a67e7e72c4a",
+      "row_count": 15
+    },
+    {
+      "path": "figures/bpe_merges_data.json",
+      "sha256": "7470ef1935c6d456e45c1fa892a6f9d2a128d6ebfd3bdc74aa4f83809e8c5932"
+    },
+    {
+      "path": "figures/overlap.csv",
+      "sha256": "65861ab5f2d9edc328be71bafd39de8bce9f62f77b1667b70371fd84daf9ebb4",
+      "row_count": 3
+    },
+    {
+      "path": "figures/overlap_data.json",
+      "sha256": "f3884481c9837917529ba5292210db546ac7b4f144292409e6a622f49e831ba8"
+    },
+    {
+      "path": "figures/language_sampling.csv",
+      "sha256": "8f32e6cd44795156c211781dc48ab414b62a192d3ea62f6e69a7b5b83b99f74d",
+      "row_count": 101,
+      "formula_rechecked": true
+    },
+    {
+      "path": "figures/language_sampling_key_points.csv",
+      "sha256": "3911e9e5147b8ebc3d3b440f274d32a96bd3856208591dc016cc2b2ab91a9015",
+      "row_count": 3,
+      "formula_rechecked": true
+    },
+    {
+      "path": "figures/language_sampling_data.json",
+      "sha256": "be1bc0d25b082749351dd412d11820646e673f91583c08dd9136de11e3716557"
+    }
+  ],
+  "data_table_generation": "code/export_figure_data.py (Python standard library only; native figures are rendered from the LaTeX sources listed for each figure).",
+  "style": {
+    "base_document_pt": 11,
+    "standalone_border_tex_pt": 4,
+    "tikz_font_commands": [
+      "small",
+      "footnotesize"
+    ],
+    "line_width_pt": [
+      0.3,
+      0.6
+    ],
+    "blue": "#285D77",
+    "orange": "#B36826",
+    "background": "white",
+    "font_setup_source": "reports/latex/main.tex",
+    "latin_serif": [
+      "Times New Roman",
+      "TeX Gyre Termes"
+    ],
+    "latin_sans": [
+      "Arial",
+      "TeX Gyre Heros"
+    ],
+    "monospace": [
+      "Consolas",
+      "Latin Modern Mono"
+    ],
+    "monospace_scale": 0.94,
+    "chinese_serif": [
+      "SimSun",
+      "FandolSong-Regular"
+    ],
+    "chinese_sans": [
+      "Microsoft YaHei",
+      "FandolHei-Regular"
+    ],
+    "pgfplots_compat": "1.18",
+    "planned_png_dpi": 300
+  },
+  "visual_review": {
+    "status": "passed",
+    "note": "Native vector diagrams and regenerated 300 dpi PNGs reviewed with the technical report."
+  },
+  "figures": [
+    {
+      "files": {
+        "pdf": "figures/bpe_merges.pdf",
+        "png": "figures/bpe_merges.png"
+      },
+      "png_dpi": 300,
+      "id": "bpe_merges",
+      "figure_type": "按原始字节区间对齐的分层方块与连接箭头",
+      "source_kind": "实际执行的教学实验记录",
+      "source": "results/bpe_walkthrough.json#training",
+      "source_data_files": [
+        "figures/bpe_merges.csv",
+        "figures/bpe_merges_data.json"
+      ],
+      "caption": "图 1. 在 abababab 的教学训练中，三次合并使当前序列从 8 个 token 缩为 1 个；词表仍保留所有旧项，并由 256 项增加到 259 项。每个方块长度表示其覆盖的原始字节数量，箭头表示子 token 合成父 token。",
+      "boundary": "使用 BasicTokenizer 的微型教学词表；不代表 cl100k_base 对这段文字的编码，也不表示压缩文件大小或模型性能。",
+      "renderer": "TikZ",
+      "latex_fragment": "reports/latex/figures/bpe_merges.tex",
+      "standalone_wrapper": "reports/latex/figures/bpe_merges_standalone.tex",
+      "fragment_sha256": "eec389adc5c5fb18eec837751a3656118b568278969cb428deffaee8bc27d4d6",
+      "standalone_wrapper_sha256": "a2b482f8c74308c3cafd5697e095171d6206f7065d877eae3fe55226095fa601",
+      "design_size_cm": [
+        15.5,
+        7.2
+      ],
+      "standalone_border_tex_pt": 4,
+      "font_sizes": "small / footnotesize relative to 11pt base document",
+      "export_status": "native_pdf_and_300dpi_png_generated_and_reviewed",
+      "output_sha256": {
+        "pdf": "05415a66e72fa63e4db7aae5a8c20e2174b42e319261d695811856aff88ebfc9",
+        "png": "b71d0a9f169d91fccf0ddab8e297abca6165ce29ac075bad2a70f93122b1baf8"
+      },
+      "png_pixels": [
+        1910,
+        884
+      ]
+    },
+    {
+      "files": {
+        "pdf": "figures/overlap.pdf",
+        "png": "figures/overlap.png"
+      },
+      "png_dpi": 300,
+      "id": "overlap",
+      "figure_type": "左右并列的相邻窗口与非重叠替换 TikZ 示意",
+      "source_kind": "实际执行的教学实验记录",
+      "source": "results/bpe_walkthrough.json#training.steps[1]",
+      "source_data_files": [
+        "figures/overlap.csv",
+        "figures/overlap_data.json"
+      ],
+      "caption": "图 2. 对 [256,256,256,256] 统计相邻 pair 时，窗口 (1,2)、(2,3)、(3,4) 都贡献一次计数。执行 merge 时从左向右只选 (1,2) 和 (3,4)，因此统计频率是 3，实际替换次数是 2，得到 [257,257]。",
+      "boundary": "图示的是同一轮教学数据；不能把相邻窗口频率误当作实际替换次数。",
+      "renderer": "TikZ",
+      "latex_fragment": "reports/latex/figures/overlap.tex",
+      "standalone_wrapper": "reports/latex/figures/overlap_standalone.tex",
+      "fragment_sha256": "a1612661a12b847694ba8e8476073c0081d4ea5d52996f0023a1d3799b1cc202",
+      "standalone_wrapper_sha256": "6540f41ae0acf605288b75692673fd8d058691c439ce28f852b654a3e1566850",
+      "design_size_cm": [
+        15.5,
+        6.5
+      ],
+      "standalone_border_tex_pt": 4,
+      "font_sizes": "small / footnotesize relative to 11pt base document",
+      "export_status": "native_pdf_and_300dpi_png_generated_and_reviewed",
+      "output_sha256": {
+        "pdf": "b2b48838854c03fd7d6217a413aedae4a97dc7ec47626e1a8c843d344035013e",
+        "png": "a45e68f5fce844426fe2a2ff8ffa068491ef295f661c4e455b4c0fc61e8d4ef3"
+      },
+      "png_pixels": [
+        1921,
+        801
+      ]
+    },
+    {
+      "files": {
+        "pdf": "figures/language_sampling.pdf",
+        "png": "figures/language_sampling.png"
+      },
+      "png_dpi": 300,
+      "id": "language_sampling",
+      "figure_type": "两条连续份额曲线及三个标注点",
+      "source_kind": "明确假设下的数学推导，不是实测数据",
+      "source": "reports/latex/figures/language_sampling.tex#PGFPlots-formula",
+      "source_data_files": [
+        "figures/language_sampling.csv",
+        "figures/language_sampling_key_points.csv",
+        "figures/language_sampling_data.json"
+      ],
+      "caption": "图 3. 假设两种可用语料的字符数为德语:西班牙语=9:1，按 p_i=n_i^α/Σ_j n_j^α 计算抽样份额。α=0 时分配为 50%:50%；α=0.5 时为 75%:25%；α=1 时保留库存比例 90%:10%。纵轴从 0% 到 100%；线型和标记辅助区分语言。",
+      "boundary": "曲线是可复算的数学情景，不衡量 tokenizer 质量；不能据此认定 50:50 或其他比例最优。库存单位固定为字符数，两种语言均有正数库存。",
+      "formula": "p_i = n_i**alpha / sum_j(n_j**alpha)",
+      "renderer": "PGFPlots",
+      "latex_fragment": "reports/latex/figures/language_sampling.tex",
+      "standalone_wrapper": "reports/latex/figures/language_sampling_standalone.tex",
+      "fragment_sha256": "49866d68402231e7b020b24b665df1d9e6592b58b66801f6950095d04fa03147",
+      "standalone_wrapper_sha256": "f408e48e6d7d24b667fdb902f56367de1a8e6c4d6343bd6a9dd248945a696e12",
+      "design_size_cm": [
+        15.5,
+        8.0
+      ],
+      "standalone_border_tex_pt": 4,
+      "font_sizes": "small / footnotesize relative to 11pt base document",
+      "export_status": "native_pdf_and_300dpi_png_generated_and_reviewed",
+      "output_sha256": {
+        "pdf": "a40d7f39a3ec50a78a5e1fc431584c396101df05ce5f6ca405f8b6a47dc755c7",
+        "png": "0c4c20d11d90b1f9713660f393798f844e940a4e2f50e0f3487bb24ff645ba05"
+      },
+      "png_pixels": [
+        1959,
+        955
+      ]
+    }
+  ],
+  "data_export_verification": {
+    "file_count": 7,
+    "all_preexisting_files_byte_identical": true,
+    "checks": [
+      "BPE token byte intervals and source merges agree",
+      "Three overlapping windows produce two non-overlapping replacements",
+      "101 sampling points agree with the 9:1 scenario formula",
+      "Key German shares are 50%, 75%, 90%; each language pair sums to 100%"
+    ]
+  },
+  "svg_note": "SVG is not included in this delivery; edit the native TeX figure source or use the vector PDF.",
+  "source_hash_encoding": "UTF-8 text with LF line endings"
+}

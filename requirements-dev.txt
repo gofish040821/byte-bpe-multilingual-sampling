@@ -1,0 +1,4 @@
+# Optional repository/PDF inspection, separate from the two runtime dependencies.
+pypdf==6.10.0
+pdfplumber==0.11.9
+Pillow==12.3.0

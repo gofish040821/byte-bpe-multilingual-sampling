@@ -1,0 +1,1049 @@
+{
+  "metadata": {
+    "python": "3.12.14",
+    "minbpe_commit": "1acefe89412b20245db5a22d2a02001e547dc602",
+    "regex_version": "2026.9.29",
+    "tiktoken_version": "0.14.0",
+    "encoding_name": "cl100k_base",
+    "random_seed": null,
+    "randomness": "无随机步骤；分词不调用生成模型",
+    "cache_policy": "TIKTOKEN_CACHE_DIR override or ignored .cache/tiktoken; absolute local path omitted"
+  },
+  "scope": "只验证该固定版本 MinBPE 对 cl100k_base 普通文本编码的复现；不代表所有 GPT 型号。",
+  "limitations": [
+    "只测试有限样例，不等于对所有可能文本的形式化证明。",
+    "没有训练 GPT-4，也没有调用 GPT-4 生成回答。",
+    "不把特殊 token 加入普通文本往返测试；此版本 GPT4Tokenizer.decode 未处理其专用解码分支。",
+    "一个 token 的字节未必能单独解码成有效字符；应先拼接完整字节，再进行 UTF-8 解码。"
+  ],
+  "cases": [
+    {
+      "label": "英文",
+      "text": "Hello, world!",
+      "utf8_bytes": [
+        72,
+        101,
+        108,
+        108,
+        111,
+        44,
+        32,
+        119,
+        111,
+        114,
+        108,
+        100,
+        33
+      ],
+      "regex_chunks": [
+        "Hello",
+        ",",
+        " world",
+        "!"
+      ],
+      "minbpe_ids": [
+        9906,
+        11,
+        1917,
+        0
+      ],
+      "tiktoken_ids": [
+        9906,
+        11,
+        1917,
+        0
+      ],
+      "token_count": 4,
+      "tokens": [
+        {
+          "token_id": 9906,
+          "bytes": [
+            72,
+            101,
+            108,
+            108,
+            111
+          ],
+          "hex": "48 65 6c 6c 6f",
+          "utf8_text_if_complete": "Hello",
+          "display": "Hello"
+        },
+        {
+          "token_id": 11,
+          "bytes": [
+            44
+          ],
+          "hex": "2c",
+          "utf8_text_if_complete": ",",
+          "display": ","
+        },
+        {
+          "token_id": 1917,
+          "bytes": [
+            32,
+            119,
+            111,
+            114,
+            108,
+            100
+          ],
+          "hex": "20 77 6f 72 6c 64",
+          "utf8_text_if_complete": " world",
+          "display": " world"
+        },
+        {
+          "token_id": 0,
+          "bytes": [
+            33
+          ],
+          "hex": "21",
+          "utf8_text_if_complete": "!",
+          "display": "!"
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "Hello, world!",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "德语",
+      "text": "Füße, Straße und Häuser.",
+      "utf8_bytes": [
+        70,
+        195,
+        188,
+        195,
+        159,
+        101,
+        44,
+        32,
+        83,
+        116,
+        114,
+        97,
+        195,
+        159,
+        101,
+        32,
+        117,
+        110,
+        100,
+        32,
+        72,
+        195,
+        164,
+        117,
+        115,
+        101,
+        114,
+        46
+      ],
+      "regex_chunks": [
+        "Füße",
+        ",",
+        " Straße",
+        " und",
+        " Häuser",
+        "."
+      ],
+      "minbpe_ids": [
+        37,
+        2448,
+        24352,
+        11,
+        27745,
+        24352,
+        2073,
+        91693,
+        882,
+        13
+      ],
+      "tiktoken_ids": [
+        37,
+        2448,
+        24352,
+        11,
+        27745,
+        24352,
+        2073,
+        91693,
+        882,
+        13
+      ],
+      "token_count": 10,
+      "tokens": [
+        {
+          "token_id": 37,
+          "bytes": [
+            70
+          ],
+          "hex": "46",
+          "utf8_text_if_complete": "F",
+          "display": "F"
+        },
+        {
+          "token_id": 2448,
+          "bytes": [
+            195,
+            188
+          ],
+          "hex": "c3 bc",
+          "utf8_text_if_complete": "ü",
+          "display": "ü"
+        },
+        {
+          "token_id": 24352,
+          "bytes": [
+            195,
+            159,
+            101
+          ],
+          "hex": "c3 9f 65",
+          "utf8_text_if_complete": "ße",
+          "display": "ße"
+        },
+        {
+          "token_id": 11,
+          "bytes": [
+            44
+          ],
+          "hex": "2c",
+          "utf8_text_if_complete": ",",
+          "display": ","
+        },
+        {
+          "token_id": 27745,
+          "bytes": [
+            32,
+            83,
+            116,
+            114,
+            97
+          ],
+          "hex": "20 53 74 72 61",
+          "utf8_text_if_complete": " Stra",
+          "display": " Stra"
+        },
+        {
+          "token_id": 24352,
+          "bytes": [
+            195,
+            159,
+            101
+          ],
+          "hex": "c3 9f 65",
+          "utf8_text_if_complete": "ße",
+          "display": "ße"
+        },
+        {
+          "token_id": 2073,
+          "bytes": [
+            32,
+            117,
+            110,
+            100
+          ],
+          "hex": "20 75 6e 64",
+          "utf8_text_if_complete": " und",
+          "display": " und"
+        },
+        {
+          "token_id": 91693,
+          "bytes": [
+            32,
+            72,
+            195,
+            164
+          ],
+          "hex": "20 48 c3 a4",
+          "utf8_text_if_complete": " Hä",
+          "display": " Hä"
+        },
+        {
+          "token_id": 882,
+          "bytes": [
+            117,
+            115,
+            101,
+            114
+          ],
+          "hex": "75 73 65 72",
+          "utf8_text_if_complete": "user",
+          "display": "user"
+        },
+        {
+          "token_id": 13,
+          "bytes": [
+            46
+          ],
+          "hex": "2e",
+          "utf8_text_if_complete": ".",
+          "display": "."
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "Füße, Straße und Häuser.",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "西班牙语",
+      "text": "¡Hola! ¿Cómo estás? El niño come piña.",
+      "utf8_bytes": [
+        194,
+        161,
+        72,
+        111,
+        108,
+        97,
+        33,
+        32,
+        194,
+        191,
+        67,
+        195,
+        179,
+        109,
+        111,
+        32,
+        101,
+        115,
+        116,
+        195,
+        161,
+        115,
+        63,
+        32,
+        69,
+        108,
+        32,
+        110,
+        105,
+        195,
+        177,
+        111,
+        32,
+        99,
+        111,
+        109,
+        101,
+        32,
+        112,
+        105,
+        195,
+        177,
+        97,
+        46
+      ],
+      "regex_chunks": [
+        "¡Hola",
+        "!",
+        " ¿",
+        "Cómo",
+        " estás",
+        "?",
+        " El",
+        " niño",
+        " come",
+        " piña",
+        "."
+      ],
+      "minbpe_ids": [
+        40932,
+        69112,
+        0,
+        29386,
+        96997,
+        1826,
+        7206,
+        30,
+        4072,
+        13080,
+        14871,
+        2586,
+        9115,
+        18829,
+        13
+      ],
+      "tiktoken_ids": [
+        40932,
+        69112,
+        0,
+        29386,
+        96997,
+        1826,
+        7206,
+        30,
+        4072,
+        13080,
+        14871,
+        2586,
+        9115,
+        18829,
+        13
+      ],
+      "token_count": 15,
+      "tokens": [
+        {
+          "token_id": 40932,
+          "bytes": [
+            194,
+            161
+          ],
+          "hex": "c2 a1",
+          "utf8_text_if_complete": "¡",
+          "display": "¡"
+        },
+        {
+          "token_id": 69112,
+          "bytes": [
+            72,
+            111,
+            108,
+            97
+          ],
+          "hex": "48 6f 6c 61",
+          "utf8_text_if_complete": "Hola",
+          "display": "Hola"
+        },
+        {
+          "token_id": 0,
+          "bytes": [
+            33
+          ],
+          "hex": "21",
+          "utf8_text_if_complete": "!",
+          "display": "!"
+        },
+        {
+          "token_id": 29386,
+          "bytes": [
+            32,
+            194,
+            191
+          ],
+          "hex": "20 c2 bf",
+          "utf8_text_if_complete": " ¿",
+          "display": " ¿"
+        },
+        {
+          "token_id": 96997,
+          "bytes": [
+            67,
+            195,
+            179,
+            109,
+            111
+          ],
+          "hex": "43 c3 b3 6d 6f",
+          "utf8_text_if_complete": "Cómo",
+          "display": "Cómo"
+        },
+        {
+          "token_id": 1826,
+          "bytes": [
+            32,
+            101,
+            115,
+            116
+          ],
+          "hex": "20 65 73 74",
+          "utf8_text_if_complete": " est",
+          "display": " est"
+        },
+        {
+          "token_id": 7206,
+          "bytes": [
+            195,
+            161,
+            115
+          ],
+          "hex": "c3 a1 73",
+          "utf8_text_if_complete": "ás",
+          "display": "ás"
+        },
+        {
+          "token_id": 30,
+          "bytes": [
+            63
+          ],
+          "hex": "3f",
+          "utf8_text_if_complete": "?",
+          "display": "?"
+        },
+        {
+          "token_id": 4072,
+          "bytes": [
+            32,
+            69,
+            108
+          ],
+          "hex": "20 45 6c",
+          "utf8_text_if_complete": " El",
+          "display": " El"
+        },
+        {
+          "token_id": 13080,
+          "bytes": [
+            32,
+            110,
+            105
+          ],
+          "hex": "20 6e 69",
+          "utf8_text_if_complete": " ni",
+          "display": " ni"
+        },
+        {
+          "token_id": 14871,
+          "bytes": [
+            195,
+            177,
+            111
+          ],
+          "hex": "c3 b1 6f",
+          "utf8_text_if_complete": "ño",
+          "display": "ño"
+        },
+        {
+          "token_id": 2586,
+          "bytes": [
+            32,
+            99,
+            111,
+            109,
+            101
+          ],
+          "hex": "20 63 6f 6d 65",
+          "utf8_text_if_complete": " come",
+          "display": " come"
+        },
+        {
+          "token_id": 9115,
+          "bytes": [
+            32,
+            112,
+            105
+          ],
+          "hex": "20 70 69",
+          "utf8_text_if_complete": " pi",
+          "display": " pi"
+        },
+        {
+          "token_id": 18829,
+          "bytes": [
+            195,
+            177,
+            97
+          ],
+          "hex": "c3 b1 61",
+          "utf8_text_if_complete": "ña",
+          "display": "ña"
+        },
+        {
+          "token_id": 13,
+          "bytes": [
+            46
+          ],
+          "hex": "2e",
+          "utf8_text_if_complete": ".",
+          "display": "."
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "¡Hola! ¿Cómo estás? El niño come piña.",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "中文",
+      "text": "你好，世界！",
+      "utf8_bytes": [
+        228,
+        189,
+        160,
+        229,
+        165,
+        189,
+        239,
+        188,
+        140,
+        228,
+        184,
+        150,
+        231,
+        149,
+        140,
+        239,
+        188,
+        129
+      ],
+      "regex_chunks": [
+        "你好",
+        "，世界",
+        "！"
+      ],
+      "minbpe_ids": [
+        57668,
+        53901,
+        3922,
+        3574,
+        244,
+        98220,
+        6447
+      ],
+      "tiktoken_ids": [
+        57668,
+        53901,
+        3922,
+        3574,
+        244,
+        98220,
+        6447
+      ],
+      "token_count": 7,
+      "tokens": [
+        {
+          "token_id": 57668,
+          "bytes": [
+            228,
+            189,
+            160
+          ],
+          "hex": "e4 bd a0",
+          "utf8_text_if_complete": "你",
+          "display": "你"
+        },
+        {
+          "token_id": 53901,
+          "bytes": [
+            229,
+            165,
+            189
+          ],
+          "hex": "e5 a5 bd",
+          "utf8_text_if_complete": "好",
+          "display": "好"
+        },
+        {
+          "token_id": 3922,
+          "bytes": [
+            239,
+            188,
+            140
+          ],
+          "hex": "ef bc 8c",
+          "utf8_text_if_complete": "，",
+          "display": "，"
+        },
+        {
+          "token_id": 3574,
+          "bytes": [
+            228,
+            184
+          ],
+          "hex": "e4 b8",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        },
+        {
+          "token_id": 244,
+          "bytes": [
+            150
+          ],
+          "hex": "96",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        },
+        {
+          "token_id": 98220,
+          "bytes": [
+            231,
+            149,
+            140
+          ],
+          "hex": "e7 95 8c",
+          "utf8_text_if_complete": "界",
+          "display": "界"
+        },
+        {
+          "token_id": 6447,
+          "bytes": [
+            239,
+            188,
+            129
+          ],
+          "hex": "ef bc 81",
+          "utf8_text_if_complete": "！",
+          "display": "！"
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "你好，世界！",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "数字",
+      "text": "1234567890",
+      "utf8_bytes": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        48
+      ],
+      "regex_chunks": [
+        "123",
+        "456",
+        "789",
+        "0"
+      ],
+      "minbpe_ids": [
+        4513,
+        10961,
+        16474,
+        15
+      ],
+      "tiktoken_ids": [
+        4513,
+        10961,
+        16474,
+        15
+      ],
+      "token_count": 4,
+      "tokens": [
+        {
+          "token_id": 4513,
+          "bytes": [
+            49,
+            50,
+            51
+          ],
+          "hex": "31 32 33",
+          "utf8_text_if_complete": "123",
+          "display": "123"
+        },
+        {
+          "token_id": 10961,
+          "bytes": [
+            52,
+            53,
+            54
+          ],
+          "hex": "34 35 36",
+          "utf8_text_if_complete": "456",
+          "display": "456"
+        },
+        {
+          "token_id": 16474,
+          "bytes": [
+            55,
+            56,
+            57
+          ],
+          "hex": "37 38 39",
+          "utf8_text_if_complete": "789",
+          "display": "789"
+        },
+        {
+          "token_id": 15,
+          "bytes": [
+            48
+          ],
+          "hex": "30",
+          "utf8_text_if_complete": "0",
+          "display": "0"
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "1234567890",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "换行",
+      "text": "line one\n\nline two\n",
+      "utf8_bytes": [
+        108,
+        105,
+        110,
+        101,
+        32,
+        111,
+        110,
+        101,
+        10,
+        10,
+        108,
+        105,
+        110,
+        101,
+        32,
+        116,
+        119,
+        111,
+        10
+      ],
+      "regex_chunks": [
+        "line",
+        " one",
+        "\n\n",
+        "line",
+        " two",
+        "\n"
+      ],
+      "minbpe_ids": [
+        1074,
+        832,
+        271,
+        1074,
+        1403,
+        198
+      ],
+      "tiktoken_ids": [
+        1074,
+        832,
+        271,
+        1074,
+        1403,
+        198
+      ],
+      "token_count": 6,
+      "tokens": [
+        {
+          "token_id": 1074,
+          "bytes": [
+            108,
+            105,
+            110,
+            101
+          ],
+          "hex": "6c 69 6e 65",
+          "utf8_text_if_complete": "line",
+          "display": "line"
+        },
+        {
+          "token_id": 832,
+          "bytes": [
+            32,
+            111,
+            110,
+            101
+          ],
+          "hex": "20 6f 6e 65",
+          "utf8_text_if_complete": " one",
+          "display": " one"
+        },
+        {
+          "token_id": 271,
+          "bytes": [
+            10,
+            10
+          ],
+          "hex": "0a 0a",
+          "utf8_text_if_complete": "\n\n",
+          "display": "\n\n"
+        },
+        {
+          "token_id": 1074,
+          "bytes": [
+            108,
+            105,
+            110,
+            101
+          ],
+          "hex": "6c 69 6e 65",
+          "utf8_text_if_complete": "line",
+          "display": "line"
+        },
+        {
+          "token_id": 1403,
+          "bytes": [
+            32,
+            116,
+            119,
+            111
+          ],
+          "hex": "20 74 77 6f",
+          "utf8_text_if_complete": " two",
+          "display": " two"
+        },
+        {
+          "token_id": 198,
+          "bytes": [
+            10
+          ],
+          "hex": "0a",
+          "utf8_text_if_complete": "\n",
+          "display": "\n"
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "line one\n\nline two\n",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "Emoji",
+      "text": "🙂🚀",
+      "utf8_bytes": [
+        240,
+        159,
+        153,
+        130,
+        240,
+        159,
+        154,
+        128
+      ],
+      "regex_chunks": [
+        "🙂🚀"
+      ],
+      "minbpe_ids": [
+        9468,
+        19044,
+        9468,
+        248,
+        222
+      ],
+      "tiktoken_ids": [
+        9468,
+        19044,
+        9468,
+        248,
+        222
+      ],
+      "token_count": 5,
+      "tokens": [
+        {
+          "token_id": 9468,
+          "bytes": [
+            240,
+            159
+          ],
+          "hex": "f0 9f",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        },
+        {
+          "token_id": 19044,
+          "bytes": [
+            153,
+            130
+          ],
+          "hex": "99 82",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        },
+        {
+          "token_id": 9468,
+          "bytes": [
+            240,
+            159
+          ],
+          "hex": "f0 9f",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        },
+        {
+          "token_id": 248,
+          "bytes": [
+            154
+          ],
+          "hex": "9a",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        },
+        {
+          "token_id": 222,
+          "bytes": [
+            128
+          ],
+          "hex": "80",
+          "utf8_text_if_complete": null,
+          "display": "<不完整 UTF-8 字节；需与相邻 token 合并解码>"
+        }
+      ],
+      "encoding_equal": true,
+      "decoded_text": "🙂🚀",
+      "roundtrip_equal": true
+    },
+    {
+      "label": "空字符串",
+      "text": "",
+      "utf8_bytes": [],
+      "regex_chunks": [],
+      "minbpe_ids": [],
+      "tiktoken_ids": [],
+      "token_count": 0,
+      "tokens": [],
+      "encoding_equal": true,
+      "decoded_text": "",
+      "roundtrip_equal": true
+    }
+  ],
+  "byte_shuffle_examples": [
+    {
+      "raw_byte": 32,
+      "raw_byte_hex": "20",
+      "cl100k_single_byte_token_id": 220,
+      "inverse_shuffle_byte": 32
+    },
+    {
+      "raw_byte": 65,
+      "raw_byte_hex": "41",
+      "cl100k_single_byte_token_id": 32,
+      "inverse_shuffle_byte": 65
+    },
+    {
+      "raw_byte": 97,
+      "raw_byte_hex": "61",
+      "cl100k_single_byte_token_id": 64,
+      "inverse_shuffle_byte": 97
+    },
+    {
+      "raw_byte": 98,
+      "raw_byte_hex": "62",
+      "cl100k_single_byte_token_id": 65,
+      "inverse_shuffle_byte": 98
+    },
+    {
+      "raw_byte": 10,
+      "raw_byte_hex": "0a",
+      "cl100k_single_byte_token_id": 198,
+      "inverse_shuffle_byte": 10
+    },
+    {
+      "raw_byte": 228,
+      "raw_byte_hex": "e4",
+      "cl100k_single_byte_token_id": 160,
+      "inverse_shuffle_byte": 228
+    }
+  ],
+  "checks": [
+    {
+      "name": "8 类普通文本编码与 cl100k_base 一致",
+      "passed": true
+    },
+    {
+      "name": "8 类普通文本完整往返一致",
+      "passed": true
+    },
+    {
+      "name": "预分块完整覆盖每段输入",
+      "passed": true
+    },
+    {
+      "name": "256 个字节编号构成可逆映射",
+      "passed": true
+    },
+    {
+      "name": "GPT4Tokenizer.train 明确未实现",
+      "passed": true
+    },
+    {
+      "name": "存在不可单独按 UTF-8 解码的 token",
+      "passed": true
+    }
+  ]
+}

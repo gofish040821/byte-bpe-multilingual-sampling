@@ -1,0 +1,745 @@
+{
+  "formula": "p_i = n_i**alpha / sum_j(n_j**alpha)",
+  "assumptions": {
+    "german_inventory": 9,
+    "spanish_inventory": 1,
+    "inventory_unit": "same character-count unit",
+    "alpha_range": [
+      0,
+      1
+    ]
+  },
+  "key_points": [
+    {
+      "alpha": 0.0,
+      "german_share_pct": 50.0,
+      "spanish_share_pct": 50.0,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.5,
+      "german_share_pct": 75.0,
+      "spanish_share_pct": 25.0,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 1.0,
+      "german_share_pct": 90.0,
+      "spanish_share_pct": 10.0,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    }
+  ],
+  "curve_points": [
+    {
+      "alpha": 0.0,
+      "german_share_pct": 50.0,
+      "spanish_share_pct": 50.0,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.01,
+      "german_share_pct": 50.54928405,
+      "spanish_share_pct": 49.45071595,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.02,
+      "german_share_pct": 51.09843553,
+      "spanish_share_pct": 48.90156447,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.03,
+      "german_share_pct": 51.64732201,
+      "spanish_share_pct": 48.35267799,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.04,
+      "german_share_pct": 52.1958113,
+      "spanish_share_pct": 47.8041887,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.05,
+      "german_share_pct": 52.74377162,
+      "spanish_share_pct": 47.25622838,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.06,
+      "german_share_pct": 53.29107166,
+      "spanish_share_pct": 46.70892834,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.07,
+      "german_share_pct": 53.83758078,
+      "spanish_share_pct": 46.16241922,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.08,
+      "german_share_pct": 54.38316907,
+      "spanish_share_pct": 45.61683093,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.09,
+      "german_share_pct": 54.92770753,
+      "spanish_share_pct": 45.07229247,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.1,
+      "german_share_pct": 55.47106813,
+      "spanish_share_pct": 44.52893187,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.11,
+      "german_share_pct": 56.01312399,
+      "spanish_share_pct": 43.98687601,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.12,
+      "german_share_pct": 56.55374945,
+      "spanish_share_pct": 43.44625055,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.13,
+      "german_share_pct": 57.09282021,
+      "spanish_share_pct": 42.90717979,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.14,
+      "german_share_pct": 57.63021341,
+      "spanish_share_pct": 42.36978659,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.15,
+      "german_share_pct": 58.16580779,
+      "spanish_share_pct": 41.83419221,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.16,
+      "german_share_pct": 58.69948375,
+      "spanish_share_pct": 41.30051625,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.17,
+      "german_share_pct": 59.23112348,
+      "spanish_share_pct": 40.76887652,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.18,
+      "german_share_pct": 59.76061102,
+      "spanish_share_pct": 40.23938898,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.19,
+      "german_share_pct": 60.2878324,
+      "spanish_share_pct": 39.7121676,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.2,
+      "german_share_pct": 60.81267573,
+      "spanish_share_pct": 39.18732427,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.21,
+      "german_share_pct": 61.33503123,
+      "spanish_share_pct": 38.66496877,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.22,
+      "german_share_pct": 61.85479138,
+      "spanish_share_pct": 38.14520862,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.23,
+      "german_share_pct": 62.37185097,
+      "spanish_share_pct": 37.62814903,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.24,
+      "german_share_pct": 62.88610718,
+      "spanish_share_pct": 37.11389282,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.25,
+      "german_share_pct": 63.39745962,
+      "spanish_share_pct": 36.60254038,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.26,
+      "german_share_pct": 63.90581046,
+      "spanish_share_pct": 36.09418954,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.27,
+      "german_share_pct": 64.41106444,
+      "spanish_share_pct": 35.58893556,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.28,
+      "german_share_pct": 64.91312894,
+      "spanish_share_pct": 35.08687106,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.29,
+      "german_share_pct": 65.41191404,
+      "spanish_share_pct": 34.58808596,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.3,
+      "german_share_pct": 65.90733256,
+      "spanish_share_pct": 34.09266744,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.31,
+      "german_share_pct": 66.39930011,
+      "spanish_share_pct": 33.60069989,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.32,
+      "german_share_pct": 66.88773512,
+      "spanish_share_pct": 33.11226488,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.33,
+      "german_share_pct": 67.37255889,
+      "spanish_share_pct": 32.62744111,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.34,
+      "german_share_pct": 67.85369559,
+      "spanish_share_pct": 32.14630441,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.35,
+      "german_share_pct": 68.33107234,
+      "spanish_share_pct": 31.66892766,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.36,
+      "german_share_pct": 68.80461916,
+      "spanish_share_pct": 31.19538084,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.37,
+      "german_share_pct": 69.27426904,
+      "spanish_share_pct": 30.72573096,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.38,
+      "german_share_pct": 69.73995793,
+      "spanish_share_pct": 30.26004207,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.39,
+      "german_share_pct": 70.20162475,
+      "spanish_share_pct": 29.79837525,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.4,
+      "german_share_pct": 70.6592114,
+      "spanish_share_pct": 29.3407886,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.41,
+      "german_share_pct": 71.11266274,
+      "spanish_share_pct": 28.88733726,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.42,
+      "german_share_pct": 71.56192663,
+      "spanish_share_pct": 28.43807337,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.43,
+      "german_share_pct": 72.00695385,
+      "spanish_share_pct": 27.99304615,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.44,
+      "german_share_pct": 72.44769817,
+      "spanish_share_pct": 27.55230183,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.45,
+      "german_share_pct": 72.88411627,
+      "spanish_share_pct": 27.11588373,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.46,
+      "german_share_pct": 73.31616774,
+      "spanish_share_pct": 26.68383226,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.47,
+      "german_share_pct": 73.74381508,
+      "spanish_share_pct": 26.25618492,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.48,
+      "german_share_pct": 74.16702365,
+      "spanish_share_pct": 25.83297635,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.49,
+      "german_share_pct": 74.58576162,
+      "spanish_share_pct": 25.41423838,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.5,
+      "german_share_pct": 75.0,
+      "spanish_share_pct": 25.0,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.51,
+      "german_share_pct": 75.40971255,
+      "spanish_share_pct": 24.59028745,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.52,
+      "german_share_pct": 75.81487576,
+      "spanish_share_pct": 24.18512424,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.53,
+      "german_share_pct": 76.21546882,
+      "spanish_share_pct": 23.78453118,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.54,
+      "german_share_pct": 76.61147356,
+      "spanish_share_pct": 23.38852644,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.55,
+      "german_share_pct": 77.00287441,
+      "spanish_share_pct": 22.99712559,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.56,
+      "german_share_pct": 77.38965838,
+      "spanish_share_pct": 22.61034162,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.57,
+      "german_share_pct": 77.77181494,
+      "spanish_share_pct": 22.22818506,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.58,
+      "german_share_pct": 78.14933608,
+      "spanish_share_pct": 21.85066392,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.59,
+      "german_share_pct": 78.52221614,
+      "spanish_share_pct": 21.47778386,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.6,
+      "german_share_pct": 78.89045183,
+      "spanish_share_pct": 21.10954817,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.61,
+      "german_share_pct": 79.25404217,
+      "spanish_share_pct": 20.74595783,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.62,
+      "german_share_pct": 79.61298839,
+      "spanish_share_pct": 20.38701161,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.63,
+      "german_share_pct": 79.96729393,
+      "spanish_share_pct": 20.03270607,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.64,
+      "german_share_pct": 80.31696433,
+      "spanish_share_pct": 19.68303567,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.65,
+      "german_share_pct": 80.66200722,
+      "spanish_share_pct": 19.33799278,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.66,
+      "german_share_pct": 81.0024322,
+      "spanish_share_pct": 18.9975678,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.67,
+      "german_share_pct": 81.33825085,
+      "spanish_share_pct": 18.66174915,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.68,
+      "german_share_pct": 81.6694766,
+      "spanish_share_pct": 18.3305234,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.69,
+      "german_share_pct": 81.99612472,
+      "spanish_share_pct": 18.00387528,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.7,
+      "german_share_pct": 82.31821224,
+      "spanish_share_pct": 17.68178776,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.71,
+      "german_share_pct": 82.63575788,
+      "spanish_share_pct": 17.36424212,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.72,
+      "german_share_pct": 82.94878201,
+      "spanish_share_pct": 17.05121799,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.73,
+      "german_share_pct": 83.25730657,
+      "spanish_share_pct": 16.74269343,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.74,
+      "german_share_pct": 83.561355,
+      "spanish_share_pct": 16.438645,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.75,
+      "german_share_pct": 83.86095222,
+      "spanish_share_pct": 16.13904778,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.76,
+      "german_share_pct": 84.15612453,
+      "spanish_share_pct": 15.84387547,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.77,
+      "german_share_pct": 84.44689955,
+      "spanish_share_pct": 15.55310045,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.78,
+      "german_share_pct": 84.7333062,
+      "spanish_share_pct": 15.2666938,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.79,
+      "german_share_pct": 85.01537461,
+      "spanish_share_pct": 14.98462539,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.8,
+      "german_share_pct": 85.29313604,
+      "spanish_share_pct": 14.70686396,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.81,
+      "german_share_pct": 85.56662288,
+      "spanish_share_pct": 14.43337712,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.82,
+      "german_share_pct": 85.83586856,
+      "spanish_share_pct": 14.16413144,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.83,
+      "german_share_pct": 86.10090748,
+      "spanish_share_pct": 13.89909252,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.84,
+      "german_share_pct": 86.36177498,
+      "spanish_share_pct": 13.63822502,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.85,
+      "german_share_pct": 86.61850728,
+      "spanish_share_pct": 13.38149272,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.86,
+      "german_share_pct": 86.87114143,
+      "spanish_share_pct": 13.12885857,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.87,
+      "german_share_pct": 87.11971526,
+      "spanish_share_pct": 12.88028474,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.88,
+      "german_share_pct": 87.36426729,
+      "spanish_share_pct": 12.63573271,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.89,
+      "german_share_pct": 87.60483674,
+      "spanish_share_pct": 12.39516326,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.9,
+      "german_share_pct": 87.84146346,
+      "spanish_share_pct": 12.15853654,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.91,
+      "german_share_pct": 88.07418787,
+      "spanish_share_pct": 11.92581213,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.92,
+      "german_share_pct": 88.3030509,
+      "spanish_share_pct": 11.6969491,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.93,
+      "german_share_pct": 88.52809399,
+      "spanish_share_pct": 11.47190601,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.94,
+      "german_share_pct": 88.74935902,
+      "spanish_share_pct": 11.25064098,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.95,
+      "german_share_pct": 88.96688826,
+      "spanish_share_pct": 11.03311174,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.96,
+      "german_share_pct": 89.18072434,
+      "spanish_share_pct": 10.81927566,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.97,
+      "german_share_pct": 89.39091021,
+      "spanish_share_pct": 10.60908979,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.98,
+      "german_share_pct": 89.59748909,
+      "spanish_share_pct": 10.40251091,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 0.99,
+      "german_share_pct": 89.80050447,
+      "spanish_share_pct": 10.19949553,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    },
+    {
+      "alpha": 1.0,
+      "german_share_pct": 90.0,
+      "spanish_share_pct": 10.0,
+      "inventory_ratio_german_to_spanish": "9:1",
+      "data_kind": "mathematical_scenario_not_performance_measurement"
+    }
+  ],
+  "scope": "根据假设计算的数学情景，不是分词效率或语言模型性能的实测结果。"
+}

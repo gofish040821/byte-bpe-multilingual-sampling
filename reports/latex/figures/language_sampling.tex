@@ -1,0 +1,79 @@
+% Mathematical scenario, not measured performance:
+% available character-count ratio n_de:n_es=9:1;
+% p_i=n_i^alpha/sum_j(n_j^alpha), alpha in [0,1].
+% Cross-check table: figures/language_sampling_key_points.csv.
+% Input fragment. Requires pgfplots (compat=1.18 recommended).
+% Requested outer design size: approximately 15.5 cm x 8 cm, including axes.
+\begingroup
+\definecolor{tokenizerBlue}{HTML}{285D77}
+\definecolor{tokenizerOchre}{HTML}{B36826}
+\definecolor{tokenizerGrey}{HTML}{66747B}
+\definecolor{tokenizerGrid}{HTML}{E1E6E9}
+\begin{tikzpicture}[font=\small]
+\begin{axis}[
+  width=15.5cm,height=8cm,
+  xmin=0,xmax=1,ymin=0,ymax=1,enlargelimits=false,
+  axis lines=left,
+  axis line style={draw=tokenizerGrey,line width=.45pt},
+  tick align=outside,
+  tick style={draw=tokenizerGrey,line width=.4pt},
+  major tick length=2.5pt,
+  xtick={0,.25,.5,.75,1},
+  xticklabels={$0$,$0.25$,$0.5$,$0.75$,$1$},
+  ytick={0,.25,.5,.75,1},
+  yticklabels={$0\%$,$25\%$,$50\%$,$75\%$,$100\%$},
+  tick label style={font=\footnotesize,text=tokenizerGrey},
+  xlabel={抽样指数 $\alpha$},ylabel={语料份额},
+  label style={font=\small},
+  xlabel near ticks,ylabel near ticks,
+  grid=major,
+  major grid style={draw=tokenizerGrid,line width=.3pt},
+  legend style={
+    at={(.025,.985)},anchor=north west,
+    draw=none,fill=none,font=\footnotesize,
+    legend columns=2,inner sep=1pt,
+    /tikz/every even column/.append style={column sep=16pt}
+  },
+  legend cell align=left,
+  clip=false,
+  samples=101,domain=0:1
+]
+  \addplot[tokenizerBlue,line width=.6pt,no marks,forget plot]
+    {9^x/(9^x+1)};
+  \addplot[tokenizerOchre,line width=.6pt,dashed,no marks,forget plot]
+    {1/(9^x+1)};
+
+  % Different marks also distinguish the curves in grayscale.
+  % At alpha=0 both markers share the same (0,.5) location, without jitter.
+  \addplot[only marks,mark=square,mark size=2.5pt,
+    mark options={draw=tokenizerOchre,fill=white,line width=.6pt},forget plot]
+    coordinates {(0,.5) (.5,.25) (1,.1)};
+  \addplot[only marks,mark=*,mark size=1.8pt,
+    mark options={draw=tokenizerBlue,fill=white,line width=.6pt},forget plot]
+    coordinates {(0,.5) (.5,.75) (1,.9)};
+
+  \addlegendimage{tokenizerBlue,line width=.6pt,mark=*,mark size=1.8pt,
+    mark options={draw=tokenizerBlue,fill=white,line width=.6pt}}
+  \addlegendentry{德语}
+  \addlegendimage{tokenizerOchre,line width=.6pt,dashed,mark=square,
+    mark size=2.3pt,mark options={draw=tokenizerOchre,fill=white,line width=.6pt}}
+  \addlegendentry{西班牙语}
+
+  % Keep value labels close to their points, without placing text on a curve.
+  \draw[tokenizerGrey,line width=.35pt]
+    (axis cs:.009,.5) -- (axis cs:.12,.5);
+  \node[anchor=west,font=\footnotesize,text=tokenizerGrey,inner sep=1pt]
+    at (axis cs:.14,.5) {$50\%$};
+  \node[anchor=south,font=\footnotesize,text=tokenizerBlue,yshift=4pt,inner sep=1pt]
+    at (axis cs:.5,.75) {$75\%$};
+  \node[anchor=north,font=\footnotesize,text=tokenizerOchre,yshift=-4pt,inner sep=1pt]
+    at (axis cs:.5,.25) {$25\%$};
+  \node[anchor=south east,font=\footnotesize,text=tokenizerBlue,
+    xshift=-4pt,yshift=3pt,inner sep=1pt]
+    at (axis cs:1,.9) {$90\%$};
+  \node[anchor=north east,font=\footnotesize,text=tokenizerOchre,
+    xshift=-4pt,yshift=-3pt,inner sep=1pt]
+    at (axis cs:1,.1) {$10\%$};
+\end{axis}
+\end{tikzpicture}
+\endgroup

@@ -1,0 +1,200 @@
+{
+  "source": "results/bpe_walkthrough.json#training",
+  "text": "abababab",
+  "stages": [
+    {
+      "stage": 0,
+      "token_count": 8,
+      "vocab_size": 256,
+      "tokens": [
+        {
+          "stage": 0,
+          "token_index_1based": 1,
+          "token_id": 97,
+          "token_text": "a",
+          "start_byte_0based": 0,
+          "end_byte_exclusive": 1,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 2,
+          "token_id": 98,
+          "token_text": "b",
+          "start_byte_0based": 1,
+          "end_byte_exclusive": 2,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 3,
+          "token_id": 97,
+          "token_text": "a",
+          "start_byte_0based": 2,
+          "end_byte_exclusive": 3,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 4,
+          "token_id": 98,
+          "token_text": "b",
+          "start_byte_0based": 3,
+          "end_byte_exclusive": 4,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 5,
+          "token_id": 97,
+          "token_text": "a",
+          "start_byte_0based": 4,
+          "end_byte_exclusive": 5,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 6,
+          "token_id": 98,
+          "token_text": "b",
+          "start_byte_0based": 5,
+          "end_byte_exclusive": 6,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 7,
+          "token_id": 97,
+          "token_text": "a",
+          "start_byte_0based": 6,
+          "end_byte_exclusive": 7,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        },
+        {
+          "stage": 0,
+          "token_index_1based": 8,
+          "token_id": 98,
+          "token_text": "b",
+          "start_byte_0based": 7,
+          "end_byte_exclusive": 8,
+          "byte_length": 1,
+          "sequence_token_count": 8,
+          "vocab_size": 256
+        }
+      ]
+    },
+    {
+      "stage": 1,
+      "token_count": 4,
+      "vocab_size": 257,
+      "tokens": [
+        {
+          "stage": 1,
+          "token_index_1based": 1,
+          "token_id": 256,
+          "token_text": "ab",
+          "start_byte_0based": 0,
+          "end_byte_exclusive": 2,
+          "byte_length": 2,
+          "sequence_token_count": 4,
+          "vocab_size": 257
+        },
+        {
+          "stage": 1,
+          "token_index_1based": 2,
+          "token_id": 256,
+          "token_text": "ab",
+          "start_byte_0based": 2,
+          "end_byte_exclusive": 4,
+          "byte_length": 2,
+          "sequence_token_count": 4,
+          "vocab_size": 257
+        },
+        {
+          "stage": 1,
+          "token_index_1based": 3,
+          "token_id": 256,
+          "token_text": "ab",
+          "start_byte_0based": 4,
+          "end_byte_exclusive": 6,
+          "byte_length": 2,
+          "sequence_token_count": 4,
+          "vocab_size": 257
+        },
+        {
+          "stage": 1,
+          "token_index_1based": 4,
+          "token_id": 256,
+          "token_text": "ab",
+          "start_byte_0based": 6,
+          "end_byte_exclusive": 8,
+          "byte_length": 2,
+          "sequence_token_count": 4,
+          "vocab_size": 257
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "token_count": 2,
+      "vocab_size": 258,
+      "tokens": [
+        {
+          "stage": 2,
+          "token_index_1based": 1,
+          "token_id": 257,
+          "token_text": "abab",
+          "start_byte_0based": 0,
+          "end_byte_exclusive": 4,
+          "byte_length": 4,
+          "sequence_token_count": 2,
+          "vocab_size": 258
+        },
+        {
+          "stage": 2,
+          "token_index_1based": 2,
+          "token_id": 257,
+          "token_text": "abab",
+          "start_byte_0based": 4,
+          "end_byte_exclusive": 8,
+          "byte_length": 4,
+          "sequence_token_count": 2,
+          "vocab_size": 258
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "token_count": 1,
+      "vocab_size": 259,
+      "tokens": [
+        {
+          "stage": 3,
+          "token_index_1based": 1,
+          "token_id": 258,
+          "token_text": "abababab",
+          "start_byte_0based": 0,
+          "end_byte_exclusive": 8,
+          "byte_length": 8,
+          "sequence_token_count": 1,
+          "vocab_size": 259
+        }
+      ]
+    }
+  ],
+  "scope": "机制分析用微型字节级 BPE；不是训练 GPT-4，也不代表 cl100k_base 的真实切分。"
+}

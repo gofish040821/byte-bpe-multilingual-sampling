@@ -1,0 +1,67 @@
+{
+  "scope": "候选配额计算。默认语料大小是明确假设，不是下载、测量或训练结果。",
+  "source_characters_assumed": {
+    "de": 9000000,
+    "es": 1000000
+  },
+  "training_character_budget": 1000000,
+  "counting_rule": "清洗、去重并按统一Unicode规范化后，对Python字符串用len计Unicode码点；不是UTF-8字节数，也不一定等于用户感知字符数。",
+  "plans": [
+    {
+      "alpha": 0.0,
+      "probabilities": {
+        "de": 0.5,
+        "es": 0.5
+      },
+      "character_quotas": {
+        "de": 500000,
+        "es": 500000
+      },
+      "requires_reuse": {
+        "de": false,
+        "es": false
+      }
+    },
+    {
+      "alpha": 0.5,
+      "probabilities": {
+        "de": 0.75,
+        "es": 0.25
+      },
+      "character_quotas": {
+        "de": 750000,
+        "es": 250000
+      },
+      "requires_reuse": {
+        "de": false,
+        "es": false
+      }
+    },
+    {
+      "alpha": 1.0,
+      "probabilities": {
+        "de": 0.9,
+        "es": 0.1
+      },
+      "character_quotas": {
+        "de": 900000,
+        "es": 100000
+      },
+      "requires_reuse": {
+        "de": false,
+        "es": false
+      }
+    }
+  ],
+  "checks": {
+    "integer_quotas_sum_to_budget": true,
+    "probabilities_sum_to_one": true,
+    "example_sqrt_9_to_1_gives_3_to_1": true,
+    "zero_source_does_not_get_a_quota": true
+  },
+  "limitations": [
+    "这些配额不是最佳语言比例结论；需在独立验证集比较tokenizer。",
+    "若配额超过可用语料，先减少预算或限制重复次数，不可把重复文本当作新增独立信息。",
+    "真实采样应保持句子或文档完整，记录实际字符比例；不要按UTF-8原始字节截断。"
+  ]
+}

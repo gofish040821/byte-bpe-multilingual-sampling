@@ -1,0 +1,729 @@
+{
+  "metadata": {
+    "python": "3.12.14",
+    "minbpe_commit": "1acefe89412b20245db5a22d2a02001e547dc602",
+    "regex_version": "2026.9.29",
+    "tiktoken_version": "0.14.0",
+    "random_seed": null,
+    "randomness": "无随机步骤；结果由文本、代码和合并规则确定"
+  },
+  "scope": "机制分析用微型字节级 BPE；不是训练 GPT-4，也不代表 cl100k_base 的真实切分。",
+  "training": {
+    "text": "abababab",
+    "vocab_size": 259,
+    "initial_ids": [
+      97,
+      98,
+      97,
+      98,
+      97,
+      98,
+      97,
+      98
+    ],
+    "initial_vocab_size": 256,
+    "steps": [
+      {
+        "round": 1,
+        "before_ids": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "before_pieces": [
+          "a",
+          "b",
+          "a",
+          "b",
+          "a",
+          "b",
+          "a",
+          "b"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              97,
+              98
+            ],
+            "pieces": [
+              "a",
+              "b"
+            ],
+            "count": 4
+          },
+          {
+            "pair": [
+              98,
+              97
+            ],
+            "pieces": [
+              "b",
+              "a"
+            ],
+            "count": 3
+          }
+        ],
+        "chosen_pair": [
+          97,
+          98
+        ],
+        "chosen_frequency": 4,
+        "new_token_id": 256,
+        "non_overlapping_replacements": 4,
+        "new_token_bytes": [
+          97,
+          98
+        ],
+        "new_token_text": "ab",
+        "after_ids": [
+          256,
+          256,
+          256,
+          256
+        ],
+        "after_pieces": [
+          "ab",
+          "ab",
+          "ab",
+          "ab"
+        ]
+      },
+      {
+        "round": 2,
+        "before_ids": [
+          256,
+          256,
+          256,
+          256
+        ],
+        "before_pieces": [
+          "ab",
+          "ab",
+          "ab",
+          "ab"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              256,
+              256
+            ],
+            "pieces": [
+              "ab",
+              "ab"
+            ],
+            "count": 3
+          }
+        ],
+        "chosen_pair": [
+          256,
+          256
+        ],
+        "chosen_frequency": 3,
+        "new_token_id": 257,
+        "non_overlapping_replacements": 2,
+        "new_token_bytes": [
+          97,
+          98,
+          97,
+          98
+        ],
+        "new_token_text": "abab",
+        "after_ids": [
+          257,
+          257
+        ],
+        "after_pieces": [
+          "abab",
+          "abab"
+        ]
+      },
+      {
+        "round": 3,
+        "before_ids": [
+          257,
+          257
+        ],
+        "before_pieces": [
+          "abab",
+          "abab"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              257,
+              257
+            ],
+            "pieces": [
+              "abab",
+              "abab"
+            ],
+            "count": 1
+          }
+        ],
+        "chosen_pair": [
+          257,
+          257
+        ],
+        "chosen_frequency": 1,
+        "new_token_id": 258,
+        "non_overlapping_replacements": 1,
+        "new_token_bytes": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "new_token_text": "abababab",
+        "after_ids": [
+          258
+        ],
+        "after_pieces": [
+          "abababab"
+        ]
+      }
+    ],
+    "final_ids": [
+      258
+    ],
+    "official_final_ids": [
+      258
+    ],
+    "official_merges_equal": true,
+    "roundtrip_text": "abababab"
+  },
+  "encoding_new_text": {
+    "text": "ababab",
+    "initial_ids": [
+      97,
+      98,
+      97,
+      98,
+      97,
+      98
+    ],
+    "steps": [
+      {
+        "round": 1,
+        "before_ids": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "before_pieces": [
+          "a",
+          "b",
+          "a",
+          "b",
+          "a",
+          "b"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              97,
+              98
+            ],
+            "pieces": [
+              "a",
+              "b"
+            ],
+            "count": 3,
+            "merge_rank": 256
+          },
+          {
+            "pair": [
+              98,
+              97
+            ],
+            "pieces": [
+              "b",
+              "a"
+            ],
+            "count": 2,
+            "merge_rank": null
+          }
+        ],
+        "chosen_pair": [
+          97,
+          98
+        ],
+        "chosen_frequency": 3,
+        "chosen_rank": 256,
+        "non_overlapping_replacements": 3,
+        "after_ids": [
+          256,
+          256,
+          256
+        ],
+        "after_pieces": [
+          "ab",
+          "ab",
+          "ab"
+        ]
+      },
+      {
+        "round": 2,
+        "before_ids": [
+          256,
+          256,
+          256
+        ],
+        "before_pieces": [
+          "ab",
+          "ab",
+          "ab"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              256,
+              256
+            ],
+            "pieces": [
+              "ab",
+              "ab"
+            ],
+            "count": 2,
+            "merge_rank": 257
+          }
+        ],
+        "chosen_pair": [
+          256,
+          256
+        ],
+        "chosen_frequency": 2,
+        "chosen_rank": 257,
+        "non_overlapping_replacements": 1,
+        "after_ids": [
+          257,
+          256
+        ],
+        "after_pieces": [
+          "abab",
+          "ab"
+        ]
+      }
+    ],
+    "final_ids": [
+      257,
+      256
+    ],
+    "final_pieces": [
+      "abab",
+      "ab"
+    ],
+    "official_final_ids": [
+      257,
+      256
+    ],
+    "roundtrip_text": "ababab",
+    "stop_reason": "没有更多可用的已学合并规则，或序列长度小于 2"
+  },
+  "overlap_example": {
+    "text": "aaa",
+    "input_ids": [
+      97,
+      97,
+      97
+    ],
+    "pair": [
+      97,
+      97
+    ],
+    "pair_count": 2,
+    "output_ids": [
+      256,
+      97
+    ],
+    "actual_replacements": 1
+  },
+  "unicode_examples": [
+    {
+      "text": "你好",
+      "unicode_character_count": 2,
+      "utf8_bytes": [
+        228,
+        189,
+        160,
+        229,
+        165,
+        189
+      ],
+      "utf8_byte_count": 6,
+      "token_ids": [
+        228,
+        189,
+        160,
+        229,
+        165,
+        189
+      ],
+      "decoded": "你好",
+      "roundtrip_equal": true
+    },
+    {
+      "text": "é",
+      "unicode_character_count": 1,
+      "utf8_bytes": [
+        195,
+        169
+      ],
+      "utf8_byte_count": 2,
+      "token_ids": [
+        195,
+        169
+      ],
+      "decoded": "é",
+      "roundtrip_equal": true
+    },
+    {
+      "text": "🙂",
+      "unicode_character_count": 1,
+      "utf8_bytes": [
+        240,
+        159,
+        153,
+        130
+      ],
+      "utf8_byte_count": 4,
+      "token_ids": [
+        240,
+        159,
+        153,
+        130
+      ],
+      "decoded": "🙂",
+      "roundtrip_equal": true
+    },
+    {
+      "text": "你好，España! 🙂",
+      "unicode_character_count": 12,
+      "utf8_bytes": [
+        228,
+        189,
+        160,
+        229,
+        165,
+        189,
+        239,
+        188,
+        140,
+        69,
+        115,
+        112,
+        97,
+        195,
+        177,
+        97,
+        33,
+        32,
+        240,
+        159,
+        153,
+        130
+      ],
+      "utf8_byte_count": 22,
+      "token_ids": [
+        228,
+        189,
+        160,
+        229,
+        165,
+        189,
+        239,
+        188,
+        140,
+        69,
+        115,
+        112,
+        97,
+        195,
+        177,
+        97,
+        33,
+        32,
+        240,
+        159,
+        153,
+        130
+      ],
+      "decoded": "你好，España! 🙂",
+      "roundtrip_equal": true
+    }
+  ],
+  "rank_vs_frequency": {
+    "text": "abcbcbcbc",
+    "initial_ids": [
+      97,
+      98,
+      99,
+      98,
+      99,
+      98,
+      99,
+      98,
+      99
+    ],
+    "steps": [
+      {
+        "round": 1,
+        "before_ids": [
+          97,
+          98,
+          99,
+          98,
+          99,
+          98,
+          99,
+          98,
+          99
+        ],
+        "before_pieces": [
+          "a",
+          "b",
+          "c",
+          "b",
+          "c",
+          "b",
+          "c",
+          "b",
+          "c"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              97,
+              98
+            ],
+            "pieces": [
+              "a",
+              "b"
+            ],
+            "count": 1,
+            "merge_rank": 256
+          },
+          {
+            "pair": [
+              98,
+              99
+            ],
+            "pieces": [
+              "b",
+              "c"
+            ],
+            "count": 4,
+            "merge_rank": 257
+          },
+          {
+            "pair": [
+              99,
+              98
+            ],
+            "pieces": [
+              "c",
+              "b"
+            ],
+            "count": 3,
+            "merge_rank": null
+          }
+        ],
+        "chosen_pair": [
+          97,
+          98
+        ],
+        "chosen_frequency": 1,
+        "chosen_rank": 256,
+        "non_overlapping_replacements": 1,
+        "after_ids": [
+          256,
+          99,
+          98,
+          99,
+          98,
+          99,
+          98,
+          99
+        ],
+        "after_pieces": [
+          "ab",
+          "c",
+          "b",
+          "c",
+          "b",
+          "c",
+          "b",
+          "c"
+        ]
+      },
+      {
+        "round": 2,
+        "before_ids": [
+          256,
+          99,
+          98,
+          99,
+          98,
+          99,
+          98,
+          99
+        ],
+        "before_pieces": [
+          "ab",
+          "c",
+          "b",
+          "c",
+          "b",
+          "c",
+          "b",
+          "c"
+        ],
+        "all_pair_counts": [
+          {
+            "pair": [
+              256,
+              99
+            ],
+            "pieces": [
+              "ab",
+              "c"
+            ],
+            "count": 1,
+            "merge_rank": null
+          },
+          {
+            "pair": [
+              99,
+              98
+            ],
+            "pieces": [
+              "c",
+              "b"
+            ],
+            "count": 3,
+            "merge_rank": null
+          },
+          {
+            "pair": [
+              98,
+              99
+            ],
+            "pieces": [
+              "b",
+              "c"
+            ],
+            "count": 3,
+            "merge_rank": 257
+          }
+        ],
+        "chosen_pair": [
+          98,
+          99
+        ],
+        "chosen_frequency": 3,
+        "chosen_rank": 257,
+        "non_overlapping_replacements": 3,
+        "after_ids": [
+          256,
+          99,
+          257,
+          257,
+          257
+        ],
+        "after_pieces": [
+          "ab",
+          "c",
+          "bc",
+          "bc",
+          "bc"
+        ]
+      }
+    ],
+    "final_ids": [
+      256,
+      99,
+      257,
+      257,
+      257
+    ],
+    "final_pieces": [
+      "ab",
+      "c",
+      "bc",
+      "bc",
+      "bc"
+    ],
+    "official_final_ids": [
+      256,
+      99,
+      257,
+      257,
+      257
+    ],
+    "roundtrip_text": "abcbcbcbc",
+    "stop_reason": "没有更多可用的已学合并规则，或序列长度小于 2",
+    "training_text": "ab1ab2ab3ab4bcbcbc",
+    "learned_rules": [
+      {
+        "pair": [
+          97,
+          98
+        ],
+        "id": 256,
+        "text": "ab"
+      },
+      {
+        "pair": [
+          98,
+          99
+        ],
+        "id": 257,
+        "text": "bc"
+      }
+    ],
+    "explanation": "新文本中 ab 出现 1 次、bc 出现 4 次；编码仍先合并 rank 为 256 的 ab，不是先合并更频繁但 rank 为 257 的 bc。"
+  },
+  "checks": [
+    {
+      "name": "训练结果与官方 train/encode 一致",
+      "passed": true
+    },
+    {
+      "name": "训练最终编码为 [258]",
+      "passed": true
+    },
+    {
+      "name": "新文本编码为 [257, 256]",
+      "passed": true
+    },
+    {
+      "name": "重叠 pair 计数 2，但实际只替换 1 次",
+      "passed": true
+    },
+    {
+      "name": "空文本可编码并还原",
+      "passed": true
+    },
+    {
+      "name": "Unicode 完整序列往返一致",
+      "passed": true
+    },
+    {
+      "name": "编码优先级不等于新文本 pair 频率",
+      "passed": true
+    }
+  ]
+}

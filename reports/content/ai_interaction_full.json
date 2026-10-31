@@ -1,0 +1,42 @@
+[
+  {
+    "type": "section",
+    "text": "AI 辅助技术交流记录（编辑版）"
+  },
+  {
+    "type": "p",
+    "text": "本项目采用 Codex 主代理与研究子代理协作。公开记录保留实际交流的技术内容，将内部任务编号、展示性称呼和本机路径改为技术模块名称或相对路径；因此以下为经编辑的交流记录，不是逐字提示词原文。未主动切换模型，精确型号未另行核实。"
+  },
+  {
+    "type": "section",
+    "text": "第一轮：主代理发送的实际任务提示词"
+  },
+  {
+    "type": "code",
+    "text": "研究任务是多语言分词器抽样设计与技术报告；你负责仅 reports/content/multilingual_sampling.json，以及 reports/content/ai_interaction.json（实际本次与AI互动记录），root已PDF author marker。请按真实原论文浏览核实3篇：Zhang etal2022 arxiv2204.14268、Rust2021 acl2021.acl-long.243、UniMax2304.09151，研究如何选择德语/西语tokenizer训练语言比例，区分tokenizer vs LM、数据质量/领域/字符计量、抽样参数alpha例9:1->3:1、固定词表/总字符、holdout token/char, fertility语言区别，不预定最佳50:50。报告给可行具体方案和局限，不能编造大语料实测或最优比例。你可用2轮自我审查式工作，但是记录必须真实我发出的这条任务prompt、你实际子代理角色、根agent后续审查prompt；不虚构用户亲自用过模型/多型号，记录平台Codex、多agent同一模型系、精确型号未额外核实。先出初稿给我，我会发第二轮明确审查prompt，之后修订并记录。JSON blocks schema list: section {type:'section',text}; p {type:'p',text}; bullets {type:'bullets',items:[str]}; table {type:'table',headers:[str],rows:[[str]]}; code {type:'code',text}; source {type:'source',text,url}; formula {type:'formula',text,latex?}。内容目标4-6页，少量必要公式；保留可点击引用与关键证据适用边界。无需写实验代码，root考虑做合成教学小实验证据但不能声称真实语料结论。"
+  },
+  {
+    "type": "p",
+    "text": "子代理实际执行：打开并核对三篇原论文的摘要与相关正文；核实 Zhang 的实验对象及 BPE 消融、Rust 的 fertility 定义、UniMax 的字符计量和单独词表训练。随后提出固定数据量、词表、验证集与随机种子的候选配比方案，明确所有数值为建议配置，未称为真实语料实验结果。"
+  },
+  {
+    "type": "p",
+    "text": "子代理第一轮反馈的关键观点：UniMax 不只是 LM 抽样研究，其第 3.1 和 4.2 节也为不同抽样策略分别训练词表；但其整体性能收益不能单独归因于 tokenizer 比例。Zhang 主要使用 Unigram，另有 BPE 消融，未直接研究德语／西语；Rust 也没有提供该语言对的最佳比例。"
+  },
+  {
+    "type": "section",
+    "text": "第二轮：主代理发送的实际审查提示词"
+  },
+  {
+    "type": "code",
+    "text": "第二轮审查prompt：请检查你的语言比例方案能否区分“文献直接支持的结论”“可迁移但未在德语/西语验证的做法”和“本报告自己的建议”。尤其核对：Zhang研究是否主要Unigram；UniMax同时改变模型训练采样时能否隔离tokenizer贡献；按字符配额截断UTF8是否破坏文本；语言内token/字符如何计算；50:50是否只是基线；没有真实语料实验时能否宣布最优比例。修正这些风险，并用日常中文说明限制。为了不伪造模型比较，记录这次Codex子任务与审查的真实prompt，说明未进行不同模型版本的效果比较。"
+  },
+  {
+    "type": "p",
+    "text": "第二轮实际审查与修改：新增“文献直接支持／可迁移待验证／本报告建议”三层证据表；保留 Zhang 主要使用 Unigram 且另做 BPE 消融的说明；保留 UniMax 不能独立证明 tokenizer 配比贡献的限制；把截取方式写清为先解码 Unicode、按文本边界处理，禁止直接切 UTF-8 字节；明确 tokens/character 是逐文档编码后的总数之比，使用同一批正规化文本，不加特殊 token，不跨文档合并；把未执行范围改为“尚未进行真实德语／西语语料的配比实验”。"
+  },
+  {
+    "type": "p",
+    "text": "协作后的结论：50:50 仅为同等需求下的基线，具体候选和门槛属于提议，不能宣布最优比例。本次未进行不同模型版本的效果比较，也没有伪造这种比较。本记录呈现的是本次实际发生的文献研究、提示词约束与审查修订过程。"
+  }
+]

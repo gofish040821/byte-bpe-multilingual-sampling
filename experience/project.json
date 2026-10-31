@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0",
+  "project_id": "byte-bpe-multilingual-sampling",
+  "title": "Byte-Level BPE Analysis and Multilingual Sampling Design",
+  "title_zh": "字节级 BPE 分析与多语言抽样方案设计",
+  "project_type": "reproducible_research_project",
+  "artifact_validation_date": "2026-10-31",
+  "ownership": {
+    "status": "user_confirmed_project_handled_by_owner",
+    "recorded_owner_involvement": [
+      "Directed project scope and explanatory depth",
+      "Requested report, mathematical notation and figure revisions",
+      "Directed preparation for a public GitHub project and future CV review"
+    ],
+    "assistance": "Project-specific code, analysis, figures and documentation were generated and revised with Codex assistance.",
+    "upstream_attribution": "The vendored MinBPE implementation is unchanged upstream software, not a project-authored algorithm."
+  },
+  "goals": [
+    "Explain and instrument byte-level BPE training and encoding",
+    "Connect algorithm behavior to pinned MinBPE source functions and line numbers",
+    "Compare the GPT4Tokenizer wrapper with cl100k_base on concrete ordinary-text inputs",
+    "Design a controlled German/Spanish tokenizer-training sampling experiment"
+  ],
+  "methods": [
+    "Executed toy BPE traces with all adjacent-pair counts and actual replacement counts",
+    "Learned-merge-priority versus frequency-first encoding counterexample",
+    "Exact token-ID and full-text round-trip differential checks",
+    "UTF-8 byte inspection and byte-ID remapping analysis",
+    "Literature synthesis with source-specific evidence boundaries",
+    "Exponent-smoothed language shares and integer budget allocation",
+    "Native LaTeX, TikZ and PGFPlots report generation",
+    "Pinned source hashes, deterministic figure data, portable paths and publication checks"
+  ],
+  "completed_results": {
+    "behavioral_checks_passed": 17,
+    "ordinary_text_cases_matched_and_roundtripped": 8,
+    "ordinary_text_categories": [
+      "English",
+      "German",
+      "Spanish",
+      "Chinese",
+      "digits",
+      "newlines",
+      "emoji",
+      "empty input"
+    ],
+    "quota_checks_passed": 4,
+    "toy_bpe": {
+      "training_text": "abababab",
+      "vocabulary_size": 259,
+      "sequence_lengths": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "vocabulary_sizes": [
+        256,
+        257,
+        258,
+        259
+      ],
+      "pair_frequency_and_replacements": [
+        [
+          4,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "training_text_ids": [
+        258
+      ],
+      "new_text": "ababab",
+      "new_text_ids": [
+        257,
+        256
+      ]
+    },
+    "priority_counterexample": {
+      "training_text": "ab1ab2ab3ab4bcbcbc",
+      "input": "abcbcbcbc",
+      "learned_priority_ids": [
+        256,
+        99,
+        257,
+        257,
+        257
+      ],
+      "incorrect_frequency_first_ids": [
+        97,
+        257,
+        257,
+        257,
+        257
+      ]
+    },
+    "hypothetical_sampling": {
+      "unit": "Unicode code points counted consistently after cleaning/normalization",
+      "assumed_inventory": {
+        "German": 9000000,
+        "Spanish": 1000000
+      },
+      "total_budget": 1000000,
+      "formula": "q_l = n_l**alpha / sum_j(n_j**alpha)",
+      "settings": [
+        {
+          "alpha": 0,
+          "German_quota": 500000,
+          "Spanish_quota": 500000
+        },
+        {
+          "alpha": 0.5,
+          "German_quota": 750000,
+          "Spanish_quota": 250000
+        },
+        {
+          "alpha": 1,
+          "German_quota": 900000,
+          "Spanish_quota": 100000
+        }
+      ],
+      "scope": "Executed arithmetic using assumed inventories; not a corpus measurement or optimal-ratio result"
+    },
+    "report_pages": 25,
+    "native_vector_figures": 3,
+    "figure_data_tables": 7,
+    "annotated_source_blocks": 19,
+    "annotated_execution_lines": 184
+  },
+  "environment_verified": {
+    "operating_system": "Windows",
+    "python": "3.12.14",
+    "regex": "2026.9.29",
+    "tiktoken": "0.14.0",
+    "hardware_requirement": "CPU; no GPU or language-model API needed for the supplied demonstrations",
+    "report_tools": [
+      "Tectonic",
+      "TikZ",
+      "PGFPlots",
+      "Poppler for optional image export"
+    ]
+  },
+  "upstream": {
+    "repository": "https://github.com/karpathy/minbpe",
+    "commit": "1acefe89412b20245db5a22d2a02001e547dc602",
+    "license_path": "vendor/LICENSE",
+    "provenance_path": "vendor/provenance.json"
+  },
+  "evidence": {
+    "overview": "README.md",
+    "experience_narrative": "docs/PROJECT_EXPERIENCE.md",
+    "report": "reports/tokenizer_analysis_report.pdf",
+    "report_content": "reports/content",
+    "report_source": "reports/latex/main.tex",
+    "source_analysis": "reports/content/bpe_analysis.json",
+    "sampling_proposal": "reports/content/multilingual_sampling.json",
+    "bpe_trace": "results/bpe_walkthrough.json",
+    "encoding_comparison": "results/gpt4_check.json",
+    "behavioral_checks": "results/verification.json",
+    "quota_results": "results/language_mix.json",
+    "repository_validation": "results/repository_validation.json",
+    "report_quality": "results/report_quality.json",
+    "figure_manifest": "figures/manifest.json",
+    "contributions": "docs/CONTRIBUTIONS.md",
+    "references": "docs/REFERENCES.md",
+    "ai_interactions": "reports/content/ai_interaction_full.json",
+    "cv_wording": "docs/CV_DESCRIPTIONS.md",
+    "extensions": "docs/EXTENSIONS.md"
+  },
+  "research_references": [
+    {
+      "label": "Zhang et al. (2022), multilingual tokenizer-training language imbalance",
+      "url": "https://arxiv.org/abs/2204.14268"
+    },
+    {
+      "label": "Rust et al. (2021), tokenizer quality and language-specific fragmentation",
+      "url": "https://aclanthology.org/2021.acl-long.243/"
+    },
+    {
+      "label": "Chung et al. (2023), UniMax language sampling",
+      "url": "https://arxiv.org/abs/2304.09151"
+    }
+  ],
+  "planned_only": [
+    "Broader 500-input differential encoding coverage",
+    "Small controlled German/Spanish language-ratio pilot",
+    "BasicTokenizer versus RegexTokenizer pre-tokenization ablation"
+  ],
+  "claim_boundaries": [
+    "No real German/Spanish corpus-ratio experiment has been executed",
+    "No language model or GPT-4 was trained",
+    "Eight ordinary-text cases do not establish equivalence over all inputs or special-token configurations",
+    "No accuracy, perplexity, speedup, or downstream model-quality gain is reported",
+    "No universal optimal language ratio or novel BPE algorithm is claimed",
+    "Project ownership and AI-assisted delivery must not be rewritten as sole manual authorship of upstream code"
+  ],
+  "cv_themes_supported_by_artifacts": [
+    "Tokenizer algorithm analysis",
+    "Source-level code reading",
+    "Behavioral and differential verification",
+    "Multilingual experiment design",
+    "Research synthesis and evidence boundaries",
+    "Reproducible engineering and technical reporting"
+  ],
+  "privacy": "No personal owner identity or private identifier is included. Evidence paths are repository-relative; public AI records redact local machine paths.",
+  "technical_scope": "Byte-level BPE/MinBPE analysis, differential encoding verification, and multilingual tokenizer-training sampling design"
+}

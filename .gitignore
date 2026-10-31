@@ -1,0 +1,28 @@
+# Python environments and bytecode
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Downloaded vocabularies, local overrides, and generated preview/build files
+.cache/
+.env
+.env.*
+!.env.example
+tmp/
+reports/latex/build/
+*.aux
+*.log
+*.out
+*.toc
+*.xdv
+*.synctex.gz
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Final reports, figure exports, and small JSON/CSV results are intentional artifacts.

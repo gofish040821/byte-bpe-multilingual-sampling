@@ -1,0 +1,4 @@
+﻿alpha,german_share_pct,spanish_share_pct,inventory_ratio_german_to_spanish,data_kind
+0.0,50.0,50.0,9:1,mathematical_scenario_not_performance_measurement
+0.5,75.0,25.0,9:1,mathematical_scenario_not_performance_measurement
+1.0,90.0,10.0,9:1,mathematical_scenario_not_performance_measurement

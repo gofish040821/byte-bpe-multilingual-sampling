@@ -1,0 +1,20 @@
+% Compile with XeLaTeX from reports/latex/ or reports/latex/figures/.
+% The font declarations and base size match reports/latex/main.tex.
+\documentclass[11pt,border=4pt]{standalone}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
+\IfFontExistsTF{Consolas}{\setmonofont[Scale=0.94]{Consolas}}{\setmonofont[Scale=0.94]{Latin Modern Mono}}
+\IfFontExistsTF{SimSun}{\setCJKmainfont[AutoFakeBold=1.8]{SimSun}}{\setCJKmainfont{FandolSong-Regular}}
+\IfFontExistsTF{Microsoft YaHei}{\setCJKsansfont{Microsoft YaHei}}{\setCJKsansfont{FandolHei-Regular}}
+\IfFontExistsTF{SimSun}{\setCJKmonofont{SimSun}}{\setCJKmonofont{FandolSong-Regular}}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,patterns,decorations.pathreplacing,matrix}
+\pgfplotsset{compat=1.18}
+\usepackage{setspace}
+\setstretch{1.20}
+\begin{document}
+\IfFileExists{overlap.tex}{\input{overlap.tex}}{\input{figures/overlap.tex}}
+\end{document}

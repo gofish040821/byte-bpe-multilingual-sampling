@@ -1,0 +1,85 @@
+{
+  "all_passed": true,
+  "check_count": 17,
+  "gpt4_sample_count": 8,
+  "checks": [
+    {
+      "name": "训练结果与官方 train/encode 一致",
+      "passed": true
+    },
+    {
+      "name": "训练最终编码为 [258]",
+      "passed": true
+    },
+    {
+      "name": "新文本编码为 [257, 256]",
+      "passed": true
+    },
+    {
+      "name": "重叠 pair 计数 2，但实际只替换 1 次",
+      "passed": true
+    },
+    {
+      "name": "空文本可编码并还原",
+      "passed": true
+    },
+    {
+      "name": "Unicode 完整序列往返一致",
+      "passed": true
+    },
+    {
+      "name": "编码优先级不等于新文本 pair 频率",
+      "passed": true
+    },
+    {
+      "name": "8 类普通文本编码与 cl100k_base 一致",
+      "passed": true
+    },
+    {
+      "name": "8 类普通文本完整往返一致",
+      "passed": true
+    },
+    {
+      "name": "预分块完整覆盖每段输入",
+      "passed": true
+    },
+    {
+      "name": "256 个字节编号构成可逆映射",
+      "passed": true
+    },
+    {
+      "name": "GPT4Tokenizer.train 明确未实现",
+      "passed": true
+    },
+    {
+      "name": "存在不可单独按 UTF-8 解码的 token",
+      "passed": true
+    },
+    {
+      "name": "重叠、尾部剩余及空序列合并",
+      "passed": true
+    },
+    {
+      "name": "主例三轮频率及实际替换次数分别为 (4,4)/(3,2)/(1,1)",
+      "passed": true
+    },
+    {
+      "name": "按新文本频率先合并的错误算法确实得到不同编码",
+      "passed": true
+    },
+    {
+      "name": "英文已知编码、数字预分块及空文本",
+      "passed": true
+    }
+  ],
+  "source_commit": "1acefe89412b20245db5a22d2a02001e547dc602",
+  "vendor_file_sha256": {
+    "base.py": "b5329a834e114459dce29a6889e05b0d5d15ead8738bf66f65396139822863b4",
+    "basic.py": "d240f8b54f25d8c65e81f3da1cc7c3a390a7692cdbf62d6ff6d0c1cba1b031b8",
+    "regex.py": "2f79fc32d719c5805782c441e6311c10790ba9873ee1ec7e920a2d04d3a77e38",
+    "gpt4.py": "9ecaa1c43e0d61af12b229aac48f121b0aed1bc5fe8d4b4d555f6ddc4f35f91b",
+    "__init__.py": "d01f1961bdef63cec9c0435053c303756a7d329a59ca465f84f65383d9174119"
+  },
+  "note": "哈希记录本次实际读取的 vendor 文件，便于核对；不是自动与远端进行真实性认证。",
+  "scope": "检查 BPE 合并机制及 cl100k_base 编码；多语言部分仅验证配额计算，不包含真实语料训练。"
+}

@@ -1,0 +1,9 @@
+# The report builder and compile helper use only the Python standard library.
+# No pip packages are required for building the native LaTeX report.
+# External required tool: Tectonic, on PATH or passed with --tectonic.
+# LaTeX packages are resolved by Tectonic: fontspec, xeCJK, amsmath, longtable,
+# booktabs, fvextra, TikZ, PGFPlots, hyperref, and related packages.
+# Optional external tools: Poppler pdftocairo for SVG and pdftoppm for PNG.
+# Fonts: Windows SimSun, Microsoft YaHei, Times New Roman, and Consolas,
+# with the fallback fonts specified in reports/latex/main.tex.
+# Algorithm example dependencies remain in ../requirements.txt.

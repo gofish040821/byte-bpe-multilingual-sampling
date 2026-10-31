@@ -1,0 +1,44 @@
+{
+  "source": "results/bpe_walkthrough.json#training.steps[1]",
+  "windows": [
+    {
+      "window": 1,
+      "left_position_1based": 1,
+      "right_position_1based": 2,
+      "left_id": 256,
+      "right_id": 256,
+      "included_in_pair_count": true,
+      "selected_for_left_to_right_replacement": true
+    },
+    {
+      "window": 2,
+      "left_position_1based": 2,
+      "right_position_1based": 3,
+      "left_id": 256,
+      "right_id": 256,
+      "included_in_pair_count": true,
+      "selected_for_left_to_right_replacement": false
+    },
+    {
+      "window": 3,
+      "left_position_1based": 3,
+      "right_position_1based": 4,
+      "left_id": 256,
+      "right_id": 256,
+      "included_in_pair_count": true,
+      "selected_for_left_to_right_replacement": true
+    }
+  ],
+  "input_ids": [
+    256,
+    256,
+    256,
+    256
+  ],
+  "pair_count": 3,
+  "actual_replacements": 2,
+  "output_ids": [
+    257,
+    257
+  ]
+}

@@ -1,0 +1,44 @@
+项目：字节级 BPE 分析与多语言抽样方案设计
+研究方向：分词器算法分析、编码行为核验与多语言实验设计。
+英文介绍、方法、结果及参考来源见 README.md；中文报告位于 reports/tokenizer_analysis_report.pdf。
+
+1. 运行算法示例
+使用已安装 Python 的终端，进入项目目录后执行：
+  python -m pip install -r requirements.txt
+  python code/verify.py
+  python code/language_mix.py
+  python code/export_figure_data.py --verify-existing
+已验证 Python 3.12.14 / Windows；其他系统和版本尚未验证。
+PowerShell 也可运行 ./run_examples.ps1，或用 -PythonExe 指定 Python。
+
+2. 阅读结果
+results 中保留 JSON 数据和中文 TXT 摘要。
+17 项行为检查和 8 类普通文本对照已有真实结果。
+language_mix.py 默认库存是假设值，只计算配额；未开展真实语料配比实验。
+figures 中有三张矢量 PDF、300 dpi PNG、七份数据和来源清单。
+
+3. 缓存与公开文件
+首次编码对照会下载 cl100k_base，缓存位于被 Git 忽略的 .cache/tiktoken。
+TIKTOKEN_CACHE_DIR 可指定其他缓存位置。结果文件不保存缓存绝对路径。
+研究范围与证据边界见 docs/PROJECT_SCOPE.md。
+
+4. 重建报告
+需要 Tectonic；PNG 导出另需 Poppler 的 pdftoppm。
+  python code/build_latex_report.py --check-only
+  python code/compile_report.py --png
+可用 --tectonic 指定编译器，--cache-dir 指定 TeX 缓存。
+缺少宏包时 Tectonic 可能联网下载。中间文件位于 reports/latex/build（已忽略）。
+正文编辑 reports/content 的 JSON，图编辑 reports/latex/figures。
+生成的 main.tex 会在下次构建时覆盖。重新生成后需要检查实际页面。
+
+5. 公开文件检查
+  python -m pip install -r requirements-dev.txt
+  python code/validate_repository.py
+检查相对链接、源文件及结果哈希、本机路径、身份字段和 PDF 作者元数据。
+该检查无法判断未知的私人身份；内容仍应由持有人确认。
+
+6. 项目经历与后续实验
+已完成内容、上游来源和 AI 辅助范围见 docs/CONTRIBUTIONS.md。
+详细研究过程、方法和证据索引见 docs/PROJECT_EXPERIENCE.md。
+三项低成本拓展实验见 docs/EXTENSIONS.md，均标为待执行。
+vendor/LICENSE 仅对应保留的上游 MinBPE 源码。

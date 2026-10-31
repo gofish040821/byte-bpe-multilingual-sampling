@@ -1,0 +1,4 @@
+﻿window,left_position_1based,right_position_1based,left_id,right_id,included_in_pair_count,selected_for_left_to_right_replacement
+1,1,2,256,256,True,True
+2,2,3,256,256,True,False
+3,3,4,256,256,True,True

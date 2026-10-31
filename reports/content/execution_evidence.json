@@ -1,11 +1,11 @@
 [
   {
     "type": "section",
-    "text": "行为验证结果与复现流程"
+    "text": "编码验证结果与机制证据"
   },
   {
     "type": "p",
-    "text": "以下结果由附带代码实际运行后写入 JSON，本节从这些结果文件自动生成。微型语料用于核验算法；cl100k_base 样例用于核对编码实现。两者都不等于训练 GPT-4。"
+    "text": "以下结果来自仓库保留的实际运行记录，可用 code/verify.py 与 results 中的原始编号、字节和检查项核对。受控输入用于分析合并机制；普通文本用于比较两个编码实现。所有结果均针对所记录的配置与输入范围。"
   },
   {
     "type": "table",
@@ -39,6 +39,11 @@
   {
     "type": "subsection",
     "text": "1. 三轮合并与新文本编码"
+  },
+  {
+    "type": "figure",
+    "path": "figures/bpe_merges.png",
+    "caption": "图 1  受控输入 abababab 的真实 BPE 合并轨迹。横向位置与块宽表示覆盖的原始字节；每轮把已有相邻 token 合成新 token。图中 token 数是当前文本的长度，词表大小则是可用编号的总数，两者不同。数据来源：results/bpe_walkthrough.json。"
   },
   {
     "type": "table",
@@ -83,6 +88,11 @@
   {
     "type": "p",
     "text": "训练文本 abababab 最终编码为 [258]。新文本 ababab 编码为 [257, 256]，对应片段是 abab 与 ab。两者都可以解码还原。第二轮的统计次数为 3，但只能进行 2 次不重叠替换。"
+  },
+  {
+    "type": "figure",
+    "path": "figures/overlap.png",
+    "caption": "图 2  同一序列的两个视角：get_stats 检查所有相邻窗口，共计 3 个；merge 从左到右只替换不重叠的相邻对，共 2 次。因此日志中的出现次数不能直接当成实际替换次数。数据来源：上述实测记录的第 2 轮。"
   },
   {
     "type": "subsection",

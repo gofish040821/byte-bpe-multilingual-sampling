@@ -53,6 +53,12 @@
       "report_pages": 25,
       "vector_figures": 3,
       "note": "Technical report and figure exports rebuilt; editor labels and internal presentation identifiers updated."
+    },
+    {
+      "command": "python code/compile_report.py --skip-figures --cache-dir <external TeX cache>",
+      "exit_code": 0,
+      "report_pages": 25,
+      "note": "Main text reorganized into research framework, methods and results; foundations and source annotations in appendix."
     }
   ],
   "upstream_connector_check": {
@@ -73,8 +79,8 @@
   ],
   "repository_checks": {
     "all_passed": true,
-    "public_files_checked": 70,
-    "text_files_checked": 56,
+    "public_files_checked": 71,
+    "text_files_checked": 57,
     "pdf_files_checked": 4,
     "upstream_files_verified": 5,
     "figure_data_files_verified": 7,
@@ -95,5 +101,6 @@
     "branch": "main"
   },
   "project_ownership": "The user directly confirmed that they handled this project; source/AI attribution and experimental scope are documented separately.",
-  "presentation": "Reproducible tokenization research: research questions, methods, mechanism checks, findings and multilingual experimental design."
+  "presentation": "Reproducible tokenization research: research questions, methods, mechanism checks, findings and multilingual experimental design.",
+  "latest_review_date_local": "2026-11-01"
 }

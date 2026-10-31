@@ -1,15 +1,15 @@
-# CV descriptions
-
-These descriptions use project-level claims supported by the current artifacts and explicitly retain the research and AI-assisted context. The owner has confirmed project involvement. The wording preserves upstream and AI-assistance attribution and does not turn proposed corpus-ratio experiments into completed results. See [CONTRIBUTIONS](CONTRIBUTIONS.md).
+# Project descriptions
 
 ## English
 
 **Byte-Level BPE Analysis and Multilingual Sampling Design — Reproducible Tokenization Study**
 
-AI-assisted reproducibility study of byte-level BPE and MinBPE: documented merge behavior and source-level encoding mechanisms, with 17 behavioral checks and exact `cl100k_base` agreement on eight ordinary-text cases. Included tested sampling-quota calculations, a literature-informed German/Spanish tokenizer evaluation proposal, and a LaTeX report with three vector figures; real-corpus ratio experiments remain proposed.
+Investigated BPE merge mechanisms through instrumented traces, fixed-version source analysis, and a rank-versus-frequency counterexample. Verified exact `cl100k_base` agreement on eight ordinary-text cases with 17 grouped behavioral checks, implemented checked sampling-budget calculations, and developed a literature-informed multilingual evaluation design. Packaged the AI-assisted analysis in a reproducible technical report with three native vector figures.
 
 ## 中文
 
 **字节级 BPE 分析与多语言抽样方案设计——可复现分词研究**
 
-采用 AI 辅助方式完成 BPE 与 MinBPE 的可复现分析，记录逐轮合并和源码编码流程，包含 17 项行为检查及 8 类普通文本与 `cl100k_base` 的编码一致性核对；提供通过检查的语料配额计算、基于文献的德语／西语分词器评估方案，以及含 3 张矢量图的 LaTeX 报告。真实语料配比实验尚待执行。
+通过受控算法轨迹、固定版本源码分析和合并优先级反例研究 BPE 机制；以17项分组行为检查核对8类普通文本与 `cl100k_base` 的编码一致性，实现经过检查的抽样配额计算，并形成基于文献的多语言评估方案。采用 AI 辅助方式完成可复现技术报告与3张原生矢量图。
+
+The descriptions concern the executed mechanism and encoding checks and the documented multilingual design. Real-corpus ratio experiments remain proposed. Source and tool-use provenance is recorded in [CONTRIBUTIONS](CONTRIBUTIONS.md).

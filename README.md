@@ -1,86 +1,69 @@
 # Byte-Level BPE Analysis and Multilingual Sampling Design
 
-**Reproducible research project in tokenizer analysis and multilingual experiment design**
+A reproducible investigation of byte-level tokenization: merge-rule mechanisms, exact reproduction of an existing encoding, and controlled design of multilingual sampling experiments.
 
-A reproducible study of byte-level Byte Pair Encoding (BPE), source-level analysis of MinBPE, and a literature-informed design for selecting German/Spanish tokenizer-training data proportions. The repository combines executable examples, recorded checks, vector figures, and a Chinese technical report.
+The executed analysis examines three concrete mechanism properties: overlapping pair frequency differs from replacement count; inference follows learned merge priority rather than frequencies in new text; and individual tokens may contain incomplete UTF-8 sequences. A differential harness matches `cl100k_base` on eight curated ordinary-text cases, with 17 grouped behavioral checks passing. A separate allocator passes four checks for hypothetical language budgets and supports a literature-informed German/Spanish evaluation design.
 
-**Status:** the BPE examples, ordinary-text encoding comparisons, and sampling-quota calculations have been run. The German/Spanish corpus experiment is a proposed study, not a completed benchmark. No language model was trained.
-
-[Project experience for agents](docs/PROJECT_EXPERIENCE.md) · [Structured experience record](experience/project.json) · [Read the PDF report](reports/tokenizer_analysis_report.pdf) · [Project scope](docs/PROJECT_SCOPE.md) · [Contribution and AI-use statement](docs/CONTRIBUTIONS.md) · [Proposed extensions](docs/EXTENSIONS.md)
+[Technical report](reports/tokenizer_analysis_report.pdf) · [Research scope](docs/PROJECT_SCOPE.md) · [Detailed project experience](docs/PROJECT_EXPERIENCE.md) · [Structured record](experience/project.json)
 
 ## Research questions
 
-- Explain how UTF-8 bytes become tokens through repeated pair merging, including overlapping pair counts and non-overlapping replacement.
-- Relate the algorithm to a fixed, inspectable version of MinBPE, including merge ranks, regular-expression pre-tokenization, byte-ID remapping, and decoding.
-- Compare the MinBPE `GPT4Tokenizer` wrapper with `tiktoken`'s `cl100k_base` on a small set of ordinary-text cases.
-- Translate multilingual-tokenization literature into a controlled sampling experiment with explicit budgets, metrics, and limitations.
+| Question | Operational method | Evidence |
+| --- | --- | --- |
+| How do adjacent-pair counts, disjoint replacements, and learned ranks determine BPE behavior? | Instrument a fixed implementation and construct a rank-versus-frequency counterexample. | [Merge traces](results/bpe_walkthrough.json) |
+| Which encoding details are necessary to reproduce `cl100k_base` on the selected inputs? | Compare exact token IDs and complete-text round trips; inspect regex boundaries and byte-ID remapping. | [Encoding results](results/gpt4_check.json) |
+| How can language proportions be selected under explicit tokenizer-training constraints? | Implement smoothed quota allocation and specify normalization, fixed budgets, document splits, and within-language evaluation. | [Quota calculations](results/language_mix.json) and [experimental design](reports/content/multilingual_sampling.json) |
+
+## Findings
+
+| Executed analysis | Recorded finding |
+| --- | --- |
+| Controlled BPE trace | `abababab` produces sequence lengths **8 → 4 → 2 → 1** and vocabulary sizes **256 → 257 → 258 → 259**. Its final encoding is `[258]`; unseen `ababab` encodes as `[257, 256]`. |
+| Counting versus replacement | In the second round, pair frequency is **3**, but only **2** non-overlapping replacements occur. |
+| Learned-priority counterexample | Training on `ab1ab2ab3ab4bcbcbc` and encoding `abcbcbcbc` yields `[256,99,257,257,257]`. An intentionally incorrect frequency-first rule yields `[97,257,257,257,257]`. |
+| Differential encoding | All **8 ordinary-text cases** match `cl100k_base` exactly and round-trip; the combined harness passes **17 grouped behavioral checks**. |
+| Sampling arithmetic | **4 quota and boundary checks** pass, including integer-budget conservation and zero-inventory handling. |
+
+![Controlled BPE merge trace](figures/bpe_merges.png)
+
+The controlled trace uses a 259-entry `BasicTokenizer` vocabulary. It describes that experiment, rather than the segmentation that `cl100k_base` would assign to the same text.
 
 ## Methods
 
-The algorithm examples call the vendored MinBPE implementation and record each merge. A deliberately small `abababab` training example starts with 256 byte tokens and adds three merges. A separate counterexample demonstrates why inference uses learned merge priority rather than the frequency of pairs in the new input.
+**Mechanism tracing and source audit.** The analysis calls the pinned upstream `BasicTokenizer`, `get_stats`, and `merge` functions and records intermediate IDs, pair frequencies, chosen rules, and actual replacement counts. Source analysis covers 19 blocks and 184 displayed execution lines, including regex pre-tokenization, merge-rank recovery, byte-ID remapping, and decoding. Detailed foundations and line-by-line annotations are retained as report appendices.
 
-The encoding analysis examines eight input categories: English, German, Spanish, Chinese, digits, newlines, emoji, and the empty string. It checks token-ID equality against `cl100k_base` and full-text round trips. This establishes agreement on these cases; it does not establish equivalence for every possible input or special-token configuration. The wrapper loads an existing encoding rather than training GPT-4.
+**Differential verification.** The harness initializes MinBPE's `GPT4Tokenizer` wrapper and `tiktoken`'s `cl100k_base`, then compares exact ID lists and complete-text reconstruction for English, German, Spanish, Chinese, digits, newlines, emoji, and empty input. Byte-level inspection preserves token contents that cannot be decoded individually as UTF-8.
 
-For multilingual sampling, the project calculates candidate shares using
+**Multilingual design.** Candidate shares use a common character-count unit:
 
-$$q_l=\frac{n_l^\alpha}{\sum_j n_j^\alpha},\qquad 0\leq\alpha\leq1,$$
+$$q_l=\frac{n_l^\alpha}{\sum_j n_j^\alpha},\qquad 0\leq\alpha\leq1.$$
 
-where `n_l` is the available text count for a language, measured in the same unit. The proposed corpus study fixes normalization, training-character budget, vocabulary size, data splits, and evaluation text. It evaluates each language separately against a 50:50 baseline. The hypothetical quota example uses Unicode code-point counts; it is not a corpus measurement.
+For an **assumed** German/Spanish inventory of 9 million/1 million Unicode code points and a 1 million-character budget, the executed allocator gives:
 
-![BPE merge trace for the controlled example](figures/bpe_merges.png)
-
-*Executed controlled example: sequence lengths 8 → 4 → 2 → 1; vocabulary sizes 256 → 257 → 258 → 259. This is a tiny BasicTokenizer example, not the `cl100k_base` segmentation of this text.*
-
-## Confirmed work and attribution
-
-Repository-specific work delivered with AI assistance includes instrumented BPE examples, a merge-priority counterexample, encoding comparisons, a quota allocator, executable checks, source annotations, literature synthesis, and a LaTeX report with native TikZ/PGFPlots figures. These artifacts are distinct from the unchanged upstream algorithm implementation in `vendor/minbpe/`.
-
-The project owner confirms that they handled this research project, including its scope and presentation requirements. The technical artifacts were developed with AI assistance, and upstream MinBPE remains separately attributed. [PROJECT_EXPERIENCE](docs/PROJECT_EXPERIENCE.md), [CONTRIBUTIONS](docs/CONTRIBUTIONS.md), and the structured experience record provide an evidence-based account for future CV review; personal identity fields are omitted.
-
-## Findings and recorded results
-
-| Item | Confirmed result | Evidence and scope |
-| --- | --- | --- |
-| BPE and encoding behavior | 17 checks passed | [verification.json](results/verification.json); this count includes grouped checks, not 17 independent datasets |
-| Ordinary-text comparison | All 8 cases matched `cl100k_base` and round-tripped | [gpt4_check.json](results/gpt4_check.json); limited input coverage |
-| Toy training trace | `abababab` encodes as `[258]`; unseen `ababab` as `[257, 256]` | [bpe_walkthrough.json](results/bpe_walkthrough.json); vocabulary size 259 |
-| Overlap distinction | Second round: pair frequency 3, actual replacements 2 | Same controlled trace; `[256,256,256,256]` becomes `[257,257]` |
-| Learned-priority counterexample | Rank-based and frequency-first encoding yield different IDs | [bpe_walkthrough.json](results/bpe_walkthrough.json); demonstrates an incorrect inference rule |
-| Sampling arithmetic | 4 quota and boundary checks passed | [language_mix.json](results/language_mix.json); hypothetical inputs only |
-| Reproducible figures | 3 native vector figures and 7 CSV/JSON data tables | [Figure manifest](figures/manifest.json); PDF plus 300 dpi PNG exports |
-
-For the **assumed** German/Spanish inventory of 9 million/1 million characters and a 1 million-character budget:
-
-| Sampling exponent | German share / quota | Spanish share / quota |
+| Exponent | German share / quota | Spanish share / quota |
 | --- | --- | --- |
 | `0` | 50% / 500,000 | 50% / 500,000 |
 | `0.5` | 75% / 750,000 | 25% / 250,000 |
 | `1` | 90% / 900,000 | 10% / 100,000 |
 
-These calculations do not identify an optimal language ratio. There are no reported downstream accuracy, perplexity, throughput, or real-corpus tokenization-quality gains.
+The proposed corpus study holds normalization, total training budget, vocabulary size, document-level splits, and evaluation text fixed. It compares token counts per character within each language against a 50:50 baseline. [Three follow-up experiments](docs/EXTENSIONS.md) specify broader encoding coverage, a small ratio pilot, and a pre-tokenization ablation.
 
-The latest local checks of the reorganized repository are recorded in [repository_validation.json](results/repository_validation.json), including the commands actually run and the privacy/path checks. That local record is separate from any future GitHub Actions run; no hosted CI result is claimed.
+## Artifacts
 
-To rerun the repository checks (local links, source/artifact hashes, explicit identity fields, machine paths, and PDF author metadata):
+| Artifact | PDF | Data and editable sources |
+| --- | --- | --- |
+| Full technical report | [Tokenization analysis](reports/tokenizer_analysis_report.pdf) | [Report content](reports/content/) · [LaTeX source](reports/latex/main.tex) |
+| Merge mechanism | [BPE merge trace](figures/bpe_merges.pdf) | [CSV](figures/bpe_merges.csv) · [TikZ](reports/latex/figures/bpe_merges.tex) |
+| Counting mechanism | [Overlapping windows and replacement](figures/overlap.pdf) | [CSV](figures/overlap.csv) · [TikZ](reports/latex/figures/overlap.tex) |
+| Sampling scenario | [Language shares](figures/language_sampling.pdf) | [CSV](figures/language_sampling.csv) · [PGFPlots](reports/latex/figures/language_sampling.tex) |
 
-```sh
-python -m pip install -r requirements-dev.txt
-python code/validate_repository.py
-```
+All four PDFs are accompanied by the code and sources required to inspect the analysis. Three PNG previews, seven CSV/JSON figure tables, and a [figure provenance manifest](figures/manifest.json) are also included. The report leads with the research framework, observed results, and multilingual design; explanatory derivations and source annotations follow in appendices. Edited AI-interaction records are retained with the report sources as supplementary provenance.
 
-The publication check excludes ignored caches/build files and cannot identify unknown personal information. The report and public project files contain no populated owner-name or private-identifier fields.
+## Reproduce
 
-## Environment and dependencies
+Recorded environment: **Python 3.12.14 on Windows**, `regex==2026.9.29`, and `tiktoken==0.14.0`. The analysis runs on CPU without model API credentials. Other Python versions and operating systems have not been validated here.
 
-- Recorded algorithm runs: **Python 3.12.14 on Windows**, `regex==2026.9.29`, `tiktoken==0.14.0`.
-- Installable Python dependencies are pinned in [requirements.txt](requirements.txt). Other Python versions and operating systems have not been validated here.
-- The demonstrations need a CPU and no model API credentials or GPU.
-- `tiktoken` may download its public `cl100k_base` encoding data on the first run. The local cache is excluded from version control; `TIKTOKEN_CACHE_DIR` can select a cache directory.
-- Optional report build: **Tectonic**, with network access for uncached TeX packages. **Poppler** is needed only for PNG/SVG export. The report builder and figure-data exporter use the Python standard library. See [report build requirements](reports/requirements-report.txt).
-
-## Run the examples
-
-From the repository root, using an activated Python environment:
+From the repository root in an activated Python environment:
 
 ```sh
 python -m pip install -r requirements.txt
@@ -89,62 +72,45 @@ python code/language_mix.py
 python code/export_figure_data.py --verify-existing
 ```
 
-`verify.py` reruns the BPE walkthrough and encoding comparison, then updates their JSON and Chinese text outputs in `results/`. `language_mix.py` updates the quota example. The figure-data command requires the seven existing data tables to match before writing them again.
-
-To supply a different hypothetical inventory and budget:
+`verify.py` regenerates BPE traces, encoding comparisons, and their JSON/TXT summaries. `language_mix.py` calculates the quota scenario. The final command verifies the seven figure tables before rewriting them. To inspect a different inventory:
 
 ```sh
 python code/language_mix.py --de-chars 9000000 --es-chars 1000000 --total-chars 1000000
 ```
 
-This command still calculates quotas only. It does not load a corpus or train a multilingual tokenizer.
+`tiktoken` may download its public encoding data on the first run. The ignored `.cache/tiktoken` directory stores that data; `TIKTOKEN_CACHE_DIR` can select another cache.
 
-## Rebuild the report and figures
+For local link, provenance, artifact-hash, and publication checks:
 
-The published PDF is ready to read; a TeX installation is only needed for rebuilding it.
+```sh
+python -m pip install -r requirements-dev.txt
+python code/validate_repository.py
+```
+
+Recorded local validation is in [repository_validation.json](results/repository_validation.json).
+
+### Rebuild the technical report
+
+The build tools use Python's standard library and an external **Tectonic** executable. Uncached TeX packages require network access. **Poppler** is optional for PNG/SVG exports; see [report dependencies](reports/requirements-report.txt).
 
 ```sh
 python code/build_latex_report.py --check-only
 python code/compile_report.py --png
 ```
 
-If Tectonic is not on `PATH`, pass `--tectonic` with its executable path. PNG export is skipped with a message when `pdftoppm` is unavailable; PDF generation can still complete. The optional `--svg` flag requires `pdftocairo`.
+Pass `--tectonic` if the executable is not on `PATH`. PNG export requires `pdftoppm`; `--svg` requires `pdftocairo`. Edit `reports/content/` for prose and `reports/latex/figures/` for diagrams. The builder regenerates `main.tex`; compiled pages require visual inspection after changes.
 
-The build reads editable content from `reports/content/`, generates `reports/latex/main.tex`, and writes the final [PDF report](reports/tokenizer_analysis_report.pdf). Edit the content JSON rather than the generated main file; edit diagram fragments directly in `reports/latex/figures/`. Rebuilding changes artifacts and requires another visual review. A successful compiler exit alone does not validate page layout.
+## Scope and limitations
 
-## Repository layout
+The eight curated cases provide bounded differential evidence, rather than comprehensive input coverage or complete special-token compatibility. Sampling results are arithmetic on assumed inventories: no real German/Spanish ratio sweep or downstream language-model evaluation has been run, and no universal optimal ratio, accuracy gain, perplexity reduction, or speedup is claimed. Proposed experiments are kept separate from recorded results in [EXTENSIONS](docs/EXTENSIONS.md).
 
-```text
-code/                  Executable walkthroughs, checks, quota and report tools
-docs/                  Detailed experience, scope, attribution, extensions and CV wording
-experience/            Machine-readable project experience record
-reports/
-  tokenizer_analysis_report.pdf        Chinese technical report
-  content/             Editable report content and AI-interaction record
-  latex/               Generated TeX document and editable figure sources
-results/               Recorded JSON results and Chinese text summaries
-figures/               Vector PDFs, PNG previews, source data and manifest
-vendor/
-  minbpe/              Unmodified, pinned upstream implementation
-  LICENSE              Upstream MinBPE MIT license
-  provenance.json      Source commit and file hashes
-requirements.txt       Pinned algorithm dependencies
-```
+## Attribution and references
 
-Local caches, virtual environments, build intermediates, and machine-specific settings are excluded by `.gitignore`. The technical scope and evidence boundaries are summarized in [PROJECT_SCOPE](docs/PROJECT_SCOPE.md).
+The mechanism implementation is unchanged [MinBPE](https://github.com/karpathy/minbpe/tree/1acefe89412b20245db5a22d2a02001e547dc602), pinned at `1acefe89412b20245db5a22d2a02001e547dc602`, with its original [MIT license](vendor/LICENSE) and [source hashes](vendor/provenance.json). Project-specific analysis, wrappers, verification, figures, and report were developed with Codex assistance. [CONTRIBUTIONS](docs/CONTRIBUTIONS.md) records that provenance.
 
-## Limitations and next experiments
+- OpenAI, [tiktoken](https://github.com/openai/tiktoken): reference implementation for the `cl100k_base` comparison.
+- Zhang et al. (2022), [How Robust is Neural Machine Translation to Language Imbalance in Multilingual Tokenizer Training?](https://arxiv.org/abs/2204.14268): tokenizer-training imbalance in the authors' evaluated setting.
+- Rust et al. (2021), [How Good is Your Tokenizer? On the Monolingual Performance of Multilingual Language Models](https://aclanthology.org/2021.acl-long.243/): language-specific segmentation diagnostics.
+- Chung et al. (2023), [UniMax: Fairer and more Effective Language Sampling for Large-Scale Multilingual Pretraining](https://arxiv.org/abs/2304.09151): sampling balance, counting units, and repetition controls.
 
-This is a reproducible tokenizer-analysis study. The small input set is not a comprehensive correctness benchmark; tokenization efficiency is not a direct measure of language-model quality. No real German/Spanish corpus sweep, downstream model training, or optimal-ratio claim is included.
-
-Three concrete, CPU-oriented extensions are specified in [EXTENSIONS](docs/EXTENSIONS.md): broader differential encoding checks, a small controlled language-ratio pilot, and a pre-tokenization ablation. All are **planned**, with no results attributed to them.
-
-## References and third-party material
-
-1. Andrej Karpathy, [MinBPE](https://github.com/karpathy/minbpe/tree/1acefe89412b20245db5a22d2a02001e547dc602), pinned at `1acefe89412b20245db5a22d2a02001e547dc602`. The vendored source retains its [MIT license](vendor/LICENSE); provenance and hashes are recorded separately.
-2. OpenAI, [tiktoken](https://github.com/openai/tiktoken), used as the `cl100k_base` comparison implementation.
-3. Zhang et al. (2022), [How Robust is Neural Machine Translation to Language Imbalance in Multilingual Tokenizer Training?](https://arxiv.org/abs/2204.14268). Its experiments do not establish an optimal German/Spanish ratio for this project.
-4. Rust et al. (2021), [How Good is Your Tokenizer? On the Monolingual Performance of Multilingual Language Models](https://aclanthology.org/2021.acl-long.243/). Used to motivate per-language segmentation diagnostics.
-5. Chung et al. (2023), [UniMax: Fairer and more Effective Language Sampling for Large-Scale Multilingual Pretraining](https://arxiv.org/abs/2304.09151). Used to motivate explicit sampling units, balance, and controls on repetition; its model-level results are not isolated tokenizer-ratio effects.
-
-The upstream license applies to its covered files. A license for the repository-specific code and report has not been selected; see [NOTICE](NOTICE.md).
+[REFERENCES](docs/REFERENCES.md) details the use and scope of these sources. [NOTICE](NOTICE.md) records licensing. The [experience narrative](docs/PROJECT_EXPERIENCE.md) and [structured project record](experience/project.json) connect the artifacts to project-review and CV use.

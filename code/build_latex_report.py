@@ -17,10 +17,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT_FILES = (
-    ("bpe_analysis.json", True),
+    ("research_overview.json", False),
     ("execution_evidence.json", False),
     ("multilingual_sampling.json", False),
-    ("ai_interaction.json", False),
+    ("bpe_analysis.json", True),
 )
 
 PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
@@ -44,6 +44,7 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{needspace}
+\usepackage{placeins}
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{xurl}
@@ -89,30 +90,19 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \begin{document}
 """
 
-COVER = r"""\begin{titlepage}
-\thispagestyle{empty}
-\vspace*{14mm}
-{\sffamily\Large Tokenization Study\par}
-\vspace{4mm}
-{\sffamily\fontsize{19}{27}\selectfont\bfseries 字节级 BPE 分析与多语言抽样设计\par}
-\vspace{6mm}
-{\large 机制分析、编码复现与评估方案\par}
-\vspace{12mm}
-\begin{minipage}{0.94\linewidth}
-本项目研究字节级 BPE 的合并机制、既有编码的复现，以及多语言分词器的语料抽样与评估设计。通过受控输入、源码分析和差分核对建立可检查的机制证据，再将相关文献转化为具有控制变量的实验方案。
-
-源码注释表直接读取随项目保存的 MinBPE 文件，保留原始行号和执行语句；多行文档字符串、纯注释及空行不重复展示。公式由 LaTeX 数学环境排版，示意图和曲线由 TikZ／PGFPlots 绘制。
-
-\textbf{验证范围：}BPE 合并轨迹、普通文本编码对照和语言抽样配额计算均已执行。真实德语／西语语料的配比实验属于后续设计，当前结果用于机制验证与复现分析。
-
-\textbf{阅读方式：}先读概念、例子和图，再查看逐行源码。进阶的合并关系恢复可以在理解训练与编码区别后阅读。
-\end{minipage}
-\vfill
-{\small 项目材料：技术分析、固定版本源码、运行证据与可复现实验设计。\par}
-\end{titlepage}
-\pagenumbering{roman}
-\tableofcontents
-\clearpage
+COVER = r"""\begin{center}
+{\sffamily\fontsize{19}{26}\selectfont\bfseries 字节级 BPE 分析与多语言抽样设计\par}
+\vspace{3mm}
+{\large Byte-Level BPE Analysis and Multilingual Sampling Design\par}
+\vspace{2mm}
+{\small Technical Research Report\par}
+\end{center}
+\renewcommand{\abstractname}{摘要}
+\begin{abstract}
+本研究通过受控算法跟踪、固定版本源码审计和差分编码检查，分析字节级 BPE 的规则学习与推理机制。微型词表案例表明，相邻对的统计频次与实际替换次数不同；进一步构造的反例验证了编码必须遵循已学习的合并优先级。在八类普通文本上，MinBPE 包装器与 cl100k\_base 的编号序列一致并能完整往返，组合验证程序的十七项行为检查全部通过。多语言部分实现了指数平滑抽样和整数配额计算，并将相关文献转化为具有固定预算、独立划分和语言内指标的德语／西语评估方案。当前证据支持机制分析、有限输入上的编码复现与抽样算术；真实语料的比例筛选保留为后续实验。代码、结果、图表数据和报告源文件均随项目提供。
+\end{abstract}
+\noindent\textbf{关键词：}字节级 BPE；编码一致性；UTF-8；多语言抽样；可复现性。
+\par\vspace{2mm}
 \pagenumbering{arabic}
 """
 
@@ -420,11 +410,16 @@ def render_document() -> tuple[str, dict[str, Any]]:
         if not isinstance(blocks, list) or not blocks or blocks[0].get("type") != "section":
             raise ValueError(f"Expected a block list beginning with section: {filename}")
         if file_index:
-            out.append(r"\clearpage")
+            out.append(r"\clearpage" if filename == "bpe_analysis.json" else r"\FloatBarrier\par\bigskip")
+        if filename == "bpe_analysis.json":
+            out.append(r"\appendix")
         out.append(f"% Content source: reports/content/{filename}")
         for index, block in enumerate(blocks):
             block_count += 1
             kind = block["type"]
+            # Main-text mechanism figures are not duplicated in the appendix.
+            if filename == "bpe_analysis.json" and kind == "figure":
+                continue
             if kind in {"section", "subsection"}:
                 level = 1 if index == 0 else (3 if kind == "subsection" and deep_hierarchy else 2)
                 heading = render_heading(block["text"], level)

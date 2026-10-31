@@ -11,7 +11,7 @@ This record describes the experience represented by this repository. It gives fu
 
 1. Read the [README](../README.md) for the executable entry points and environment.
 2. Read this experience record and the [machine-readable project card](../experience/project.json).
-3. Read the [25-page Chinese report](../reports/tokenizer_analysis_report.pdf), particularly the concrete BPE walkthrough, source annotations, measured results, and language-sampling proposal.
+3. Read the [full Chinese technical report](../reports/tokenizer_analysis_report.pdf), beginning with the research framework, measured results, and multilingual sampling design; explanatory foundations and source annotations are retained in appendices.
 4. Inspect the [behavior checks](../results/verification.json), [encoding cases](../results/gpt4_check.json), [quota calculations](../results/language_mix.json), and [repository validation](../results/repository_validation.json).
 5. Consult [contribution provenance](CONTRIBUTIONS.md), [research references](REFERENCES.md), and the [retained AI-interaction record](../reports/content/ai_interaction_full.json) when determining the wording of a personal contribution.
 
@@ -63,7 +63,7 @@ The report's larger proposed experiment fixes NFC normalization, Unicode code-po
 
 ### 4. Reproducible reporting and public project engineering
 
-The project includes a **25-page LaTeX report** with standard mathematical notation and **three native TikZ/PGFPlots vector figures**. Two figures illustrate executed BPE behavior; one depicts the explicitly assumed sampling scenario. Seven CSV/JSON tables preserve the figure data and provenance. The exporter uses fixed LF line endings for stable data output.
+The project includes a **full LaTeX technical report** organized around research questions, methods, results, and experimental design, followed by appendices for explanatory foundations and source annotations. Standard mathematical notation and **three native TikZ/PGFPlots vector figures** support the analysis. Two figures illustrate executed BPE behavior; one depicts the explicitly assumed sampling scenario. Seven CSV/JSON tables preserve the figure data and provenance. The exporter uses fixed LF line endings for stable data output.
 
 The local project was reorganized into code, documentation, report content, TeX sources, results, figures, and pinned upstream software. Scripts locate the project relative to their own files; the PowerShell launcher accepts the active Python interpreter. Optional Tectonic and Poppler tools rebuild the report and image exports. The retained algorithm runs use **Python 3.12.14 on Windows, regex 2026.9.29, and tiktoken 0.14.0**.
 
@@ -71,9 +71,9 @@ The publication preparation removes personal machine paths from public results a
 
 ## Contribution and tool-use provenance
 
-The owner handled the project and directed its scope, explanatory depth, presentation revisions, public-repository preparation, and use as a record of project experience. Repository-specific walkthroughs, checks, analysis, documentation, figures, and report tooling were generated and revised with Codex assistance. Retained interactions document that workflow, including literature checks and review prompts; machine paths in the public record were redacted.
+The owner handled the project and directed the analysis scope, report organization, presentation revisions, and reproducible publication of its artifacts. Repository-specific walkthroughs, checks, analysis, documentation, figures, and report tooling were generated and revised with Codex assistance. Retained interactions document that workflow, including literature checks and review prompts; machine paths in the public record were redacted.
 
-The BPE implementation in `vendor/minbpe/` is unchanged upstream software, not a new algorithm or a project-authored reimplementation. Fixed commit `1acefe89412b20245db5a22d2a02001e547dc602`, the original MIT notice, and file hashes preserve this distinction. Project ownership does not turn upstream code or AI assistance into a claim of sole manual authorship.
+The BPE implementation in `vendor/minbpe/` is unchanged upstream software, not a new algorithm or a project-authored reimplementation. Fixed commit `1acefe89412b20245db5a22d2a02001e547dc602`, the original MIT notice, and file hashes preserve this distinction. Project-specific work and upstream implementation remain separately attributed in the retained provenance record.
 
 ## Evidence map for future CV agents
 
@@ -87,6 +87,6 @@ The BPE implementation in `vendor/minbpe/` is unchanged upstream software, not a
 | Reproducibility | [Build script](../code/compile_report.py), [validation](../results/repository_validation.json) | Packaged code, evidence, pinned dependencies, data exports, report sources, and portable entry points. |
 | Technical communication | [Three figures](../figures/manifest.json), [report](../reports/tokenizer_analysis_report.pdf) | Produced a detailed explanation and native vector visualizations with AI assistance. |
 
-Prefer an **AI-assisted research project in tokenizer analysis, verification, and experiment design** as the overall framing. Numerical claims should identify their measurement unit and scope: 17 behavioral checks, eight text cases, four quota checks, three vector figures, or 25 report pages. Avoid converting these counts into accuracy gains, model-performance improvements, corpus-scale results, or proof of mastery. No real-corpus language-ratio experiment, language-model training, or universal optimal ratio is recorded here.
+Prefer an **AI-assisted research project in tokenizer analysis, verification, and experiment design** as the overall framing. Numerical claims should identify their measurement unit and scope: 17 behavioral checks, eight text cases, four quota checks, three vector figures. Avoid converting these counts into accuracy gains, model-performance improvements, corpus-scale results, or proof of mastery. No real-corpus language-ratio experiment, language-model training, or universal optimal ratio is recorded here.
 
 The [machine-readable project card](../experience/project.json) provides the same factual anchors for automated CV aggregation. The [CV descriptions](CV_DESCRIPTIONS.md) are a starting point; future agents should adapt emphasis to a target role while retaining evidence and attribution.

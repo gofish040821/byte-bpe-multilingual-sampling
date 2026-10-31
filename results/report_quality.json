@@ -1,6 +1,6 @@
 {
   "pdf_pages": 25,
-  "pdf_sha256": "ebfdb628a54179d9e82b7f4259116b462400fe651c0c734c6b31134a1365980c",
+  "pdf_sha256": "6ba945ed511df742a987ddeeb4cafde2c44ad583030dc9529e34cc0b56424c37",
   "page_size": "A4",
   "engine": "Tectonic 0.17.0+20260731 (XeTeX/LaTeX)",
   "math_typesetting": "amsmath; native TeX math environments",
@@ -15,9 +15,17 @@
   "annotated_source_blocks": 19,
   "annotated_execution_lines": 184,
   "source_commit": "1acefe89412b20245db5a22d2a02001e547dc602",
-  "visual_review": "All 25 pages rendered and inspected after technical framing and file renaming. Cover, headers, formulas, source tables, diagrams and final interaction page reviewed.",
+  "visual_review": "Research-format main text and source audit appendix rendered and inspected; title, abstract, research questions, methods, findings, figures, formulas and source tables reviewed.",
   "compile_notes": "No overfull boxes or missing-character diagnostics. Bundled lineno.sty emits an invalid-UTF-8 warning in a package comment; no replacement glyph is present in the output. Windows font paths are environment-dependent; font fallbacks are provided.",
   "unperformed": "No real German/Spanish corpus ratio experiment; no GPT-4 or LLM training.",
   "pdf_path": "reports/tokenizer_analysis_report.pdf",
-  "privacy_metadata": "No personal PDF Author value; repository privacy checks recorded separately."
+  "privacy_metadata": "No personal PDF Author value; repository privacy checks recorded separately.",
+  "validation_date_local": "2026-11-01",
+  "report_structure": [
+    "Abstract and keywords",
+    "Research framework and methods",
+    "Observed encoding results",
+    "Multilingual sampling design and limitations",
+    "Appendix: foundations and source audit"
+  ]
 }

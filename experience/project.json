@@ -16,10 +16,9 @@
     "upstream_attribution": "The vendored MinBPE implementation is unchanged upstream software, not a project-authored algorithm."
   },
   "goals": [
-    "Explain and instrument byte-level BPE training and encoding",
-    "Connect algorithm behavior to pinned MinBPE source functions and line numbers",
-    "Compare the GPT4Tokenizer wrapper with cl100k_base on concrete ordinary-text inputs",
-    "Design a controlled German/Spanish tokenizer-training sampling experiment"
+    "Analyze the relation between adjacent-pair frequency, disjoint replacements and learned merge priority",
+    "Audit fixed-version encoding mechanisms and compare exact cl100k_base IDs on selected inputs",
+    "Develop controlled multilingual tokenizer-training sampling and evaluation conditions"
   ],
   "methods": [
     "Executed toy BPE traces with all adjacent-pair counts and actual replacement counts",
@@ -172,7 +171,9 @@
     "references": "docs/REFERENCES.md",
     "ai_interactions": "reports/content/ai_interaction_full.json",
     "cv_wording": "docs/CV_DESCRIPTIONS.md",
-    "extensions": "docs/EXTENSIONS.md"
+    "extensions": "docs/EXTENSIONS.md",
+    "research_framework": "reports/content/research_overview.json",
+    "artifact_catalog": "README.md#artifacts"
   },
   "research_references": [
     {
@@ -210,5 +211,35 @@
     "Reproducible engineering and technical reporting"
   ],
   "privacy": "No personal owner identity or private identifier is included. Evidence paths are repository-relative; public AI records redact local machine paths.",
-  "technical_scope": "Byte-level BPE/MinBPE analysis, differential encoding verification, and multilingual tokenizer-training sampling design"
+  "technical_scope": "Byte-level BPE/MinBPE analysis, differential encoding verification, and multilingual tokenizer-training sampling design",
+  "research_questions": [
+    {
+      "id": "RQ1",
+      "question": "How do pair counts, replacement constraints and learned ranks determine BPE behavior?",
+      "evidence": "results/bpe_walkthrough.json"
+    },
+    {
+      "id": "RQ2",
+      "question": "Which implementation details reproduce cl100k_base on the selected ordinary inputs?",
+      "evidence": "results/gpt4_check.json"
+    },
+    {
+      "id": "RQ3",
+      "question": "How can language proportions be evaluated under explicit tokenizer-training constraints?",
+      "evidence": "reports/content/multilingual_sampling.json"
+    }
+  ],
+  "report_structure": {
+    "main": [
+      "Research framework",
+      "Methods and observed verification results",
+      "Multilingual sampling and evaluation design"
+    ],
+    "appendices": [
+      "Explanatory foundations",
+      "Fixed-version source annotations"
+    ],
+    "supplementary_provenance": "reports/content/ai_interaction_full.json"
+  },
+  "latest_publication_review": "2026-11-01"
 }

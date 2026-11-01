@@ -79,8 +79,8 @@
   ],
   "repository_checks": {
     "all_passed": true,
-    "public_files_checked": 71,
-    "text_files_checked": 57,
+    "public_files_checked": 72,
+    "text_files_checked": 58,
     "pdf_files_checked": 4,
     "upstream_files_verified": 5,
     "figure_data_files_verified": 7,
@@ -102,5 +102,52 @@
   },
   "project_ownership": "The user directly confirmed that they handled this project; source/AI attribution and experimental scope are documented separately.",
   "presentation": "Reproducible tokenization research: research questions, methods, mechanism checks, findings and multilingual experimental design.",
-  "latest_review_date_local": "2026-11-01"
+  "latest_review_date_local": "2026-11-01",
+  "pdf_access_check": {
+    "date_local": "2026-11-01",
+    "download_base_url": "https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/",
+    "method": "Unauthenticated HTTPS GET; byte-for-byte comparison with local files; strict pypdf parsing and full text extraction for all pages.",
+    "files": [
+      {
+        "path": "reports/tokenizer_analysis_report.pdf",
+        "http_status": 200,
+        "bytes": 466695,
+        "sha256": "6ba945ed511df742a987ddeeb4cafde2c44ad583030dc9529e34cc0b56424c37",
+        "matches_local": true,
+        "pages": 25,
+        "strict_pdf_parse": "passed"
+      },
+      {
+        "path": "figures/bpe_merges.pdf",
+        "http_status": 200,
+        "bytes": 35015,
+        "sha256": "05415a66e72fa63e4db7aae5a8c20e2174b42e319261d695811856aff88ebfc9",
+        "matches_local": true,
+        "pages": 1,
+        "strict_pdf_parse": "passed"
+      },
+      {
+        "path": "figures/overlap.pdf",
+        "http_status": 200,
+        "bytes": 33028,
+        "sha256": "b2b48838854c03fd7d6217a413aedae4a97dc7ec47626e1a8c843d344035013e",
+        "matches_local": true,
+        "pages": 1,
+        "strict_pdf_parse": "passed"
+      },
+      {
+        "path": "figures/language_sampling.pdf",
+        "http_status": 200,
+        "bytes": 25822,
+        "sha256": "a40d7f39a3ec50a78a5e1fc431584c396101df05ce5f6ca405f8b6a47dc755c7",
+        "matches_local": true,
+        "pages": 1,
+        "strict_pdf_parse": "passed"
+      }
+    ],
+    "visual_check": "Downloaded main-report page 1 rendered with Poppler and visually inspected.",
+    "observed_issue": "Visitor screenshot showed GitHub embedded PDF preview: Unable to render code block.",
+    "scope": "Direct file downloads verified; cause of the visitor-side preview failure is not established. PDF bytes unchanged.",
+    "access_improvement": "README and report index provide explicit direct downloads for all four PDFs and existing PNG previews for the figures."
+  }
 }

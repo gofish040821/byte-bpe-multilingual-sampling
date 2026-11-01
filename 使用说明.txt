@@ -1,6 +1,6 @@
 项目：字节级 BPE 分析与多语言抽样方案设计
 研究方向：分词器算法分析、编码行为核验与多语言实验设计。
-英文介绍、方法、结果及参考来源见 README.md；中文报告位于 reports/tokenizer_analysis_report.pdf。
+在 GitHub 项目首页点击 Read the full report online (中文) 即可在线阅读全文。网页版位于 reports/online.md，排印版位于 reports/tokenizer_analysis_report.pdf。
 
 1. 运行算法示例
 使用已安装 Python 的终端，进入项目目录后执行：

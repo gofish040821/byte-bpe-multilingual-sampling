@@ -1,10 +1,12 @@
 # Byte-Level BPE Analysis and Multilingual Sampling Design
 
+**[Read the full report online (中文)](reports/online.md)** · [View the typeset PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf)
+
 A reproducible investigation of byte-level tokenization: merge-rule mechanisms, exact reproduction of an existing encoding, and controlled design of multilingual sampling experiments.
 
 The executed analysis examines three concrete mechanism properties: overlapping pair frequency differs from replacement count; inference follows learned merge priority rather than frequencies in new text; and individual tokens may contain incomplete UTF-8 sequences. A differential harness matches `cl100k_base` on eight curated ordinary-text cases, with 17 grouped behavioral checks passing. A separate allocator passes four checks for hypothetical language budgets and supports a literature-informed German/Spanish evaluation design.
 
-[Technical report — download PDF](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) · [Report and figure access](reports/README.md) · [Research scope](docs/PROJECT_SCOPE.md) · [Detailed project experience](docs/PROJECT_EXPERIENCE.md) · [Structured record](experience/project.json)
+[Report and figure access](reports/README.md) · [Research scope](docs/PROJECT_SCOPE.md) · [Detailed project experience](docs/PROJECT_EXPERIENCE.md) · [Structured record](experience/project.json)
 
 ## Research questions
 
@@ -52,12 +54,12 @@ The proposed corpus study holds normalization, total training budget, vocabulary
 
 | Artifact | PDF access | Data and editable sources |
 | --- | --- | --- |
-| Full technical report | [Preview](reports/tokenizer_analysis_report.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) | [Report content](reports/content/) · [LaTeX source](reports/latex/main.tex) |
-| Merge mechanism | [Preview](figures/bpe_merges.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/bpe_merges.pdf) · [PNG](figures/bpe_merges.png) | [CSV](figures/bpe_merges.csv) · [TikZ](reports/latex/figures/bpe_merges.tex) |
-| Counting mechanism | [Preview](figures/overlap.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/overlap.pdf) · [PNG](figures/overlap.png) | [CSV](figures/overlap.csv) · [TikZ](reports/latex/figures/overlap.tex) |
-| Sampling scenario | [Preview](figures/language_sampling.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/language_sampling.pdf) · [PNG](figures/language_sampling.png) | [CSV](figures/language_sampling.csv) · [PGFPlots](reports/latex/figures/language_sampling.tex) |
+| Full technical report | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) | [Report content](reports/content/) · [LaTeX source](reports/latex/main.tex) |
+| Merge mechanism | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/bpe_merges.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/bpe_merges.pdf) · [PNG](figures/bpe_merges.png) | [CSV](figures/bpe_merges.csv) · [TikZ](reports/latex/figures/bpe_merges.tex) |
+| Counting mechanism | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/overlap.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/overlap.pdf) · [PNG](figures/overlap.png) | [CSV](figures/overlap.csv) · [TikZ](reports/latex/figures/overlap.tex) |
+| Sampling scenario | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/language_sampling.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/language_sampling.pdf) · [PNG](figures/language_sampling.png) | [CSV](figures/language_sampling.csv) · [PGFPlots](reports/latex/figures/language_sampling.tex) |
 
-If GitHub's PDF preview displays **Unable to render code block**, use **Download** and open the saved file in a PDF reader. These links retrieve the original PDF bytes without using GitHub's embedded document preview. [Report and figure access](reports/README.md) lists all four files.
+The [web edition](reports/online.md) includes the full report and source annotations. The PDF links open the original typeset files on GitHub Pages.
 
 All four PDFs are accompanied by the code and sources required to inspect the analysis. Three PNG previews, seven CSV/JSON figure tables, and a [figure provenance manifest](figures/manifest.json) are also included. The report leads with the research framework, observed results, and multilingual design; explanatory derivations and source annotations follow in appendices. Edited AI-interaction records are retained with the report sources as supplementary provenance.
 
@@ -96,6 +98,7 @@ Recorded local validation is in [repository_validation.json](results/repository_
 The build tools use Python's standard library and an external **Tectonic** executable. Uncached TeX packages require network access. **Poppler** is optional for PNG/SVG exports; see [report dependencies](reports/requirements-report.txt).
 
 ```sh
+python code/build_online_report.py
 python code/build_latex_report.py --check-only
 python code/compile_report.py --png
 ```

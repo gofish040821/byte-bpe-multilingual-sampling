@@ -79,8 +79,8 @@
   ],
   "repository_checks": {
     "all_passed": true,
-    "public_files_checked": 72,
-    "text_files_checked": 58,
+    "public_files_checked": 74,
+    "text_files_checked": 60,
     "pdf_files_checked": 4,
     "upstream_files_verified": 5,
     "figure_data_files_verified": 7,
@@ -149,5 +149,24 @@
     "observed_issue": "Visitor screenshot showed GitHub embedded PDF preview: Unable to render code block.",
     "scope": "Direct file downloads verified; cause of the visitor-side preview failure is not established. PDF bytes unchanged.",
     "access_improvement": "README and report index provide explicit direct downloads for all four PDFs and existing PNG previews for the figures."
+  },
+  "online_reading": {
+    "web_edition": "reports/online.md",
+    "web_edition_check": "python code/build_online_report.py --check",
+    "typeset_report": "https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf",
+    "public_pdf_check": {
+      "method": "GET each published report and figure without credentials",
+      "http_status": 200,
+      "media_type": "application/pdf",
+      "content_disposition_attachment": false,
+      "matches_local_bytes": true,
+      "files": {
+        "reports/tokenizer_analysis_report.pdf": 25,
+        "figures/bpe_merges.pdf": 1,
+        "figures/overlap.pdf": 1,
+        "figures/language_sampling.pdf": 1
+      },
+      "file_values": "PDF page counts"
+    }
   }
 }

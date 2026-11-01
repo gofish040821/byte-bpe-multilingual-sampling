@@ -1,18 +1,14 @@
-# Technical report and figure access
+# Technical report and figures
 
-The report presents the research framework, observed encoding results, multilingual sampling design, and source-audit appendix. The three standalone vector figures are supplied with PNG previews, data, and editable LaTeX sources.
+**[Read the full report online (中文)](online.md)** · [Open the typeset PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf)
 
-| Document | Direct PDF download | Repository preview | Image preview |
-| --- | --- | --- | --- |
-| Full technical report | [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) | [PDF](tokenizer_analysis_report.pdf) | — |
-| BPE merge trace | [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/bpe_merges.pdf) | [PDF](../figures/bpe_merges.pdf) | [PNG](../figures/bpe_merges.png) |
-| Overlapping windows and replacement | [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/overlap.pdf) | [PDF](../figures/overlap.pdf) | [PNG](../figures/overlap.png) |
-| Multilingual sampling scenario | [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/language_sampling.pdf) | [PDF](../figures/language_sampling.pdf) | [PNG](../figures/language_sampling.png) |
+The web edition includes the three research questions, experimental results, figures, equations and the annotated source appendix. The PDF preserves the original pagination.
 
-## If the embedded PDF preview fails
+| Document | Read online | Download |
+| --- | --- | --- |
+| Full technical report | [Web edition](online.md) · [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf) | [PDF](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) |
+| BPE merge trace | [PNG](../figures/bpe_merges.png) · [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/bpe_merges.pdf) | [PDF](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/bpe_merges.pdf) |
+| Overlapping windows and replacement | [PNG](../figures/overlap.png) · [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/overlap.pdf) | [PDF](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/overlap.pdf) |
+| Multilingual sampling scenario | [PNG](../figures/language_sampling.png) · [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/language_sampling.pdf) | [PDF](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/language_sampling.pdf) |
 
-GitHub's file page may display **Unable to render code block** instead of its PDF preview. Click **Download** above, or use the download-arrow button on the file page, then open the saved PDF in a browser or PDF reader. Direct downloads bypass the embedded preview; access to `raw.githubusercontent.com` is required.
-
-The public downloads were checked on **2026-11-01**: all four returned HTTP 200, matched the local files byte for byte, and parsed successfully. The full report contains 25 pages; its downloaded first page was also rendered and visually checked. These checks establish file integrity; they do not diagnose a visitor's browser or network. See the [access check record](../results/repository_validation.json).
-
-For editable material, see [report content](content/), [LaTeX source](latex/main.tex), and the [artifact catalog](../README.md#artifacts).
+[Report content](content/) · [LaTeX source](latex/main.tex) · [Figure data and sources](../README.md#artifacts)

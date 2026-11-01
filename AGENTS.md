@@ -11,7 +11,7 @@ identity details are not prerequisites for reviewing this project.
 2. [Structured project record](experience/project.json): machine-readable facts
    and links for integrating this project into an experience inventory.
 3. [README](README.md) and [contribution record](docs/CONTRIBUTIONS.md).
-4. [Chinese report](reports/tokenizer_analysis_report.pdf), its editable content in
+4. [Chinese report, online edition](reports/online.md), its editable content in
    `reports/content/`, and the code in `code/`.
 5. [Recorded checks](results/verification.json), [encoding comparisons](results/gpt4_check.json),
    [quota calculations](results/language_mix.json), and [repository validation](results/repository_validation.json).

@@ -12,6 +12,7 @@ import ast
 import json
 import re
 from pathlib import Path
+from string import Template
 from typing import Any
 
 
@@ -90,21 +91,32 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \begin{document}
 """
 
-COVER = r"""\begin{center}
-{\sffamily\fontsize{19}{26}\selectfont\bfseries 字节级 BPE 分析与多语言抽样设计\par}
+TITLE_ZH = "字节级 BPE 分析与多语言抽样设计"
+TITLE_EN = "Byte-Level BPE Analysis and Multilingual Sampling Design"
+ABSTRACT = (
+    "本研究通过受控算法跟踪、固定版本源码审计和差分编码检查，分析字节级 BPE 的规则学习与推理机制。"
+    "微型词表案例表明，相邻对的统计频次与实际替换次数不同；进一步构造的反例验证了编码必须遵循已学习的合并优先级。"
+    "在八类普通文本上，MinBPE 包装器与 cl100k_base 的编号序列一致并能完整往返，组合验证程序的十七项行为检查全部通过。"
+    "多语言部分实现了指数平滑抽样和整数配额计算，并将相关文献转化为具有固定预算、独立划分和语言内指标的德语／西语评估方案。"
+    "当前证据支持机制分析、有限输入上的编码复现与抽样算术；真实语料的比例筛选保留为后续实验。代码、结果、图表数据和报告源文件均随项目提供。"
+)
+KEYWORDS = "字节级 BPE；编码一致性；UTF-8；多语言抽样；可复现性。"
+
+COVER_TEMPLATE = Template(r"""\begin{center}
+{\sffamily\fontsize{19}{26}\selectfont\bfseries $title\par}
 \vspace{3mm}
-{\large Byte-Level BPE Analysis and Multilingual Sampling Design\par}
+{\large $subtitle\par}
 \vspace{2mm}
 {\small Technical Research Report\par}
 \end{center}
 \renewcommand{\abstractname}{摘要}
 \begin{abstract}
-本研究通过受控算法跟踪、固定版本源码审计和差分编码检查，分析字节级 BPE 的规则学习与推理机制。微型词表案例表明，相邻对的统计频次与实际替换次数不同；进一步构造的反例验证了编码必须遵循已学习的合并优先级。在八类普通文本上，MinBPE 包装器与 cl100k\_base 的编号序列一致并能完整往返，组合验证程序的十七项行为检查全部通过。多语言部分实现了指数平滑抽样和整数配额计算，并将相关文献转化为具有固定预算、独立划分和语言内指标的德语／西语评估方案。当前证据支持机制分析、有限输入上的编码复现与抽样算术；真实语料的比例筛选保留为后续实验。代码、结果、图表数据和报告源文件均随项目提供。
+$abstract
 \end{abstract}
-\noindent\textbf{关键词：}字节级 BPE；编码一致性；UTF-8；多语言抽样；可复现性。
+\noindent\textbf{关键词：}$keywords
 \par\vspace{2mm}
 \pagenumbering{arabic}
-"""
+""")
 
 SPECIAL_ESCAPES = {
     "\\": r"\textbackslash{}",
@@ -352,7 +364,7 @@ def render_annotated(block: dict[str, Any], reader: SourceReader) -> str:
     return "\n".join(out)
 
 
-def render_formula(block: dict[str, Any]) -> str:
+def equation(block: dict[str, Any]) -> tuple[str, str]:
     plain = block.get("text", "")
     if plain.startswith("q_l") or plain.startswith("p_i"):
         formula = r"q_l=\frac{n_l^{\alpha}}{\displaystyle\sum_j n_j^{\alpha}},\qquad 0\leq\alpha\leq1."
@@ -374,6 +386,11 @@ def render_formula(block: dict[str, Any]) -> str:
         if not formula:
             raise ValueError(f"Formula has no LaTeX representation: {plain}")
         label = ""
+    return formula, label
+
+
+def render_formula(block: dict[str, Any]) -> str:
+    formula, label = equation(block)
     return "\n".join([r"\begin{equation}" + (rf"\label{{{label}}}" if label else ""), formula, r"\end{equation}", ""])
 
 
@@ -402,7 +419,9 @@ def render_source(block: dict[str, Any]) -> str:
 
 def render_document() -> tuple[str, dict[str, Any]]:
     reader = SourceReader()
-    out = [PREAMBLE, COVER]
+    cover = COVER_TEMPLATE.substitute(title=tex_escape(TITLE_ZH), subtitle=tex_escape(TITLE_EN),
+                                      abstract=tex_escape(ABSTRACT), keywords=tex_escape(KEYWORDS))
+    out = [PREAMBLE, cover]
     block_count = 0
     figures = []
     for file_index, (filename, deep_hierarchy) in enumerate(CONTENT_FILES):

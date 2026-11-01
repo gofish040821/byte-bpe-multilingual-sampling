@@ -7,7 +7,7 @@ This project studies byte-level BPE through source-level analysis, controlled al
 | Question | Method | Observable evidence |
 | --- | --- | --- |
 | How do BPE training and inference choose merge rules? | Trace a controlled byte-level tokenizer, inspect fixed-version source functions, and construct a merge-priority counterexample. | Intermediate sequences, adjacent-pair counts, learned ranks, replacement counts, and source annotations. |
-| How does the MinBPE wrapper reproduce an existing GPT-style encoding? | Compare exact token IDs and round trips with `cl100k_base`; inspect regex boundaries, UTF-8 bytes, and byte-ID remapping. | Eight ordinary-text cases and grouped behavioral checks. |
+| Does the MinBPE wrapper match `cl100k_base` on the selected ordinary-text inputs? | Compare exact token IDs and round trips. Inspect regex boundaries, UTF-8 bytes and byte-ID remapping. | Eight individual test inputs and the recorded comparison for each. |
 | How could German/Spanish tokenizer-training proportions be selected reproducibly? | Synthesize language-sampling literature, implement quota arithmetic, and specify controlled evaluation conditions. | Executed hypothetical quota calculations and a clearly separated future corpus experiment. |
 
 ## Project artifacts
@@ -25,7 +25,7 @@ The upstream algorithm retains its attribution. Project-specific analysis and en
 | Evidence | Confirmed scope | Interpretation boundary |
 | --- | --- | --- |
 | `results/verification.json` | 17 successful checks covering the supplied BPE and encoding examples. | Does not establish reliability over arbitrary inputs. |
-| `results/gpt4_check.json` | Eight ordinary-text categories match `cl100k_base` token IDs and round-trip successfully. | Does not establish complete special-token compatibility, equivalence for every model, or model quality. |
+| `results/gpt4_check.json` | Eight ordinary-text inputs match `cl100k_base` token IDs and round-trip successfully. | Coverage is limited to the recorded inputs and ordinary-text encoding mode. |
 | `results/language_mix.json` | Four quota checks and three hypothetical sampling settings. | Does not measure real corpus quality or identify an optimal German/Spanish ratio. |
 | Report source annotations | 19 source blocks and 184 displayed execution lines at the pinned MinBPE version. | Documents analysis of upstream code, rather than a newly authored BPE algorithm. |
 | Three figures | Two diagrams derived from an executed controlled example; one mathematical sampling scenario. | Does not measure downstream model performance. |

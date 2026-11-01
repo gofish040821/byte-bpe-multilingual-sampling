@@ -32,6 +32,7 @@
   ],
   "completed_results": {
     "behavioral_checks_passed": 17,
+    "behavioral_check_scope": "The combined BPE and encoding harness includes grouped checks over the eight ordinary-text inputs.",
     "ordinary_text_cases_matched_and_roundtripped": 8,
     "ordinary_text_categories": [
       "English",
@@ -73,6 +74,15 @@
           1
         ]
       ],
+      "round_2_interpretation": {
+        "input": "Four tokens, each with ID 256 and text 'ab'",
+        "position_basis": "1-based start position of a two-token window",
+        "matching_window_starts": [1, 2, 3],
+        "applied_replacement_starts": [1, 3],
+        "output_ids": [257, 257],
+        "meaning": "Expected MinBPE behavior. get_stats counts all matching windows. A left-to-right merge consumes both tokens at each applied replacement.",
+        "evidence": "results/bpe_walkthrough.json"
+      },
       "training_text_ids": [
         258
       ],
@@ -85,6 +95,7 @@
     "priority_counterexample": {
       "training_text": "ab1ab2ab3ab4bcbcbc",
       "input": "abcbcbcbc",
+      "interpretation": "Training uses pair counts to learn ab before bc. On this new input ab occurs once and bc four times. MinBPE applies the earliest available learned rule, ab. The frequency-first output below comes from a deliberately different encoder.",
       "learned_priority_ids": [
         256,
         99,
@@ -125,7 +136,7 @@
           "Spanish_quota": 100000
         }
       ],
-      "scope": "Executed arithmetic using assumed inventories; not a corpus measurement or optimal-ratio result"
+      "scope": "The four checks cover integer budget totals, probability totals, the square-root share for a 9:1 inventory, and a zero quota for a language with no inventory. Comparing trained tokenizers on real corpora is a proposed experiment."
     },
     "report_pages": 25,
     "native_vector_figures": 3,

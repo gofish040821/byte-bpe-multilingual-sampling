@@ -147,8 +147,9 @@
     ],
     "visual_check": "Downloaded main-report page 1 rendered with Poppler and visually inspected.",
     "observed_issue": "Visitor screenshot showed GitHub embedded PDF preview: Unable to render code block.",
-    "scope": "Direct file downloads verified; cause of the visitor-side preview failure is not established. PDF bytes unchanged.",
-    "access_improvement": "README and report index provide explicit direct downloads for all four PDFs and existing PNG previews for the figures."
+    "scope": "Historical direct-download check. File sizes and digests describe the tested commit. The current report digest is recorded in results/report_quality.json.",
+    "access_improvement": "README and report index provide explicit direct downloads for all four PDFs and existing PNG previews for the figures.",
+    "tested_commit": "cc29c9192573e695c2651bf44cdee331f70a7bb5"
   },
   "online_reading": {
     "web_edition": "reports/online.md",
@@ -166,7 +167,8 @@
         "figures/overlap.pdf": 1,
         "figures/language_sampling.pdf": 1
       },
-      "file_values": "PDF page counts"
+      "file_values": "PDF page counts",
+      "tested_commit": "009316eea12cefb7a34df0782cd5ccbe8036fd04"
     }
   }
 }

@@ -27,7 +27,7 @@ The main technical goals were to explain the difference between learning merge r
 
 The walkthrough calls the pinned upstream `BasicTokenizer`, `get_stats`, and `merge` functions while recording each intermediate sequence, all adjacent-pair frequencies, the chosen pair, the new token ID, and the number of actual replacements. This makes the algorithm trace independently inspectable instead of relying only on a prose explanation.
 
-For `abababab` with a vocabulary of 259 entries, the executed sequence lengths are **8 → 4 → 2 → 1**, while vocabulary sizes grow **256 → 257 → 258 → 259**. The three rounds have pair-frequency/replacement-count pairs **(4,4), (3,2), (1,1)**. The second round explains a subtle distinction: `[256,256,256,256]` has three overlapping adjacent windows, but left-to-right replacement can use only two disjoint pairs.
+For `abababab`, sequence lengths are **8 → 4 → 2 → 1** as vocabulary sizes grow **256 → 257 → 258 → 259**. In round two the four tokens each represent `ab` (ID 256). The pair `(256, 256)` matches at positions 1–2, 2–3 and 3–4. A left-to-right merge consumes positions 1–2 together, then 3–4 together, yielding two `abab` tokens (ID 257). The trace verifies how `get_stats` counts matching windows and how `merge` consumes two input tokens per replacement. [Recorded trace](../results/bpe_walkthrough.json) · [Source functions](../vendor/minbpe/base.py)
 
 A separate, executed counterexample trains on `ab1ab2ab3ab4bcbcbc`, learning `ab → 256` before `bc → 257`. On new input `abcbcbcbc`, `bc` is initially more frequent, but the earlier learned `ab` rule still takes priority. Correct encoding produces `[256,99,257,257,257]`; an intentionally wrong frequency-first rule produces `[97,257,257,257,257]`. This connects a concrete failure mode to the source-level distinction between training and inference.
 
@@ -35,7 +35,7 @@ The report annotates **19 source blocks and 184 displayed execution lines** acro
 
 ### 2. Differential encoding and Unicode checks
 
-The comparison harness initializes the MinBPE `GPT4Tokenizer` wrapper and `tiktoken`'s `cl100k_base`, then checks exact token-ID equality and full-text round trips on eight ordinary-text categories: English, German, Spanish, Chinese, digits, newlines, emoji, and empty input. **All eight recorded cases agree and round-trip successfully.** The combined verification script reports **17 successful behavioral checks**; some are grouped checks rather than independent datasets.
+The comparison harness runs the MinBPE `GPT4Tokenizer` wrapper and `tiktoken`'s `cl100k_base` on eight individual inputs covering English, German, Spanish, Chinese, digits, newlines, emoji and empty input. On each of these eight inputs the token IDs match exactly and decoding recovers the original text. The **17 grouped behavioral checks** cover the wider harness, including the BPE trace, those input comparisons and additional encoding checks.
 
 The recorded examples include `Hello, world! → [9906,11,1917,0]` and the three-digit regex chunks for `1234567890`. They also expose how individual tokens can contain incomplete UTF-8 byte sequences and therefore require concatenation before decoding. The byte-remapping examples distinguish raw byte values from `cl100k_base` single-byte token IDs: space byte 32 maps to ID 220, and byte 97 (`a`) maps to ID 64.
 

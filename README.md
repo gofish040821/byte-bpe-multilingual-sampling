@@ -2,9 +2,7 @@
 
 **[Read the full report online (中文)](reports/online.md)** · [View the typeset PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf)
 
-A reproducible investigation of byte-level tokenization: merge-rule mechanisms, exact reproduction of an existing encoding, and controlled design of multilingual sampling experiments.
-
-The executed analysis examines three concrete mechanism properties: overlapping pair frequency differs from replacement count; inference follows learned merge priority rather than frequencies in new text; and individual tokens may contain incomplete UTF-8 sequences. A differential harness matches `cl100k_base` on eight curated ordinary-text cases, with 17 grouped behavioral checks passing. A separate allocator passes four checks for hypothetical language budgets and supports a literature-informed German/Spanish evaluation design.
+This study traces how MinBPE learns and applies merge rules. It compares the wrapper's token IDs with `cl100k_base` on eight selected ordinary-text inputs and calculates character quotas for a proposed German/Spanish tokenizer experiment.
 
 [Report and figure access](reports/README.md) · [Research scope](docs/PROJECT_SCOPE.md) · [Detailed project experience](docs/PROJECT_EXPERIENCE.md) · [Structured record](experience/project.json)
 
@@ -13,22 +11,34 @@ The executed analysis examines three concrete mechanism properties: overlapping 
 | Question | Operational method | Evidence |
 | --- | --- | --- |
 | How do adjacent-pair counts, disjoint replacements, and learned ranks determine BPE behavior? | Instrument a fixed implementation and construct a rank-versus-frequency counterexample. | [Merge traces](results/bpe_walkthrough.json) |
-| Which encoding details are necessary to reproduce `cl100k_base` on the selected inputs? | Compare exact token IDs and complete-text round trips; inspect regex boundaries and byte-ID remapping. | [Encoding results](results/gpt4_check.json) |
+| Do the two encoders return the same token IDs on the eight selected inputs? | Compare ID lists and full-text round trips, then inspect regex boundaries and byte-ID remapping. | [Encoding results](results/gpt4_check.json) |
 | How can language proportions be selected under explicit tokenizer-training constraints? | Implement smoothed quota allocation and specify normalization, fixed budgets, document splits, and within-language evaluation. | [Quota calculations](results/language_mix.json) and [experimental design](reports/content/multilingual_sampling.json) |
 
-## Findings
+<a name="findings"></a>
 
-| Executed analysis | Recorded finding |
-| --- | --- |
-| Controlled BPE trace | `abababab` produces sequence lengths **8 → 4 → 2 → 1** and vocabulary sizes **256 → 257 → 258 → 259**. Its final encoding is `[258]`; unseen `ababab` encodes as `[257, 256]`. |
-| Counting versus replacement | In the second round, pair frequency is **3**, but only **2** non-overlapping replacements occur. |
-| Learned-priority counterexample | Training on `ab1ab2ab3ab4bcbcbc` and encoding `abcbcbcbc` yields `[256,99,257,257,257]`. An intentionally incorrect frequency-first rule yields `[97,257,257,257,257]`. |
-| Differential encoding | All **8 ordinary-text cases** match `cl100k_base` exactly and round-trip; the combined harness passes **17 grouped behavioral checks**. |
-| Sampling arithmetic | **4 quota and boundary checks** pass, including integer-budget conservation and zero-inventory handling. |
+## Worked example and verification results
 
-![Controlled BPE merge trace](figures/bpe_merges.png)
+### How MinBPE counts and applies a merge
 
-The controlled trace uses a 259-entry `BasicTokenizer` vocabulary. It describes that experiment, rather than the segmentation that `cl100k_base` would assign to the same text.
+After the first training round on `abababab`, the sequence contains four copies of the token `ab` (ID 256). Number them 1 through 4. In round two, MinBPE learns **one rule**, `(ab, ab) → abab` (ID 257). The trace records two quantities for this rule.
+
+| Operation | Token positions | Recorded value |
+| --- | --- | --- |
+| [Count occurrences](vendor/minbpe/base.py#L13-L23) of the adjacent token pair `(ab, ab)` | (1,2), (2,3), (3,4) | **3 matching windows** |
+| [Apply the rule](vendor/minbpe/base.py#L25-L41) from left to right | (1,2), (3,4) | **2 replacements**, yielding `[257, 257]` |
+
+The first replacement consumes tokens 1 and 2, so the scan resumes at token 3. This accounts for both numbers. The same trace gives **4 windows and 4 replacements** in round one and **1 of each** in round three. Overlap in the second round explains why its counts differ. [Recorded training steps](results/bpe_walkthrough.json)
+
+![Four copies of token 256, with three matching windows on the left and two disjoint replacements on the right](figures/overlap.png)
+
+### What each check covers
+
+| Check | Input and observed result | Evidence |
+| --- | --- | --- |
+| Training trace | With a final vocabulary of 259, `BasicTokenizer` reduces `abababab` from 8 tokens to 4, then 2, then 1. The vocabulary grows from 256 to 259 entries. The resulting tokenizer encodes `ababab` as `[257, 256]`. | [Trace figure](figures/bpe_merges.png) |
+| Learned merge order | Training on `ab1ab2ab3ab4bcbcbc` gives `ab` priority over `bc`. On the new input `abcbcbcbc`, MinBPE follows that order and returns `[256,99,257,257,257]`. A comparison that selects the most frequent pair in the new input first returns `[97,257,257,257,257]`. | [Counterexample](results/bpe_walkthrough.json) |
+| Encoding comparison | On **8 selected ordinary-text inputs**, the MinBPE wrapper and `tiktoken`'s `cl100k_base` return identical IDs and reconstruct each input. The combined suite passes **17 grouped checks** across the BPE trace, wrapper and additional cases. | [Inputs and IDs](results/gpt4_check.json) · [Check list](results/verification.json) |
+| Sampling arithmetic | **4 checks** cover integer budget conservation, shares summing to one, the square-root allocation for a 9:1 inventory, and zero quota for an empty source. The German/Spanish inventories are hypothetical. Comparing tokenizer quality on real text is a proposed experiment. | [Quotas and checks](results/language_mix.json) |
 
 ## Methods
 

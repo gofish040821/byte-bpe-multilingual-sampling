@@ -59,6 +59,23 @@
       "exit_code": 0,
       "report_pages": 25,
       "note": "Main text reorganized into research framework, methods and results; foundations and source annotations in appendix."
+    },
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "scope": "Exact byte-string likelihood checked against exhaustive path enumeration, including EOS and duplicate spellings, and on a 4,096-byte string."
+    },
+    {
+      "command": "python code/quota_pilot.py --offline --jobs 4",
+      "exit_code": 0,
+      "scope": "Reproduced all nine models from hash-verified cached corpora. Document scores were byte-identical across worker counts, and the final JSON replay matched after the scope note was clarified.",
+      "models": 9,
+      "document_rows": 7146
+    },
+    {
+      "command": "python code/quota_uncertainty.py",
+      "exit_code": 0,
+      "scope": "Paired document bootstrap of the prespecified smoothed-to-proportional contrast over 397 documents and 4,000 resamples."
     }
   ],
   "upstream_connector_check": {
@@ -75,12 +92,12 @@
     "Fresh isolated dependency installation",
     "Empty-cache vocabulary download",
     "GitHub-hosted CI",
-    "Real German/Spanish corpus ratio experiments"
+    "Downstream task accuracy and transfer of the quota result to neural models or other corpora"
   ],
   "repository_checks": {
     "all_passed": true,
-    "public_files_checked": 74,
-    "text_files_checked": 60,
+    "public_files_checked": 82,
+    "text_files_checked": 67,
     "pdf_files_checked": 4,
     "upstream_files_verified": 5,
     "figure_data_files_verified": 7,
@@ -101,7 +118,7 @@
     "branch": "main"
   },
   "project_ownership": "The user directly confirmed that they handled this project; source/AI attribution and experimental scope are documented separately.",
-  "presentation": "Reproducible tokenization research: research questions, methods, mechanism checks, findings and multilingual experimental design.",
+  "presentation": "Reproducible BPE traces, coding checks and a controlled multilingual tokenizer-quota study on held-out text.",
   "latest_review_date_local": "2026-11-01",
   "pdf_access_check": {
     "date_local": "2026-11-01",

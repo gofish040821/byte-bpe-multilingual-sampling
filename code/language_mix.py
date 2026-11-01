@@ -77,7 +77,7 @@ def main():
     lines = [result['scope'], f'假设可用字符数：{sizes}；训练预算：{args.total_chars}']
     for p in plans:
         lines.append(f"alpha={p['alpha']}: 比例={p['probabilities']}, 字符配额={p['character_quotas']}")
-    lines.append('4项配额与边界检查通过；未进行真实语料训练。')
+    lines.append('本程序通过4项配额与边界检查。独立的德西语料对照实验结果见 results/quota_pilot.json。')
     (outdir / 'language_mix.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
     print('\n'.join(lines))
 

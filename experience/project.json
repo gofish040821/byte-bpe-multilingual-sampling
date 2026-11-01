@@ -4,13 +4,14 @@
   "title": "Byte-Level BPE Analysis and Multilingual Sampling Design",
   "title_zh": "字节级 BPE 分析与多语言抽样方案设计",
   "project_type": "reproducible_research_project",
-  "artifact_validation_date": "2026-10-31",
+  "artifact_validation_date": "2026-11-01",
   "ownership": {
     "status": "user_confirmed_project_handled_by_owner",
     "recorded_owner_involvement": [
       "Directed project scope and explanatory depth",
       "Requested report, mathematical notation and figure revisions",
-      "Directed preparation for a public GitHub project and future CV review"
+      "Directed preparation for a public GitHub project and future CV review",
+      "Requested empirical evaluation of multilingual quota effects"
     ],
     "assistance": "Project-specific code, analysis, figures and documentation were generated and revised with Codex assistance.",
     "upstream_attribution": "The vendored MinBPE implementation is unchanged upstream software, not a project-authored algorithm."
@@ -18,7 +19,7 @@
   "goals": [
     "Analyze the relation between adjacent-pair frequency, disjoint replacements and learned merge priority",
     "Audit fixed-version encoding mechanisms and compare exact cl100k_base IDs on selected inputs",
-    "Develop controlled multilingual tokenizer-training sampling and evaluation conditions"
+    "Measure how tokenizer-training language quotas affect held-out German and Spanish byte-normalized language-model perplexity"
   ],
   "methods": [
     "Executed toy BPE traces with all adjacent-pair counts and actual replacement counts",
@@ -27,6 +28,8 @@
     "UTF-8 byte inspection and byte-ID remapping analysis",
     "Literature synthesis with source-specific evidence boundaries",
     "Exponent-smoothed language shares and integer budget allocation",
+    "Matched tokenizer training budgets and three paired seeds across three German/Spanish mixes",
+    "Held-out PUD evaluation using exact bigram likelihood of byte strings, with equal language weighting",
     "Native LaTeX, TikZ and PGFPlots report generation",
     "Pinned source hashes, deterministic figure data, portable paths and publication checks"
   ],
@@ -77,9 +80,19 @@
       "round_2_interpretation": {
         "input": "Four tokens, each with ID 256 and text 'ab'",
         "position_basis": "1-based start position of a two-token window",
-        "matching_window_starts": [1, 2, 3],
-        "applied_replacement_starts": [1, 3],
-        "output_ids": [257, 257],
+        "matching_window_starts": [
+          1,
+          2,
+          3
+        ],
+        "applied_replacement_starts": [
+          1,
+          3
+        ],
+        "output_ids": [
+          257,
+          257
+        ],
         "meaning": "Expected MinBPE behavior. get_stats counts all matching windows. A left-to-right merge consumes both tokens at each applied replacement.",
         "evidence": "results/bpe_walkthrough.json"
       },
@@ -136,13 +149,56 @@
           "Spanish_quota": 100000
         }
       ],
-      "scope": "The four checks cover integer budget totals, probability totals, the square-root share for a 9:1 inventory, and a zero quota for a language with no inventory. Comparing trained tokenizers on real corpora is a proposed experiment."
+      "scope": "The four checks cover integer budget totals, probability totals, the square-root share for a 9:1 inventory, and a zero quota for a language with no inventory."
     },
-    "report_pages": 25,
+    "report_pages": 27,
     "native_vector_figures": 3,
     "figure_data_tables": 7,
     "annotated_source_blocks": 19,
-    "annotated_execution_lines": 184
+    "annotated_execution_lines": 184,
+    "quota_pilot": {
+      "training": "UD r2.15 German and Spanish GSD, 1,500 sentences per language for each add-0.1 bilingual bigram",
+      "test": "All 1,000 official German/Spanish PUD test sentence pairs, 397 aligned documents",
+      "tokenizer_budget_nfc_codepoints": 50000,
+      "tokenizer_vocabulary": 512,
+      "sampling_seeds": [
+        11,
+        29,
+        47
+      ],
+      "number_of_runs": 9,
+      "metric": "Byte perplexity from the exact marginal sentence likelihood; exponentiate the mean bits per UTF-8 byte, weighting languages and fitted seeds equally. Lower is better.",
+      "byte_perplexity_by_de_es_quota": {
+        "50:50": {
+          "de": 8.84039395834456,
+          "es": 7.738042744077716,
+          "macro": 8.270873371304665
+        },
+        "75:25": {
+          "de": 8.62821054289061,
+          "es": 7.934019538079145,
+          "macro": 8.273837744720074
+        },
+        "90:10": {
+          "de": 8.53833230868358,
+          "es": 8.285836283071937,
+          "macro": 8.411136881552684
+        }
+      },
+      "planned_contrast": "75:25 versus proportional 90:10",
+      "relative_change_percent": {
+        "de": 1.0526438999759373,
+        "es": -4.246001646346277,
+        "macro": -1.632349333580951
+      },
+      "conditional_document_bootstrap_95_percent": [
+        -1.7749235184862149,
+        -1.4914698916097824
+      ],
+      "bootstrap_unit": "Paired test document, same draw across languages and seeds, fitted models fixed, 4,000 replicates.",
+      "interpretation": "75:25 improved aggregate and Spanish byte perplexity relative to 90:10, with a German penalty. The 50:50 reference had a slightly lower aggregate point estimate than 75:25.",
+      "evidence": "results/quota_pilot.json"
+    }
   },
   "environment_verified": {
     "operating_system": "Windows",
@@ -184,7 +240,12 @@
     "cv_wording": "docs/CV_DESCRIPTIONS.md",
     "extensions": "docs/EXTENSIONS.md",
     "research_framework": "reports/content/research_overview.json",
-    "artifact_catalog": "README.md#artifacts"
+    "artifact_catalog": "README.md#artifacts",
+    "multilingual_pilot_code": "code/quota_pilot.py",
+    "byte_likelihood_code": "code/byte_likelihood.py",
+    "multilingual_pilot_results": "results/quota_pilot.json",
+    "pilot_document_scores": "results/quota_pilot_documents.csv",
+    "paired_document_bootstrap": "results/quota_uncertainty.json"
   },
   "research_references": [
     {
@@ -198,18 +259,22 @@
     {
       "label": "Chung et al. (2023), UniMax language sampling",
       "url": "https://arxiv.org/abs/2304.09151"
+    },
+    {
+      "label": "Cao and Rimell (2021), marginal likelihood over tokenisations",
+      "url": "https://aclanthology.org/2021.emnlp-main.161/"
     }
   ],
   "planned_only": [
     "Broader 500-input differential encoding coverage",
-    "Small controlled German/Spanish language-ratio pilot",
+    "Replicate the quota pilot on a second independent corpus",
     "BasicTokenizer versus RegexTokenizer pre-tokenization ablation"
   ],
   "claim_boundaries": [
-    "No real German/Spanish corpus-ratio experiment has been executed",
-    "No language model or GPT-4 was trained",
+    "The German/Spanish perplexity experiment uses small statistical bigram models, three tokenizer-training mixes and a fixed PUD test collection.",
+    "The larger five-million-character tokenizer experiment is a proposed follow-up.",
+    "No downstream task accuracy or neural language-model performance was measured.",
     "Eight ordinary-text cases do not establish equivalence over all inputs or special-token configurations",
-    "No accuracy, perplexity, speedup, or downstream model-quality gain is reported",
     "No universal optimal language ratio or novel BPE algorithm is claimed",
     "Project ownership and AI-assisted delivery must not be rewritten as sole manual authorship of upstream code"
   ],
@@ -218,11 +283,12 @@
     "Source-level code reading",
     "Behavioral and differential verification",
     "Multilingual experiment design",
+    "Controlled multilingual corpus evaluation and exact byte-string likelihood",
     "Research synthesis and evidence boundaries",
     "Reproducible engineering and technical reporting"
   ],
   "privacy": "No personal owner identity or private identifier is included. Evidence paths are repository-relative; public AI records redact local machine paths.",
-  "technical_scope": "Byte-level BPE/MinBPE analysis, differential encoding verification, and multilingual tokenizer-training sampling design",
+  "technical_scope": "Byte-level BPE analysis, differential encoding verification and a controlled German/Spanish tokenizer-training quota experiment",
   "research_questions": [
     {
       "id": "RQ1",
@@ -236,15 +302,15 @@
     },
     {
       "id": "RQ3",
-      "question": "How can language proportions be evaluated under explicit tokenizer-training constraints?",
-      "evidence": "reports/content/multilingual_sampling.json"
+      "question": "How does a change in tokenizer-training language quotas affect bilingual bigram perplexity on held-out German and Spanish?",
+      "evidence": "results/quota_pilot.json"
     }
   ],
   "report_structure": {
     "main": [
       "Research framework",
       "Methods and observed verification results",
-      "Multilingual sampling and evaluation design"
+      "Multilingual sampling design and corpus pilot"
     ],
     "appendices": [
       "Explanatory foundations",

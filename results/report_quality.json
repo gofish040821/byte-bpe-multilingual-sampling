@@ -1,6 +1,6 @@
 {
-  "pdf_pages": 25,
-  "pdf_sha256": "1d5b34a60c033e676db670b7e299dab136cac2882e6cf04a686e7ab7dbd5dfd5",
+  "pdf_pages": 27,
+  "pdf_sha256": "8aada742118ec3ea5c0978edbd5658a5ffaf4ce78301985ca3aa86af83fd886a",
   "page_size": "A4",
   "engine": "Tectonic 0.17.0+20260731 (XeTeX/LaTeX)",
   "math_typesetting": "amsmath; native TeX math environments",
@@ -15,9 +15,9 @@
   "annotated_source_blocks": 19,
   "annotated_execution_lines": 184,
   "source_commit": "1acefe89412b20245db5a22d2a02001e547dc602",
-  "visual_review": "All 25 pages rendered and reviewed. The revised abstract, worked position pairs, merge trace, overlap diagram, equations, and source tables fit the A4 pages.",
+  "visual_review": "Rendered and visually checked all 27 A4 pages, plus the empirical results table and paired document interval at full preview size on page 10. No clipping or overlap observed.",
   "compile_notes": "No overfull boxes or missing-character diagnostics. Bundled lineno.sty emits an invalid-UTF-8 warning in a package comment; no replacement glyph is present in the output. Windows font paths are environment-dependent; font fallbacks are provided.",
-  "unperformed": "No real German/Spanish corpus ratio experiment; no GPT-4 or LLM training.",
+  "unperformed": "Classification, translation and question-answering accuracy; large neural language model trials; the proposed five-million-character tokenizer sweep.",
   "pdf_path": "reports/tokenizer_analysis_report.pdf",
   "privacy_metadata": "No personal PDF Author value; repository privacy checks recorded separately.",
   "validation_date_local": "2026-11-01",
@@ -25,7 +25,17 @@
     "Abstract and keywords",
     "Research framework and methods",
     "Observed encoding results",
-    "Multilingual sampling design and limitations",
+    "Multilingual quota pilot, held-out predictive results and larger follow-up design",
     "Appendix: foundations and source audit"
-  ]
+  ],
+  "quota_pilot": {
+    "test_documents_per_language": 397,
+    "test_sentences_per_language": 1000,
+    "trained_tokenizers_and_bigrams": 9,
+    "result_page": 10,
+    "result_section": "3.7",
+    "bootstrap_document_draws": 4000,
+    "score_table_checked_against": "results/quota_pilot.json",
+    "interval_checked_against": "results/quota_uncertainty.json"
+  }
 }

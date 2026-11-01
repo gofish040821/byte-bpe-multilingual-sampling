@@ -57,6 +57,11 @@ def validate(forbidden: list[str]) -> dict:
     provenance = json.loads((ROOT / "vendor/provenance.json").read_text("utf-8"))
     for name, expected in provenance["files"].items():
         check_hash("vendor/minbpe/" + name, expected["sha256"])
+    pilot = json.loads((ROOT / "results/quota_pilot.json").read_text("utf-8"))
+    document_scores = pilot["document_scores"]
+    check_hash(document_scores["path"], document_scores["sha256"])
+    uncertainty = json.loads((ROOT / "results/quota_uncertainty.json").read_text("utf-8"))
+    check_hash(document_scores["path"], uncertainty["input_sha256"])
     manifest = json.loads((ROOT / "figures/manifest.json").read_text("utf-8"))
     for entry in manifest["data_audit"]:
         check_hash(entry["path"], entry["sha256"])

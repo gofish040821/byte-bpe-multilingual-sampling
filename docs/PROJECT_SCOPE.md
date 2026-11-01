@@ -1,6 +1,6 @@
 # Research scope and evidence boundaries
 
-This project studies byte-level BPE through source-level analysis, controlled algorithm traces, and differential encoding checks. It also develops a literature-informed experimental design for multilingual tokenizer sampling. The deliverables combine executable analysis, structured results, vector figures, and a reproducible technical report.
+This project studies byte-level BPE through source-level analysis, controlled algorithm traces, differential encoding checks and a German/Spanish sampling pilot. The deliverables combine executable analysis, structured results, vector figures, and a reproducible technical report.
 
 ## Research questions
 
@@ -8,7 +8,7 @@ This project studies byte-level BPE through source-level analysis, controlled al
 | --- | --- | --- |
 | How do BPE training and inference choose merge rules? | Trace a controlled byte-level tokenizer, inspect fixed-version source functions, and construct a merge-priority counterexample. | Intermediate sequences, adjacent-pair counts, learned ranks, replacement counts, and source annotations. |
 | Does the MinBPE wrapper match `cl100k_base` on the selected ordinary-text inputs? | Compare exact token IDs and round trips. Inspect regex boundaries, UTF-8 bytes and byte-ID remapping. | Eight individual test inputs and the recorded comparison for each. |
-| How could German/Spanish tokenizer-training proportions be selected reproducibly? | Synthesize language-sampling literature, implement quota arithmetic, and specify controlled evaluation conditions. | Executed hypothetical quota calculations and a clearly separated future corpus experiment. |
+| How does the German/Spanish mix used to train the tokenizer affect held-out language-model perplexity? | Keep the language-model text, test text, vocabulary size and scoring rule fixed while varying tokenizer-training quotas. | [Paired pilot results](../results/quota_pilot.json) for three mixtures and three sampling seeds. |
 
 ## Project artifacts
 
@@ -27,6 +27,7 @@ The upstream algorithm retains its attribution. Project-specific analysis and en
 | `results/verification.json` | 17 successful checks covering the supplied BPE and encoding examples. | Does not establish reliability over arbitrary inputs. |
 | `results/gpt4_check.json` | Eight ordinary-text inputs match `cl100k_base` token IDs and round-trip successfully. | Coverage is limited to the recorded inputs and ordinary-text encoding mode. |
 | `results/language_mix.json` | Four quota checks and three hypothetical sampling settings. | Does not measure real corpus quality or identify an optimal German/Spanish ratio. |
+| [Corpus pilot](../results/quota_pilot.json) | On PUD test sentences, 75:25 versus 90:10 reduced equal-language byte perplexity by 1.63%. Spanish fell 4.25% and German rose 1.05%. The 50:50 reference had the lowest aggregate point estimate. | Perplexity applies to a statistical bigram model. Task accuracy and performance of neural language models require separate evaluation. |
 | Report source annotations | 19 source blocks and 184 displayed execution lines at the pinned MinBPE version. | Documents analysis of upstream code, rather than a newly authored BPE algorithm. |
 | Three figures | Two diagrams derived from an executed controlled example; one mathematical sampling scenario. | Does not measure downstream model performance. |
 

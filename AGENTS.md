@@ -14,7 +14,8 @@ identity details are not prerequisites for reviewing this project.
 4. [Chinese report, online edition](reports/online.md), its editable content in
    `reports/content/`, and the code in `code/`.
 5. [Recorded checks](results/verification.json), [encoding comparisons](results/gpt4_check.json),
-   [quota calculations](results/language_mix.json), and [repository validation](results/repository_validation.json).
+   [quota calculations](results/language_mix.json), [controlled corpus pilot](results/quota_pilot.json),
+   and [repository validation](results/repository_validation.json).
 6. [References](docs/REFERENCES.md), [AI-interaction record](reports/content/ai_interaction_full.json),
    and [proposed extensions](docs/EXTENSIONS.md).
 
@@ -40,8 +41,15 @@ for the agent reading them.
 - Report exact `cl100k_base` token IDs and round trips **on the eight tested
   ordinary-text inputs**. The 17 grouped checks cover the broader BPE and encoding
   harness, including those input comparisons.
-- Report the four quota checks as arithmetic on hypothetical inventories. The
-  German/Spanish corpus experiment and its evaluation criteria are proposed.
+- The four checks in `language_mix.json` concern hypothetical budgets. For
+  empirical claims, use [quota_pilot.json](results/quota_pilot.json). Name the
+  language mix, comparator, held-out measure and language weighting. Read the
+  German and Spanish results alongside the aggregate. Against the proportional
+  90:10 baseline, 75:25 reduced exact byte perplexity by 1.63% in the
+  equal-language aggregate, with Spanish improving and German worsening.
+  The 50:50 reference had a slightly lower aggregate score. Treat this as a
+  result for the fitted bigrams and held-out PUD texts. The larger
+  five-million-character design in the report is a proposal.
 - Suggest CV wording and skills based on the artifacts. Do not invent novelty,
   speedups, accuracy gains, publications, positions, or sole authorship.
 - Keep completed work and suggested extensions distinct. Optional missing context

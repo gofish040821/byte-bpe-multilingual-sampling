@@ -2,7 +2,7 @@
 
 **[Read the full report online (中文)](reports/online.md)** · [View the typeset PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf)
 
-This study traces how MinBPE learns and applies merge rules. It compares the wrapper's token IDs with `cl100k_base` on eight selected ordinary-text inputs and calculates character quotas for a proposed German/Spanish tokenizer experiment.
+This study traces how MinBPE learns and applies merge rules, compares two encoders on eight inputs, and tests how the German–Spanish mix used to train a tokenizer affects prediction on independent bilingual text.
 
 [Report and figure access](reports/README.md) · [Research scope](docs/PROJECT_SCOPE.md) · [Detailed project experience](docs/PROJECT_EXPERIENCE.md) · [Structured record](experience/project.json)
 
@@ -12,7 +12,21 @@ This study traces how MinBPE learns and applies merge rules. It compares the wra
 | --- | --- | --- |
 | How do adjacent-pair counts, disjoint replacements, and learned ranks determine BPE behavior? | Instrument a fixed implementation and construct a rank-versus-frequency counterexample. | [Merge traces](results/bpe_walkthrough.json) |
 | Do the two encoders return the same token IDs on the eight selected inputs? | Compare ID lists and full-text round trips, then inspect regex boundaries and byte-ID remapping. | [Encoding results](results/gpt4_check.json) |
-| How can language proportions be selected under explicit tokenizer-training constraints? | Implement smoothed quota allocation and specify normalization, fixed budgets, document splits, and within-language evaluation. | [Quota calculations](results/language_mix.json) and [experimental design](reports/content/multilingual_sampling.json) |
+| Does giving Spanish a larger share of a fixed tokenizer budget improve bilingual prediction? | Compare 50:50, 75:25 and 90:10 German–Spanish quotas across paired seeds. Fit each bigram on identical text and score the same held-out sentences. | [Protocol](experiments/quota_pilot_protocol.md) · [Pilot results](results/quota_pilot.json) |
+
+## German–Spanish quota pilot
+
+Increasing Spanish's share of the tokenizer training budget from 10% to 25% **lowered held-out bilingual byte perplexity by 1.63%** in a smoothed bigram model. Spanish perplexity fell 4.25% while German perplexity rose 1.05%. Against the 50:50 reference, 75:25 was 0.036% higher on the bilingual measure.
+
+| Tokenizer budget (DE:ES) | German | Spanish | Equal-language aggregate |
+| --- | ---: | ---: | ---: |
+| 90:10 · proportional baseline | 8.5383 | 8.2858 | 8.4111 |
+| 75:25 · square-root smoothing | 8.6282 | 7.9340 | 8.2738 |
+| 50:50 · equal shares | 8.8404 | 7.7380 | 8.2709 |
+
+Lower byte perplexity means the model assigned more probability to the observed text. For each quota, we trained 512-entry BPE tokenizers on 50,000 characters of real German and Spanish GSD text using three paired seeds. Each bigram learned from the same 1,500 training sentences per language. Evaluation covered all 1,000 aligned PUD test sentences per language. We summed the probabilities of all token sequences that produce each sentence, including its end, and averaged bits per UTF-8 byte equally across languages and seeds before converting to perplexity. [Study protocol](experiments/quota_pilot_protocol.md) · [Data sources and per-run scores](results/quota_pilot.json)
+
+All three seeds favored 75:25 over 90:10 on the bilingual measure. With the fitted models held fixed, a paired bootstrap of the 397 test documents gave a 95% interval of **1.49% to 1.77% lower perplexity**. The experiment measured text prediction under these models. It did not evaluate task accuracy. [Document scores](results/quota_pilot_documents.csv) · [Paired comparison and interval](results/quota_uncertainty.json)
 
 <a name="findings"></a>
 
@@ -38,7 +52,7 @@ The first replacement consumes tokens 1 and 2, so the scan resumes at token 3. T
 | Training trace | With a final vocabulary of 259, `BasicTokenizer` reduces `abababab` from 8 tokens to 4, then 2, then 1. The vocabulary grows from 256 to 259 entries. The resulting tokenizer encodes `ababab` as `[257, 256]`. | [Trace figure](figures/bpe_merges.png) |
 | Learned merge order | Training on `ab1ab2ab3ab4bcbcbc` gives `ab` priority over `bc`. On the new input `abcbcbcbc`, MinBPE follows that order and returns `[256,99,257,257,257]`. A comparison that selects the most frequent pair in the new input first returns `[97,257,257,257,257]`. | [Counterexample](results/bpe_walkthrough.json) |
 | Encoding comparison | On **8 selected ordinary-text inputs**, the MinBPE wrapper and `tiktoken`'s `cl100k_base` return identical IDs and reconstruct each input. The combined suite passes **17 grouped checks** across the BPE trace, wrapper and additional cases. | [Inputs and IDs](results/gpt4_check.json) · [Check list](results/verification.json) |
-| Sampling arithmetic | **4 checks** cover integer budget conservation, shares summing to one, the square-root allocation for a 9:1 inventory, and zero quota for an empty source. The German/Spanish inventories are hypothetical. Comparing tokenizer quality on real text is a proposed experiment. | [Quotas and checks](results/language_mix.json) |
+| Sampling arithmetic | **4 checks** cover integer budget conservation, shares summing to one, the square-root allocation for a 9:1 inventory, and zero quota for an empty source. The inventory ratio sets the three candidate shares for the corpus pilot. | [Quotas and checks](results/language_mix.json) |
 
 ## Methods
 
@@ -58,7 +72,7 @@ For an **assumed** German/Spanish inventory of 9 million/1 million Unicode code 
 | `0.5` | 75% / 750,000 | 25% / 250,000 |
 | `1` | 90% / 900,000 | 10% / 100,000 |
 
-The proposed corpus study holds normalization, total training budget, vocabulary size, document-level splits, and evaluation text fixed. It compares token counts per character within each language against a 50:50 baseline. [Three follow-up experiments](docs/EXTENSIONS.md) specify broader encoding coverage, a small ratio pilot, and a pre-tokenization ablation.
+The real-text pilot uses these same three shares at a smaller budget. The longer-term design in the [technical report](reports/online.md) considers larger vocabularies and training budgets. [Extensions](docs/EXTENSIONS.md) separates that work from the completed runs.
 
 ## Artifacts
 
@@ -94,6 +108,15 @@ python code/language_mix.py --de-chars 9000000 --es-chars 1000000 --total-chars 
 
 `tiktoken` may download its public encoding data on the first run. The ignored `.cache/tiktoken` directory stores that data; `TIKTOKEN_CACHE_DIR` can select another cache.
 
+To reproduce the German–Spanish pilot and its paired document intervals:
+
+```sh
+python code/quota_pilot.py
+python code/quota_uncertainty.py
+```
+
+The first command fetches the pinned UD releases and verifies their hashes. Use `python code/quota_pilot.py --offline` to rerun using the populated cache. The second command can run directly on the [published document scores](results/quota_pilot_documents.csv).
+
 For local link, provenance, artifact-hash, and publication checks:
 
 ```sh
@@ -117,7 +140,7 @@ Pass `--tectonic` if the executable is not on `PATH`. PNG export requires `pdfto
 
 ## Scope and limitations
 
-The eight curated cases provide bounded differential evidence, rather than comprehensive input coverage or complete special-token compatibility. Sampling results are arithmetic on assumed inventories: no real German/Spanish ratio sweep or downstream language-model evaluation has been run, and no universal optimal ratio, accuracy gain, perplexity reduction, or speedup is claimed. Proposed experiments are kept separate from recorded results in [EXTENSIONS](docs/EXTENSIONS.md).
+The encoding comparison covers eight selected ordinary-text inputs. The bilingual prediction experiment measures held-out byte perplexity for a smoothed bigram with a small BPE vocabulary. The German and Spanish training sources and PUD evaluation domain are part of that result. Testing task accuracy, neural models, or transfer to other language pairs requires additional experiments.
 
 ## Attribution and references
 

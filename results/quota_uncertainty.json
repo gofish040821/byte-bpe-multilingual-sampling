@@ -1,0 +1,46 @@
+{
+  "estimand": "100 * (PPL_75:25 / PPL_90:10 - 1); negative favors 75:25",
+  "averaging": "Average bits across paired seeds, pool costs by bytes within language, then give German and Spanish equal weight in log space.",
+  "resampling_unit": "Aligned PUD source document with replacement; same draw for both languages, all seeds and both quotas.",
+  "scope": "Percentile intervals reflect test-document variability conditional on the fitted models, not uncertainty across corpora or model families.",
+  "n_documents": 397,
+  "replicates": 4000,
+  "bootstrap_seed": 101,
+  "input_sha256": "7d938724902f8e9089113d1591626644e1f41200edcf576821a94d456566e404",
+  "point_percent": {
+    "de": 1.0526438999759373,
+    "es": -4.246001646346277,
+    "macro": -1.632349333580951
+  },
+  "percentile_95_percent": {
+    "de": [
+      0.8489496544734317,
+      1.2508844637055088
+    ],
+    "es": [
+      -4.444729551153685,
+      -4.050139294571043
+    ],
+    "macro": [
+      -1.7749235184862149,
+      -1.4914698916097824
+    ]
+  },
+  "individual_seed_percent": {
+    "11": {
+      "de": 0.9754713601064804,
+      "es": -3.3070671411191563,
+      "macro": -1.1889961966956766
+    },
+    "29": {
+      "de": 1.483895357092485,
+      "es": -5.269230634712448,
+      "macro": -1.950790490877978
+    },
+    "47": {
+      "de": 0.7001283559225613,
+      "es": -4.151580677029115,
+      "macro": -1.7556712652813915
+    }
+  }
+}

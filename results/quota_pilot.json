@@ -1,0 +1,495 @@
+{
+  "sources": [
+    {
+      "treebank": "German-GSD",
+      "release": "UD r2.15",
+      "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_German-GSD/d47d56779e81203ec7a9e3460c7f5afa9f711269/de_gsd-ud-train.conllu",
+      "revision": "d47d56779e81203ec7a9e3460c7f5afa9f711269",
+      "sha256": "cb1326edce0e4f61847416235611ae6a15d0fed9c8e403c355a1edd9a23b2c77",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://raw.githubusercontent.com/UniversalDependencies/UD_German-GSD/d47d56779e81203ec7a9e3460c7f5afa9f711269/LICENSE.txt",
+      "sentences": 13814
+    },
+    {
+      "treebank": "Spanish-GSD",
+      "release": "UD r2.15",
+      "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Spanish-GSD/de16cd88598b302a9a5dab502e10d667458072f7/es_gsd-ud-train.conllu",
+      "revision": "de16cd88598b302a9a5dab502e10d667458072f7",
+      "sha256": "81af0ef69a5ec0f9a8b37352057d06fd27a66f1e13f7d926562ea1ff5c335fdb",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Spanish-GSD/de16cd88598b302a9a5dab502e10d667458072f7/LICENSE.txt",
+      "sentences": 14187
+    },
+    {
+      "treebank": "German-PUD",
+      "release": "UD r2.15",
+      "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_German-PUD/38815149e93d35ec81ffa6a941111dcfe39977f4/de_pud-ud-test.conllu",
+      "revision": "38815149e93d35ec81ffa6a941111dcfe39977f4",
+      "sha256": "51e16418c8ca5ff9d14d457eb67f6f051280e7766b3cecc556479d0e42cd73bc",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://raw.githubusercontent.com/UniversalDependencies/UD_German-PUD/38815149e93d35ec81ffa6a941111dcfe39977f4/LICENSE.txt",
+      "sentences": 1000
+    },
+    {
+      "treebank": "Spanish-PUD",
+      "release": "UD r2.15",
+      "url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Spanish-PUD/4a5fc2b4b4cbe335870836d505cd25a16a24f6ac/es_pud-ud-test.conllu",
+      "revision": "4a5fc2b4b4cbe335870836d505cd25a16a24f6ac",
+      "sha256": "4c143cbf4ea9debebc94659a1fcee516e0de2ceba342ac943df3582f333f56de",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Spanish-PUD/4a5fc2b4b4cbe335870836d505cd25a16a24f6ac/LICENSE.txt",
+      "sentences": 1000
+    }
+  ],
+  "split_audit": {
+    "de": {
+      "source_train_sentences": 13814,
+      "train_rows_matching_pud_excluded": 0,
+      "duplicate_train_rows_excluded": 1,
+      "training_sentences": 1500,
+      "training_codepoints": 175098,
+      "train_ids_sha256": "e327e089cc0ed1fed0c00e1597141a88ab7b3d98abb4827786b46800cad17174",
+      "test_sentences": 1000,
+      "test_documents": 397,
+      "test_ids_sha256": "4c7242db56d3bd2de065615361adf98fee503cde527ff53111f911daf3f6e323"
+    },
+    "es": {
+      "source_train_sentences": 14187,
+      "train_rows_matching_pud_excluded": 0,
+      "duplicate_train_rows_excluded": 94,
+      "training_sentences": 1500,
+      "training_codepoints": 209095,
+      "train_ids_sha256": "a41bc355cf562622ba32dcff5bcbe77495d895aafe01ef826ce4b67032844820",
+      "test_sentences": 1000,
+      "test_documents": 397,
+      "test_ids_sha256": "4c7242db56d3bd2de065615361adf98fee503cde527ff53111f911daf3f6e323"
+    }
+  },
+  "protocol": {
+    "training": "Fixed GSD train sample per language, ordered by the hash of sentence ID with language and lm-training salt. Exclude duplicate NFC text and exact overlaps with either evaluation language. Use the entire fixed sample for each bilingual bigram.",
+    "evaluation": "All 1000 official PUD test sentence pairs in 397 aligned source documents. No PUD fitting, model selection or hyperparameter tuning.",
+    "tokenizer": "Vendored RegexTokenizer, seeded whole-sentence subsets without replacement, exact character quotas. Newline separators are isolated and never merged.",
+    "regex": "\\n| ?\\p{L}+| ?\\p{N}+| ?[^\\s\\p{L}\\p{N}]+|[^\\S\\n]+",
+    "nfc_codepoint_budget": 50000,
+    "vocab_size": 512,
+    "training_sentences_per_language": 1500,
+    "quota_weights_for_design_only": {
+      "de": 9,
+      "es": 1
+    },
+    "alphas": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "paired_seeds": [
+      11,
+      29,
+      47
+    ],
+    "lm": "Additive token bigram on each sentence's deterministic BPE encoding; single BOS context, outcomes = 512 token IDs + EOS.",
+    "smoothing_pseudocount": 0.1,
+    "primary_metric": "Exact probability sums all token paths emitting each UTF-8 string and then EOS. Divide total negative log2 probability by original UTF-8 bytes. Byte perplexity = 2^BPB. Average BPB equally across languages and seeds before exponentiating.",
+    "secondary_metric": "Canonical BPB uses only the deterministic BPE path and EOS.",
+    "primary_contrast": "75:25 smoothed versus 90:10 proportional under design inventory 9:1. Include 50:50 as equal-share reference.",
+    "limits": "A small count model, two languages, two GSD training treebanks, two PUD evaluation treebanks and three tokenizer sampling seeds. Results apply to these test sets. Neural-model quality and task accuracy were not evaluated."
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "alpha": 0.0,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 227,
+          "codepoints": 25000,
+          "ids_sha256": "0bf83bd704351f30b31c200671f4a497dfb4f24dacfcc2818b725bb4b1df9570"
+        },
+        "es": {
+          "sentences": 176,
+          "codepoints": 25000,
+          "ids_sha256": "882102343477d97da17e133a95b573ff8c533fa65c60951700afc01f984d9c6f"
+        }
+      },
+      "merge_rules_sha256": "b87eb4f4626af936657aef61a0cae5d27e0e8dfab325208f4889cee7e2854851",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 65751,
+          "exact_bits": 400952.032682016,
+          "exact_bpb": 3.1362110091986923,
+          "exact_byte_ppl": 8.792119585779913,
+          "canonical_bpb": 3.1400997417351504,
+          "canonical_byte_ppl": 8.815850395954902
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 64782,
+          "exact_bits": 370456.96468156215,
+          "exact_bpb": 2.961168336050215,
+          "exact_byte_ppl": 7.787543603759838,
+          "canonical_bpb": 2.9640352844850835,
+          "canonical_byte_ppl": 7.8030345313665395
+        }
+      },
+      "macro_exact_bpb": 3.0486896726244535,
+      "macro_exact_byte_ppl": 8.274600573062843
+    },
+    {
+      "seed": 11,
+      "alpha": 0.5,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 325,
+          "codepoints": 37500,
+          "ids_sha256": "9a5d2eb81f60e164e4d95c0bf778235f5cd0c49e194bf6d1a0c967ce93d627bd"
+        },
+        "es": {
+          "sentences": 81,
+          "codepoints": 12500,
+          "ids_sha256": "16a277b3aab614754b177d8a86bb6d610aac44be5b2b7e92e3cfc8ee9dbecf0e"
+        }
+      },
+      "merge_rules_sha256": "fabb2d4f3f49c34f05fb6607d447580899f3b9b4138b68b4f3dc2f8597cd3a95",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 63366,
+          "exact_bits": 396655.50144194724,
+          "exact_bpb": 3.102603925362915,
+          "exact_byte_ppl": 8.589677256255479,
+          "canonical_bpb": 3.106424176010643,
+          "canonical_byte_ppl": 8.61245282847841
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 68287,
+          "exact_bits": 373405.82306386135,
+          "exact_bpb": 2.9847394034120245,
+          "exact_byte_ppl": 7.915823272846928,
+          "canonical_bpb": 2.986801360790997,
+          "canonical_byte_ppl": 7.9271449724408924
+        }
+      },
+      "macro_exact_bpb": 3.0436716643874697,
+      "macro_exact_byte_ppl": 8.245869701329937
+    },
+    {
+      "seed": 11,
+      "alpha": 1.0,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 390,
+          "codepoints": 45000,
+          "ids_sha256": "43227b426c927fb70c8beb0e2f2e86eac27d92048b67b07f9476569e3167d0c7"
+        },
+        "es": {
+          "sentences": 31,
+          "codepoints": 5000,
+          "ids_sha256": "937a3de75ed73158f2a0297e86e4ef9afe88c8e7b584a42fc7414d4702c4e4e2"
+        }
+      },
+      "merge_rules_sha256": "ad565e1e58cb145adb9d36826135a12e7ee283183495dea62a098f86b9465678",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 61917,
+          "exact_bits": 394865.03347016854,
+          "exact_bpb": 3.08859904471136,
+          "exact_byte_ppl": 8.506696864649747,
+          "canonical_bpb": 3.0917082851118227,
+          "canonical_byte_ppl": 8.525049937631275
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 74199,
+          "exact_bits": 379475.6231346652,
+          "exact_bpb": 3.0332570491560307,
+          "exact_byte_ppl": 8.186558250745929,
+          "canonical_bpb": 3.0348035888450693,
+          "canonical_byte_ppl": 8.195338779823565
+        }
+      },
+      "macro_exact_bpb": 3.0609280469336952,
+      "macro_exact_byte_ppl": 8.345092534171979
+    },
+    {
+      "seed": 29,
+      "alpha": 0.0,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 215,
+          "codepoints": 25000,
+          "ids_sha256": "dc35585508b968e3981db0876b121cafc94cfad69cee0d95c3cff4f104b120d7"
+        },
+        "es": {
+          "sentences": 175,
+          "codepoints": 25000,
+          "ids_sha256": "ebb2f281ffa4fd23a2cd412fd5b8648e36646ef70d6f3ebd11dac5f3c1274c2f"
+        }
+      },
+      "merge_rules_sha256": "fe852931faf03a53fb2c3bb9ac9c38bfbedb33ec7e314a23213890700bcb2387",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 66354,
+          "exact_bits": 402472.6534485591,
+          "exact_bpb": 3.1481051690984394,
+          "exact_byte_ppl": 8.864904990231569,
+          "canonical_bpb": 3.1525516682118195,
+          "canonical_byte_ppl": 8.892269469817476
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 64197,
+          "exact_bits": 368309.92856702453,
+          "exact_bpb": 2.9440064631071863,
+          "exact_byte_ppl": 7.6954541119867566,
+          "canonical_bpb": 2.9467177157331763,
+          "canonical_byte_ppl": 7.709929754442584
+        }
+      },
+      "macro_exact_bpb": 3.046055816102813,
+      "macro_exact_byte_ppl": 8.259507827918648
+    },
+    {
+      "seed": 29,
+      "alpha": 0.5,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 318,
+          "codepoints": 37500,
+          "ids_sha256": "b619d881bba62205fb942f61e61eb8918e01846cd9bd816df20ae612e48478e8"
+        },
+        "es": {
+          "sentences": 92,
+          "codepoints": 12500,
+          "ids_sha256": "747af49c7bb49fb62f96c4fc6856ff239e58960bb83329bef28a179255758b9f"
+        }
+      },
+      "merge_rules_sha256": "1b22a6a3d4107a1f781cb9c9909aeeb3ed5931f28c2c38dcec4adda63d3e477b",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 63828,
+          "exact_bits": 398145.98381253873,
+          "exact_bpb": 3.114262345419792,
+          "exact_byte_ppl": 8.65937166772182,
+          "canonical_bpb": 3.1180374070175327,
+          "canonical_byte_ppl": 8.682060085527745
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 67949,
+          "exact_bits": 372705.68703110603,
+          "exact_bpb": 2.9791430161153114,
+          "exact_byte_ppl": 7.885176323898497,
+          "canonical_bpb": 2.981120106722384,
+          "canonical_byte_ppl": 7.895989693784336
+        }
+      },
+      "macro_exact_bpb": 3.0467026807675515,
+      "macro_exact_byte_ppl": 8.263211993780477
+    },
+    {
+      "seed": 29,
+      "alpha": 1.0,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 384,
+          "codepoints": 45000,
+          "ids_sha256": "0ae34e382b11d0b56de1251c431cd7a71d255c0b3a2484a6f1b3bde189492058"
+        },
+        "es": {
+          "sentences": 37,
+          "codepoints": 5000,
+          "ids_sha256": "ed4ab5f05ac79744d2f0019c93d911b38aab6ce4add923423e2eb329ccdd3059"
+        }
+      },
+      "merge_rules_sha256": "607a6c7aee77ae7fec9e46d03a8c82041cac8cb8f8ec25492c4712666f61bf9a",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 62130,
+          "exact_bits": 395429.1537834817,
+          "exact_bpb": 3.09301154344666,
+          "exact_byte_ppl": 8.532754519573766,
+          "canonical_bpb": 3.0980330125079125,
+          "canonical_byte_ppl": 8.562505516933122
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 75939,
+          "exact_bits": 382475.7611764371,
+          "exact_bpb": 3.0572380094835303,
+          "exact_byte_ppl": 8.323775238742947,
+          "canonical_bpb": 3.0588586943892953,
+          "canonical_byte_ppl": 8.333131198677581
+        }
+      },
+      "macro_exact_bpb": 3.075124776465095,
+      "macro_exact_byte_ppl": 8.427617147705517
+    },
+    {
+      "seed": 47,
+      "alpha": 0.0,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 217,
+          "codepoints": 25000,
+          "ids_sha256": "5babb2f7f2cca7f8166da5a36924fbaf0fec4e7e954a732118741a9d5a7def6f"
+        },
+        "es": {
+          "sentences": 180,
+          "codepoints": 25000,
+          "ids_sha256": "0566d40575c8915d6bbb3587ad8095a7d46ad9e7f0b3af962d89895beaa6e7ae"
+        }
+      },
+      "merge_rules_sha256": "6c250626074c58919dac183a66a82af959e5944859d36a01c0b399cca709f70a",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 66090,
+          "exact_bits": 402461.22914323886,
+          "exact_bpb": 3.1480158092019996,
+          "exact_byte_ppl": 8.864355918919411,
+          "canonical_bpb": 3.1516004089793292,
+          "canonical_byte_ppl": 8.886408171983845
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 64727,
+          "exact_bits": 369151.2386744111,
+          "exact_bpb": 2.9507312951073983,
+          "exact_byte_ppl": 7.7314086517873735,
+          "canonical_bpb": 2.95342723573633,
+          "canonical_byte_ppl": 7.74586971606376
+        }
+      },
+      "macro_exact_bpb": 3.049373552154699,
+      "macro_exact_byte_ppl": 8.278523904903347
+    },
+    {
+      "seed": 47,
+      "alpha": 0.5,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 321,
+          "codepoints": 37500,
+          "ids_sha256": "eff302ca8247b91626ebf950bc01b78adf8ef95d47b4f2c16f51ef0a61889bae"
+        },
+        "es": {
+          "sentences": 89,
+          "codepoints": 12500,
+          "ids_sha256": "b75dbbdca64c4b93fa666ff1b1fb310a6ac321baa667aa4ece297df235e19c9c"
+        }
+      },
+      "merge_rules_sha256": "236bdfcd23247afa6fdc53d291b594992da762da56b752e96e0dea2d15da713d",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 63632,
+          "exact_bits": 397641.6987376368,
+          "exact_bpb": 3.110317872578233,
+          "exact_byte_ppl": 8.635728413903994,
+          "canonical_bpb": 3.113717107698214,
+          "canonical_byte_ppl": 8.656099649814616
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 69009,
+          "exact_bits": 375349.2076038086,
+          "exact_bpb": 3.000273431148304,
+          "exact_byte_ppl": 8.001516367928767,
+          "canonical_bpb": 3.00190523997213,
+          "canonical_byte_ppl": 8.010571872852886
+        }
+      },
+      "macro_exact_bpb": 3.0552956518632683,
+      "macro_exact_byte_ppl": 8.312576150197984
+    },
+    {
+      "seed": 47,
+      "alpha": 1.0,
+      "tokenizer_sample": {
+        "de": {
+          "sentences": 392,
+          "codepoints": 45000,
+          "ids_sha256": "12de9abb2c6d561e4add39087b46edd24e8d779b6425fbdbdb7b2055e8562cd3"
+        },
+        "es": {
+          "sentences": 33,
+          "codepoints": 5000,
+          "ids_sha256": "393c06e22b5a640d2422d000dd5424b2c6750b9ecd5e8b5c2e0de46bd3476340"
+        }
+      },
+      "merge_rules_sha256": "7742160c35c1959cb08b5121884f81852d808b754b0725e7912bb255139a6ac7",
+      "test": {
+        "de": {
+          "test_bytes": 127846,
+          "test_tokens": 62197,
+          "exact_bits": 396354.86197933834,
+          "exact_bpb": 3.1002523503225627,
+          "exact_byte_ppl": 8.575687593347633,
+          "canonical_bpb": 3.1044229747270924,
+          "canonical_byte_ppl": 8.600514544260172
+        },
+        "es": {
+          "test_bytes": 125105,
+          "test_tokens": 75896,
+          "exact_bits": 383002.31267844484,
+          "exact_bpb": 3.0614468860432824,
+          "exact_byte_ppl": 8.348094235093074,
+          "canonical_bpb": 3.06311468602521,
+          "canonical_byte_ppl": 8.357750469988405
+        }
+      },
+      "macro_exact_bpb": 3.0808496181829224,
+      "macro_exact_byte_ppl": 8.461125702882835
+    }
+  ],
+  "summary": [
+    {
+      "alpha": 0.0,
+      "seed_mean_exact_bpb": {
+        "de": 3.14411066249971,
+        "es": 2.9519686980882667,
+        "macro": 3.0480396802939884
+      },
+      "exact_byte_ppl": {
+        "de": 8.84039395834456,
+        "es": 7.738042744077716,
+        "macro": 8.270873371304665
+      }
+    },
+    {
+      "alpha": 0.5,
+      "seed_mean_exact_bpb": {
+        "de": 3.109061381120313,
+        "es": 2.988051950225213,
+        "macro": 3.048556665672763
+      },
+      "exact_byte_ppl": {
+        "de": 8.62821054289061,
+        "es": 7.934019538079145,
+        "macro": 8.273837744720074
+      }
+    },
+    {
+      "alpha": 1.0,
+      "seed_mean_exact_bpb": {
+        "de": 3.093954312826861,
+        "es": 3.050647314894281,
+        "macro": 3.072300813860571
+      },
+      "exact_byte_ppl": {
+        "de": 8.53833230868358,
+        "es": 8.285836283071937,
+        "macro": 8.411136881552684
+      }
+    }
+  ],
+  "document_scores": {
+    "path": "results/quota_pilot_documents.csv",
+    "sha256": "7d938724902f8e9089113d1591626644e1f41200edcf576821a94d456566e404"
+  }
+}

@@ -29,6 +29,23 @@ The public repository has not been granted a new blanket license on behalf of it
 
 The German/Spanish experiment design in this project adapts these ideas. The papers are not cited as proof that a 50:50 mix, the proposed budget or a chosen threshold is optimal.
 
+## Measurement in the quota pilot
+
+A text can have several token sequences that decode to the same bytes. The pilot's bigram model permits an exact sum of the probabilities of those sequences, including sentence termination. The resulting negative log likelihood per UTF-8 byte gives all three mixtures a common evaluation unit. The score of the tokenizer's deterministic segmentation is a separate diagnostic. For the distinction between these likelihoods, see [Cao and Rimell (2021), *You should evaluate your language model on marginal likelihood over tokenisations*](https://aclanthology.org/2021.emnlp-main.161/).
+
+## Pilot corpora
+
+The pilot uses the sentence texts from Universal Dependencies release r2.15. Each treebank's pinned README lists its contributors, data sources and license. The GSD files supply training texts. The German and Spanish PUD files provide aligned translations of news and Wikipedia excerpts for testing.
+
+| Treebank | File | Pinned source and credits | License |
+| --- | --- | --- | --- |
+| German GSD | `de_gsd-ud-train.conllu` | [German GSD README](https://github.com/UniversalDependencies/UD_German-GSD/blob/d47d56779e81203ec7a9e3460c7f5afa9f711269/README.md) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| Spanish GSD | `es_gsd-ud-train.conllu` | [Spanish GSD README](https://github.com/UniversalDependencies/UD_Spanish-GSD/blob/de16cd88598b302a9a5dab502e10d667458072f7/README.md) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| German PUD | `de_pud-ud-test.conllu` | [German PUD README](https://github.com/UniversalDependencies/UD_German-PUD/blob/38815149e93d35ec81ffa6a941111dcfe39977f4/README.md) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
+| Spanish PUD | `es_pud-ud-test.conllu` | [Spanish PUD README](https://github.com/UniversalDependencies/UD_Spanish-PUD/blob/4a5fc2b4b4cbe335870836d505cd25a16a24f6ac/README.md) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
+
+Training and scoring use normalized sentence text without syntactic annotations. For the preprocessing, sampling and exact upstream file hashes, see the [experiment](../code/quota_pilot.py) and its [run record](../results/quota_pilot.json).
+
 ## AI-assisted work
 
 The report was developed with Codex assistance, including delegated literature review and review prompts. Available records describe that actual assistance, rather than claiming that the project owner personally typed every recorded prompt or independently produced the upstream implementation. See [CONTRIBUTIONS.md](CONTRIBUTIONS.md) and the anonymized interaction records with the report sources.

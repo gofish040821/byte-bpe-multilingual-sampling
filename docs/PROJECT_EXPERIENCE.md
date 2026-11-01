@@ -2,7 +2,7 @@
 
 **Research area:** Tokenizer analysis, behavioral verification, and multilingual experiment design.
 
-**Documented artifact and validation date:** 2026-10-31.
+**Project evidence updated:** 2026-11-01.
 **Ownership:** The project owner confirms that this is a project they handled. The work was developed with AI assistance; the upstream MinBPE implementation retains its original attribution.
 
 This record describes the experience represented by this repository. It gives future agents enough context to assess the work and draft evidence-based CV descriptions. It covers this research project, rather than the owner's entire academic or employment history.
@@ -12,14 +12,14 @@ This record describes the experience represented by this repository. It gives fu
 1. Read the [README](../README.md) for the executable entry points and environment.
 2. Read this experience record and the [machine-readable project card](../experience/project.json).
 3. Read the [full Chinese technical report](../reports/tokenizer_analysis_report.pdf), beginning with the research framework, measured results, and multilingual sampling design; explanatory foundations and source annotations are retained in appendices.
-4. Inspect the [behavior checks](../results/verification.json), [encoding cases](../results/gpt4_check.json), [quota calculations](../results/language_mix.json), and [repository validation](../results/repository_validation.json).
+4. Inspect the [behavior checks](../results/verification.json), [encoding cases](../results/gpt4_check.json), [quota calculations](../results/language_mix.json), [multilingual pilot](../results/quota_pilot.json), and [repository validation](../results/repository_validation.json).
 5. Consult [contribution provenance](CONTRIBUTIONS.md), [research references](REFERENCES.md), and the [retained AI-interaction record](../reports/content/ai_interaction_full.json) when determining the wording of a personal contribution.
 
 ## Research questions and goals
 
 The project investigates how byte-level Byte Pair Encoding (BPE) learns and applies merge rules, how those rules map to a concrete implementation, and how language proportions could be selected for a German/Spanish BPE tokenizer. It develops an inspectable technical record: executable traces of algorithm behavior, fixed-version source analysis, structured results, scientific figures, and a reproducible report build.
 
-The main technical goals were to explain the difference between learning merge rules and applying them, understand UTF-8 and token-ID details, verify a GPT-style tokenizer wrapper on concrete inputs, and design a controlled multilingual-tokenizer experiment. The language-ratio part remains an experimental design supported by papers and executable arithmetic; it is not presented as a completed corpus benchmark.
+The main goals were to connect BPE training and inference to the source code, verify a GPT-style tokenizer wrapper on concrete inputs and measure how a change in tokenizer-training mix affects a small bilingual language model.
 
 ## Methods and work carried out
 
@@ -59,9 +59,25 @@ For the explicitly assumed inventory of **9 million German / 1 million Spanish c
 
 **Four arithmetic and boundary checks pass**, including integer quotas summing to the budget and zero-inventory language handling. These are mathematical calculations with hypothetical inventories.
 
-The report's larger proposed experiment fixes NFC normalization, Unicode code-point counting, total training budget, vocabulary size, document-level splits, ordinary-text encoding policy, and random seeds. It proposes evaluating tokens per character separately within each language, using a 50:50 baseline and validation data to select a candidate before final testing. The proposed budgets and comparison thresholds are design choices, not measured improvements. A smaller pilot and two other inexpensive next experiments are described in [EXTENSIONS](EXTENSIONS.md).
+The larger design in the report proposes a five-million-character budget, an 8,192-entry vocabulary and a validation stage to select a ratio. A smaller controlled experiment tested the three quota settings on public German and Spanish text.
 
-### 4. Reproducible reporting and public project engineering
+### 4. German/Spanish corpus experiment
+
+The tokenizer-training mix varied across 50:50, 75:25 and 90:10 German:Spanish. Each mix used the same three sampling seeds and 512-entry vocabulary. This tests how the 9:1 inventory scenario would allocate a 50,000-character tokenizer budget on actual text. The 9:1 ratio is a scenario assumption. The observed corpus sizes are recorded separately.
+
+The language model for each tokenizer was a smoothed bilingual bigram trained on the same German and Spanish GSD sentences. The independent PUD test collection contains aligned texts in both languages. The score sums the probabilities of all ways the model could generate each test sentence and expresses the cost per byte. German and Spanish carry equal weight in the aggregate. See the [source and license record](REFERENCES.md#pilot-corpora) and [per-run results](../results/quota_pilot.json).
+
+All nine models used the same 1,500 training sentences per language and the same 1,000 PUD test sentence pairs from 397 documents. The table gives byte perplexity. Each entry exponentiates the mean bits per byte across the three seeds. The final column gives each language equal weight in log space. Lower is better.
+
+| German:Spanish tokenizer quota | German | Spanish | Equal-language score |
+| --- | ---: | ---: | ---: |
+| 50:50, equal-share reference | 8.8404 | 7.7380 | 8.2709 |
+| 75:25, square-root smoothing | 8.6282 | 7.9340 | 8.2738 |
+| 90:10, proportional baseline | 8.5383 | 8.2858 | 8.4111 |
+
+In the planned comparison with proportional sampling, smoothing from 90:10 to 75:25 reduced aggregate byte perplexity by 1.63%. Spanish improved by 4.25% while German worsened by 1.05%. All three paired seeds had a lower aggregate score with smoothing. Across 4,000 paired resamples of the test documents, the middle 95% of aggregate changes ranged from −1.77% to −1.49%, conditional on the fitted models. The 50:50 reference scored slightly better than 75:25 on the aggregate, by about 0.04%. [Document scores](../results/quota_pilot_documents.csv) · [Paired bootstrap](../results/quota_uncertainty.json)
+
+### 5. Reproducible reporting and public project engineering
 
 The project includes a **full LaTeX technical report** organized around research questions, methods, results, and experimental design, followed by appendices for explanatory foundations and source annotations. Standard mathematical notation and **three native TikZ/PGFPlots vector figures** support the analysis. Two figures illustrate executed BPE behavior; one depicts the explicitly assumed sampling scenario. Seven CSV/JSON tables preserve the figure data and provenance. The exporter uses fixed LF line endings for stable data output.
 
@@ -84,9 +100,10 @@ The BPE implementation in `vendor/minbpe/` is unchanged upstream software, not a
 | Behavioral verification | [Harness](../code/gpt4_check.py), [17 checks](../results/verification.json) | Compared exact token IDs and round trips on eight curated ordinary-text cases. |
 | Research design | [Proposal](../reports/content/multilingual_sampling.json), [references](REFERENCES.md) | Synthesized literature into a controlled, unexecuted multilingual-tokenizer evaluation plan. |
 | Numerical implementation | [Quota allocator](../code/language_mix.py), [results](../results/language_mix.json) | Implemented and checked hypothetical sampling-budget arithmetic. |
+| Controlled language-model evaluation | [Pilot code](../code/quota_pilot.py), [nine runs](../results/quota_pilot.json) | Varied tokenizer-training shares, held language-model training text fixed and compared held-out code lengths per byte. |
 | Reproducibility | [Build script](../code/compile_report.py), [validation](../results/repository_validation.json) | Packaged code, evidence, pinned dependencies, data exports, report sources, and portable entry points. |
 | Technical communication | [Three figures](../figures/manifest.json), [report](../reports/tokenizer_analysis_report.pdf) | Produced a detailed explanation and native vector visualizations with AI assistance. |
 
-Prefer an **AI-assisted research project in tokenizer analysis, verification, and experiment design** as the overall framing. Numerical claims should identify their measurement unit and scope: 17 behavioral checks, eight text cases, four quota checks, three vector figures. Avoid converting these counts into accuracy gains, model-performance improvements, corpus-scale results, or proof of mastery. No real-corpus language-ratio experiment, language-model training, or universal optimal ratio is recorded here.
+When describing the multilingual experiment, name the training and test corpora, model type, baseline and unit of evaluation. The seed repeats vary the tokenizer-training sample on a common test collection. A claim about downstream accuracy would require a separate labeled task.
 
 The [machine-readable project card](../experience/project.json) provides the same factual anchors for automated CV aggregation. The [CV descriptions](CV_DESCRIPTIONS.md) are a starting point; future agents should adapt emphasis to a target role while retaining evidence and attribution.

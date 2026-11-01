@@ -1,5 +1,5 @@
 项目：字节级 BPE 分析与多语言抽样方案设计
-研究方向：分词器算法分析、编码行为核验与多语言实验设计。
+研究方向：分词器算法分析、编码行为核验与德语／西班牙语配额对照实验。
 在 GitHub 项目首页点击 Read the full report online (中文) 即可在线阅读全文。网页版位于 reports/online.md，排印版位于 reports/tokenizer_analysis_report.pdf。
 
 1. 运行算法示例
@@ -14,7 +14,9 @@ PowerShell 也可运行 ./run_examples.ps1，或用 -PythonExe 指定 Python。
 2. 阅读结果
 results 中保留 JSON 数据和中文 TXT 摘要。
 17 项行为检查和 8 类普通文本对照已有真实结果。
-language_mix.py 默认库存是假设值，只计算配额；未开展真实语料配比实验。
+language_mix.py 用假设库存计算候选配额。真实语料实验另行运行：
+  python code/quota_pilot.py
+首次运行从固定版本的语料库下载数据。文件已缓存后，可用 --offline 在本地复现。三组配比、三个采样种子的逐项测量保存在 results/quota_pilot.json。
 figures 中有三张矢量 PDF、300 dpi PNG、七份数据和来源清单。
 
 3. 缓存与公开文件

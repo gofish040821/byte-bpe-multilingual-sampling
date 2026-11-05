@@ -1,6 +1,6 @@
 # Byte-Level BPE Analysis and Multilingual Sampling Design
 
-**[Read the full report online (中文)](reports/online.md)** · [View the typeset PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf)
+**[Read the full report online (中文)](reports/online.md)** · [View the typeset PDF](https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf)
 
 This study traces how MinBPE learns and applies merge rules, compares two encoders on eight inputs, and tests how the German–Spanish mix used to train a tokenizer affects prediction on independent bilingual text.
 
@@ -78,10 +78,10 @@ The real-text pilot uses these same three shares at a smaller budget. The longer
 
 | Artifact | PDF access | Data and editable sources |
 | --- | --- | --- |
-| Full technical report | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) | [Report content](reports/content/) · [LaTeX source](reports/latex/main.tex) |
-| Merge mechanism | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/bpe_merges.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/bpe_merges.pdf) · [PNG](figures/bpe_merges.png) | [CSV](figures/bpe_merges.csv) · [TikZ](reports/latex/figures/bpe_merges.tex) |
-| Counting mechanism | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/overlap.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/overlap.pdf) · [PNG](figures/overlap.png) | [CSV](figures/overlap.csv) · [TikZ](reports/latex/figures/overlap.tex) |
-| Sampling scenario | [View PDF](https://gofish040821.github.io/byte-bpe-multilingual-sampling/figures/language_sampling.pdf) · [Download](https://raw.githubusercontent.com/gofish040821/byte-bpe-multilingual-sampling/main/figures/language_sampling.pdf) · [PNG](figures/language_sampling.png) | [CSV](figures/language_sampling.csv) · [PGFPlots](reports/latex/figures/language_sampling.tex) |
+| Full technical report | [View PDF](https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf) · [Download](https://raw.githubusercontent.com/DolomitiAugust/byte-bpe-multilingual-sampling/main/reports/tokenizer_analysis_report.pdf) | [Report content](reports/content/) · [LaTeX source](reports/latex/main.tex) |
+| Merge mechanism | [View PDF](https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/figures/bpe_merges.pdf) · [Download](https://raw.githubusercontent.com/DolomitiAugust/byte-bpe-multilingual-sampling/main/figures/bpe_merges.pdf) · [PNG](figures/bpe_merges.png) | [CSV](figures/bpe_merges.csv) · [TikZ](reports/latex/figures/bpe_merges.tex) |
+| Counting mechanism | [View PDF](https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/figures/overlap.pdf) · [Download](https://raw.githubusercontent.com/DolomitiAugust/byte-bpe-multilingual-sampling/main/figures/overlap.pdf) · [PNG](figures/overlap.png) | [CSV](figures/overlap.csv) · [TikZ](reports/latex/figures/overlap.tex) |
+| Sampling scenario | [View PDF](https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/figures/language_sampling.pdf) · [Download](https://raw.githubusercontent.com/DolomitiAugust/byte-bpe-multilingual-sampling/main/figures/language_sampling.pdf) · [PNG](figures/language_sampling.png) | [CSV](figures/language_sampling.csv) · [PGFPlots](reports/latex/figures/language_sampling.tex) |
 
 The [web edition](reports/online.md) includes the full report and source annotations. The PDF links open the original typeset files on GitHub Pages.
 

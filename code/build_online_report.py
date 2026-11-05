@@ -13,7 +13,7 @@ from build_latex_report import (
 )
 
 OUTPUT = ROOT / "reports" / "online.md"
-PDF_URL = "https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf"
+PDF_URL = "https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf"
 
 
 def literal(text):

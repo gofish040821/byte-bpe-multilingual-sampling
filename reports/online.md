@@ -2,7 +2,7 @@
 
 *Byte-Level BPE Analysis and Multilingual Sampling Design* · Technical Research Report
 
-[在线查看 PDF 排印版](https://gofish040821.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf) · [项目主页](../README.md)
+[在线查看 PDF 排印版](https://dolomitiaugust.github.io/byte-bpe-multilingual-sampling/reports/tokenizer_analysis_report.pdf) · [项目主页](../README.md)
 
 ## 摘要
 
